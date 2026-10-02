@@ -160,7 +160,7 @@ Full-screen card: icon · **what** (title) · rows "Why: We ask {why}." · "What
 - **Entry:** `today` (app-bar icon, "Verify a card"), `settings` row, deep link `/verify?q=`. **Exit:** back.
 - **Primary:** search (submit). **Secondary:** clear field.
 - **States:** `empty` "Verify a card" / "Type the serial printed on the card." field hint "Tiger #0427" · `loading` field busy, result area skeleton · `success` = `serial-found`: card, "Earned by {earned_by} on {date}" (or "Earned on {date}"), "{Animal} #{serial} of {issued_so_far} issued", seal "Real ✓ · lives in the Flying Cobra ledger" · `unverified` adds "We couldn't fully verify this run, so it drew from the everyday bag." · `not-found` = `serial-not-found`: "No such card. If someone showed you this, they're bluffing." + API `hint` or "Try the animal name and the number, like \"Tiger #0427\"." · `error` "Couldn't reach the ledger right now. Try again in a moment."
-- **Data:** `lookup_serial` → `found`, `card`, `earned_by`, `stats`, `issued_so_far`, `reason`, `hint`. **A11y:** field labelled; result announced; seal label "Real. Lives in the Flying Cobra ledger."; serial in tabular Fraunces.
+- **Data:** `lookup_serial` → `found`, `card`, `earned_by`, `stats`, `issued_so_far`, `reason`, `hint`. **A11y:** field labelled; result announced; seal label "Real. Lives in the Flying Cobra ledger."; serial in tabular Satoshi.
 - **Never:** people search, location, route, health; an owner's full name.
 
 ---

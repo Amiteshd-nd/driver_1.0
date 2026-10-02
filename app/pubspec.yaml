@@ -59,3 +59,17 @@ flutter:
     - assets/shaders/
   shaders:
     - assets/shaders/foil.frag
+  fonts:
+    - family: Satoshi
+      fonts:
+        - asset: assets/fonts/Satoshi-Regular.otf
+          weight: 400
+        - asset: assets/fonts/Satoshi-Italic.otf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/Satoshi-Medium.otf
+          weight: 500
+        - asset: assets/fonts/Satoshi-Bold.otf
+          weight: 700
+        - asset: assets/fonts/Satoshi-Black.otf
+          weight: 900

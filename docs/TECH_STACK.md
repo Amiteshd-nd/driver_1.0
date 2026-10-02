@@ -80,7 +80,7 @@ The mapping is deliberate: each package backs exactly one purpose in the consent
 
 | Purpose | Package | Version |
 |---|---|---|
-| Type | `google_fonts` (Fraunces, Manrope) | ^6.2.1 |
+| Type | Satoshi, bundled (`assets/fonts/`); `google_fonts` kept only for the admin JSON monospace | ^6.2.1 |
 | Motion | `flutter_animate` | ^4.5.0 |
 | Charts | `fl_chart` | ^0.69.2 |
 | QR codes | `qr_flutter` | ^4.1.0 |
@@ -101,7 +101,7 @@ The foil is a real shader, not an image overlay: a hue-rotating band whose angle
 | Verify fallback | Same, plus one `fetch` to the lookup function | Works even if the Edge Function is not deployed yet. |
 | Design document | Hand-written HTML, CSS, JavaScript | Same reasoning. See `web/design-doc/`. |
 
-No bundler, no `node_modules`, no transpile step anywhere in `web/`. Fonts come from Google Fonts with a system fallback, so a blocked CDN degrades to readable rather than broken.
+No bundler, no `node_modules`, no transpile step anywhere in `web/`. Satoshi comes from Fontshare with a system fallback, so a blocked CDN degrades to readable rather than broken.
 
 ---
 

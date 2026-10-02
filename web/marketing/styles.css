@@ -13,8 +13,8 @@
   --warn: #B3791C;
   --danger: #A33A2B;
   --shadow: 0 18px 50px -24px rgba(27, 27, 24, .35);
-  --display: "Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  --text: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --display: "Satoshi", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --text: "Satoshi", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --radius: 16px;
   color-scheme: light dark;
 }
@@ -46,7 +46,7 @@ body {
   font: 400 16px/1.5 var(--text);
   -webkit-font-smoothing: antialiased;
 }
-h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0 0 .4em; letter-spacing: -.01em; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; margin: 0 0 .4em; letter-spacing: -.01em; }
 h1 { font-size: clamp(2.2rem, 6vw, 3.6rem); line-height: 1.08; }
 h2 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); line-height: 1.2; }
 h3 { font-size: 1.25rem; line-height: 1.3; }
@@ -62,7 +62,7 @@ img, svg { display: block; max-width: 100%; }
 
 .skip-link {
   position: absolute; left: 16px; top: -100px; z-index: 100;
-  background: var(--accent-fill); color: var(--accent-ink); padding: 10px 14px; border-radius: 8px; font-weight: 600;
+  background: var(--accent-fill); color: var(--accent-ink); padding: 10px 14px; border-radius: 8px; font-weight: 700;
 }
 .skip-link:focus { top: 12px; }
 
@@ -145,7 +145,7 @@ section + section { border-top: 1px solid var(--line); }
 .trust .wrap { display: grid; gap: 32px; align-items: start; }
 @media (min-width: 860px) { .trust .wrap { grid-template-columns: 1fr 1fr; } }
 .lookup { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
-.lookup label { flex: 1 1 100%; font-weight: 600; font-size: 14px; }
+.lookup label { flex: 1 1 100%; font-weight: 700; font-size: 14px; }
 .lookup input {
   flex: 1 1 220px; min-height: 48px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--line);
   background: var(--surface); color: var(--ink); font: 500 16px/1 var(--display); letter-spacing: .04em; font-variant-numeric: tabular-nums;
@@ -253,7 +253,7 @@ footer a:hover { text-decoration: underline; }
 .verify-card { display: grid; place-items: center; }
 .seal {
   display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px 8px 10px; border-radius: 999px;
-  border: 1.5px solid var(--success); color: var(--success); font-weight: 600; font-size: 14px; background: var(--surface);
+  border: 1.5px solid var(--success); color: var(--success); font-weight: 700; font-size: 14px; background: var(--surface);
 }
 .seal--warn { border-color: var(--warn); color: var(--warn); }
 .seal--off { border-color: var(--danger); color: var(--danger); }

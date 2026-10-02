@@ -80,20 +80,19 @@ Consistency finishes (`plain / glow / radiant`) add a soft outer glow (`glow`: 1
 
 ## 4. Typography
 
-Two families, both open-licence (bundled as assets; Google Fonts fallback):
+One family: **Satoshi** (Indian Type Foundry, via Fontshare; free for commercial use). It carries every role, from the animal name and the banknote-style serial to body and labels. Serial numbers use tabular figures, letter-spacing 0.08 em. Satoshi ships no 600 weight, so semibold roles use 700.
 
-- **Display:** *Fraunces* (variable, optical size). Animal names, serial numbers, headlines. Serial numbers use `Fraunces` with tabular figures, `font-feature-settings: "tnum"`, letter-spacing 0.08 em, so `#0427` reads like a banknote.
-- **Text:** *Manrope*. Everything else.
+> **On record, not in use.** Before 2 Oct 2026 the system used *Fraunces* for display and *Manrope* for text. They were retired at the designer's request and are recorded in `design_system/tokens.json` → `typography.retired`. Nothing loads or references them.
 
 | Role | Font | Size / line | Weight |
 |---|---|---|---|
-| Card animal name | Fraunces | 28 / 32 | 600 |
-| Card serial | Fraunces | 18 / 22, tabular | 500 |
-| Card flavour | Manrope | 14 / 20, italic | 400 |
-| Screen title | Fraunces | 24 / 30 | 600 |
-| Body | Manrope | 16 / 24 | 400 |
-| Caption / meta | Manrope | 13 / 18 | 500, +0.02 em |
-| Stat numeral | Fraunces | 22 / 26, tabular | 500 |
+| Card animal name | Satoshi | 28 / 32 | 700 |
+| Card serial | Satoshi | 18 / 22, tabular | 500 |
+| Card flavour | Satoshi | 14 / 20, italic | 400 |
+| Screen title | Satoshi | 24 / 30 | 700 |
+| Body | Satoshi | 16 / 24 | 400 |
+| Caption / meta | Satoshi | 13 / 18 | 500, +0.02 em |
+| Stat numeral | Satoshi | 22 / 26, tabular | 500 |
 
 Minimum touch target 48 × 48 pt. Dynamic Type supported to 1.3×; the card scales as a unit.
 
@@ -120,7 +119,7 @@ Portrait 5:7 ratio (e.g. 300 × 420 pt), corner radius 16 pt, 1 pt border per ra
 ```
 
 Rules:
-- Art is **original**: flat-shaded illustration with a single light source, no outlines, 3 poses per animal (baby, young, adult). Until commissioned, the app renders a **procedural placeholder**: family-coloured silhouette card with the animal's initial in Fraunces, deterministic per slug (so placeholders are consistent everywhere).
+- Art is **original**: flat-shaded illustration with a single light source, no outlines, 3 poses per animal (baby, young, adult). Until commissioned, the app renders a **procedural placeholder**: family-coloured silhouette card with the animal's initial in Satoshi, deterministic per slug (so placeholders are consistent everywhere).
 - The route map, start point, time of day in detail, heart rate, age and sex **never** appear on the card or poster.
 - Verified tick: `success` for verified; `warn` outline "unverified" for unverified cards (still a card, still real).
 

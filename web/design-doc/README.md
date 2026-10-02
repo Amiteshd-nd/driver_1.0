@@ -31,7 +31,7 @@ Two deliberate simplifications, both noted here so nobody mistakes the page for 
 
 Hand-written HTML, CSS and JavaScript. No framework, no bundler, no dependencies, no build step.
 
-That is a deliberate choice rather than a shortcut. This page has to outlive the toolchain that made it: a collaborator should be able to open it in five years, read the source, and change a sentence without installing anything. The only external request is to Google Fonts for Fraunces and Manrope, and the page falls back to system serif and sans if that is blocked.
+That is a deliberate choice rather than a shortcut. This page has to outlive the toolchain that made it: a collaborator should be able to open it in five years, read the source, and change a sentence without installing anything. The only external request is to Fontshare for Satoshi, and the page falls back to the system sans if that is blocked.
 
 | File | Role |
 |---|---|
@@ -41,7 +41,7 @@ That is a deliberate choice rather than a shortcut. This page has to outlive the
 
 ## Design system
 
-Flying Cobra's own, from `docs/DESIGN.md`: the chrome palette (§3.1), the family palettes (§3.2), the rarity borders and finishes (§3.3), Fraunces for display and Manrope for text (§4), and the card anatomy (§5). The cards on this page are built from the same rules as the cards in the app, so the two cannot drift apart visually.
+Flying Cobra's own, from `docs/DESIGN.md`: the chrome palette (§3.1), the family palettes (§3.2), the rarity borders and finishes (§3.3), Satoshi for both display and text (§4), and the card anatomy (§5). The cards on this page are built from the same rules as the cards in the app, so the two cannot drift apart visually.
 
 ## Accessibility
 

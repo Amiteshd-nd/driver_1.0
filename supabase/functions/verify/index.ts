@@ -14,7 +14,7 @@ const PUBLIC_BASE_URL = (Deno.env.get("PUBLIC_BASE_URL") ?? "").replace(/\/+$/, 
 
 const CACHE = "public, max-age=300";
 const FONTS =
-  "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap";
+  "https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900,301,401,501,701,901&display=swap";
 
 type Palette = { bg: string; fg: string; accent: string };
 const FAMILIES: Record<string, Palette> = {
@@ -165,7 +165,7 @@ async function lookupSerial(q: string): Promise<Lookup> {
 
 // ---------- shared HTML bits ----------
 const CSS = `
-:root{--bg:#F7F3EC;--surface:#fff;--surface-alt:#EFE9DE;--ink:#1B1B18;--ink-muted:#6B6A63;--line:#E2DCD0;--accent:#C8551B;--accent-fill:#B84A14;--accent-ink:#fff;--success:#2E7D5B;--warn:#B3791C;--danger:#A33A2B;--shadow:0 18px 50px -24px rgba(27,27,24,.35);--display:"Fraunces","Iowan Old Style",Georgia,serif;--text:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color-scheme:light dark}
+:root{--bg:#F7F3EC;--surface:#fff;--surface-alt:#EFE9DE;--ink:#1B1B18;--ink-muted:#6B6A63;--line:#E2DCD0;--accent:#C8551B;--accent-fill:#B84A14;--accent-ink:#fff;--success:#2E7D5B;--warn:#B3791C;--danger:#A33A2B;--shadow:0 18px 50px -24px rgba(27,27,24,.35);--display:"Satoshi","Iowan Old Style",Georgia,serif;--text:"Satoshi",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color-scheme:light dark}
 @media(prefers-color-scheme:dark){:root{--bg:#121311;--surface:#1C1E1B;--surface-alt:#262925;--ink:#F2EFE8;--ink-muted:#A5A49C;--line:#33362F;--accent:#F08A4B;--accent-fill:#F08A4B;--accent-ink:#1B1B18;--success:#59B98F;--warn:#E0A94C;--danger:#E0695A;--shadow:0 18px 50px -20px rgba(0,0,0,.7)}}
 *,*::before,*::after{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 var(--text);-webkit-font-smoothing:antialiased}
 h1,h2{font-family:var(--display);font-weight:600;margin:0 0 .4em;letter-spacing:-.01em}h1{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.1}h2{font-size:1.5rem;line-height:1.2}p{margin:0 0 1em}
@@ -375,22 +375,22 @@ function cardSvg(v: CardView): Response {
       <rect width="300" height="420" rx="16" fill="#FFFFFF"/>
       <rect x="12" y="38" width="276" height="210" rx="12" fill="${esc(p.bg)}"/>
       <circle cx="150" cy="143" r="78" fill="${esc(p.accent)}"/>
-      <text x="150" y="176" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-weight="600" font-size="92" fill="${esc(p.bg)}">${esc(v.name.charAt(0).toUpperCase())}</text>
-      <text x="16" y="26" font-family="Manrope, system-ui, sans-serif" font-size="12" font-weight="500" letter-spacing=".5" fill="#6B6A63">${esc((v.season || "Flying Cobra").toUpperCase())}</text>
+      <text x="150" y="176" text-anchor="middle" font-family="Satoshi, Georgia, serif" font-weight="600" font-size="92" fill="${esc(p.bg)}">${esc(v.name.charAt(0).toUpperCase())}</text>
+      <text x="16" y="26" font-family="Satoshi, system-ui, sans-serif" font-size="12" font-weight="500" letter-spacing=".5" fill="#6B6A63">${esc((v.season || "Flying Cobra").toUpperCase())}</text>
       <circle cx="${v.rarity.length > 6 ? 212 : 224}" cy="22" r="4" fill="${esc(p.accent)}"/>
-      <text x="284" y="26" text-anchor="end" font-family="Manrope, system-ui, sans-serif" font-size="12" font-weight="500" letter-spacing=".5" fill="#6B6A63">${esc(v.rarity.toUpperCase())}</text>
-      <text x="16" y="290" font-family="Fraunces, Georgia, serif" font-weight="600" font-size="28" fill="#1B1B18">${esc(v.name)}</text>
-      <text x="16" y="314" font-family="Manrope, system-ui, sans-serif" font-style="italic" font-size="14" fill="#6B6A63">${esc(v.flavour.length > 40 ? v.flavour.slice(0, 38) + "…" : v.flavour)}</text>
+      <text x="284" y="26" text-anchor="end" font-family="Satoshi, system-ui, sans-serif" font-size="12" font-weight="500" letter-spacing=".5" fill="#6B6A63">${esc(v.rarity.toUpperCase())}</text>
+      <text x="16" y="290" font-family="Satoshi, Georgia, serif" font-weight="600" font-size="28" fill="#1B1B18">${esc(v.name)}</text>
+      <text x="16" y="314" font-family="Satoshi, system-ui, sans-serif" font-style="italic" font-size="14" fill="#6B6A63">${esc(v.flavour.length > 40 ? v.flavour.slice(0, 38) + "…" : v.flavour)}</text>
       <line x1="16" y1="356" x2="284" y2="356" stroke="#E2DCD0"/>
-      <text x="16" y="378" font-family="Manrope, system-ui, sans-serif" font-size="13" font-weight="500" fill="#1B1B18">${esc(v.statsLine)}</text>
-      <text x="16" y="404" font-family="Fraunces, Georgia, serif" font-size="18" font-weight="500" letter-spacing="1.4" fill="#1B1B18">${esc(v.name.toUpperCase())}  #${pad4(v.serialNo)}</text>
-      <text x="284" y="404" text-anchor="end" font-family="Manrope, system-ui, sans-serif" font-size="16" font-weight="700" fill="${tickColor}">${v.verdict === "verified" ? "✓" : "○"}</text>
+      <text x="16" y="378" font-family="Satoshi, system-ui, sans-serif" font-size="13" font-weight="500" fill="#1B1B18">${esc(v.statsLine)}</text>
+      <text x="16" y="404" font-family="Satoshi, Georgia, serif" font-size="18" font-weight="500" letter-spacing="1.4" fill="#1B1B18">${esc(v.name.toUpperCase())}  #${pad4(v.serialNo)}</text>
+      <text x="284" y="404" text-anchor="end" font-family="Satoshi, system-ui, sans-serif" font-size="16" font-weight="700" fill="${tickColor}">${v.verdict === "verified" ? "✓" : "○"}</text>
     </g>
     <rect x="1.25" y="1.25" width="297.5" height="417.5" rx="15" fill="none" stroke="url(#bd)" stroke-width="2.5"/>
   </g>
-  <g transform="translate(560 150)" font-family="Manrope, system-ui, sans-serif" fill="${esc(p.fg)}">
+  <g transform="translate(560 150)" font-family="Satoshi, system-ui, sans-serif" fill="${esc(p.fg)}">
     <text y="0" font-size="20" font-weight="600" letter-spacing="2" opacity=".75">FLYINGCOBRA · VERIFIED CARD</text>
-    <text y="84" font-family="Fraunces, Georgia, serif" font-size="68" font-weight="600" letter-spacing="1">${esc(v.name)} #${pad4(v.serialNo)}</text>
+    <text y="84" font-family="Satoshi, Georgia, serif" font-size="68" font-weight="600" letter-spacing="1">${esc(v.name)} #${pad4(v.serialNo)}</text>
     <text y="140" font-size="28">Earned by ${esc(v.earnedBy)}${date ? ` on ${esc(date)}` : ""}</text>
     ${v.statsLine ? `<text y="184" font-size="26" opacity=".85">${esc(v.statsLine)}</text>` : ""}
     <text y="236" font-size="22" opacity=".8">#${pad4(v.serialNo)} of ${v.issuedSoFar} issued</text>
@@ -399,7 +399,7 @@ function cardSvg(v: CardView): Response {
       <text x="24" y="6" font-size="22" font-weight="700" fill="${tickColor}">${v.verdict === "verified" ? "Real ✓ · lives in the Flying Cobra ledger" : "Real · drawn from the everyday bag"}</text>
     </g>
   </g>
-  <text x="1150" y="590" text-anchor="end" font-family="Fraunces, Georgia, serif" font-size="24" font-weight="600" fill="${esc(p.fg)}" opacity=".7">flyingcobra.run</text>
+  <text x="1150" y="590" text-anchor="end" font-family="Satoshi, Georgia, serif" font-size="24" font-weight="600" fill="${esc(p.fg)}" opacity=".7">flyingcobra.run</text>
 </svg>`;
   return new Response(svg, {
     status: 200,

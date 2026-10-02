@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'tokens.dart';
+
+/// The product typeface. Satoshi has no 600 weight; semibold roles use w700.
+const kFontFamily = 'Satoshi';
 
 /// Builds the Material theme from the Flying Cobra tokens (docs/DESIGN.md §3–4).
 ThemeData buildTheme(Brightness brightness) {
@@ -94,22 +96,24 @@ ThemeData buildTheme(Brightness brightness) {
 }
 
 TextTheme _textTheme(AppColors c) {
-  TextStyle display(double size, double height, FontWeight w) => GoogleFonts.fraunces(fontSize: size, height: height / size, fontWeight: w, color: c.ink);
+  // Satoshi (Indian Type Foundry, via Fontshare) for every role — bundled under assets/fonts, declared in pubspec.yaml.
+  // Fraunces/Manrope were retired 2026-10-02 and are kept on record in design_system/tokens.json only.
+  TextStyle display(double size, double height, FontWeight w) => TextStyle(fontFamily: kFontFamily, fontSize: size, height: height / size, fontWeight: w, color: c.ink);
   TextStyle text(double size, double height, FontWeight w, {double spacing = 0}) =>
-      GoogleFonts.manrope(fontSize: size, height: height / size, fontWeight: w, color: c.ink, letterSpacing: spacing);
+      TextStyle(fontFamily: kFontFamily, fontSize: size, height: height / size, fontWeight: w, color: c.ink, letterSpacing: spacing);
   return TextTheme(
-    displayLarge: display(40, 46, FontWeight.w600),
-    displayMedium: display(32, 38, FontWeight.w600),
-    displaySmall: display(28, 32, FontWeight.w600), // card animal name
-    headlineMedium: display(24, 30, FontWeight.w600), // screen title
-    headlineSmall: display(20, 26, FontWeight.w600),
+    displayLarge: display(40, 46, FontWeight.w700),
+    displayMedium: display(32, 38, FontWeight.w700),
+    displaySmall: display(28, 32, FontWeight.w700), // card animal name
+    headlineMedium: display(24, 30, FontWeight.w700), // screen title
+    headlineSmall: display(20, 26, FontWeight.w700),
     titleLarge: display(22, 26, FontWeight.w500), // stat numerals (tabular via AppText.tabular)
-    titleMedium: text(16, 22, FontWeight.w600),
-    titleSmall: text(14, 20, FontWeight.w600),
+    titleMedium: text(16, 22, FontWeight.w700),
+    titleSmall: text(14, 20, FontWeight.w700),
     bodyLarge: text(18, 26, FontWeight.w400),
     bodyMedium: text(16, 24, FontWeight.w400),
     bodySmall: text(14, 20, FontWeight.w400),
-    labelLarge: text(16, 20, FontWeight.w600),
+    labelLarge: text(16, 20, FontWeight.w700),
     labelMedium: text(13, 18, FontWeight.w500, spacing: 0.26),
     labelSmall: text(11, 14, FontWeight.w500, spacing: 0.4),
   );
@@ -120,8 +124,8 @@ class AppText {
   AppText._();
   static const tabular = [FontFeature.tabularFigures()];
 
-  /// `Fraunces` serial with tabular figures and wide tracking (DESIGN.md §4).
-  static TextStyle serial(BuildContext context, {Color? color, double size = 18}) => GoogleFonts.fraunces(
+  /// Satoshi serial with tabular figures and wide tracking (DESIGN.md §4).
+  static TextStyle serial(BuildContext context, {Color? color, double size = 18}) => TextStyle(fontFamily: kFontFamily, 
         fontSize: size,
         fontWeight: FontWeight.w500,
         letterSpacing: size * 0.08,
@@ -130,8 +134,8 @@ class AppText {
       );
 
   static TextStyle stat(BuildContext context, {Color? color}) =>
-      GoogleFonts.fraunces(fontSize: 22, height: 26 / 22, fontWeight: FontWeight.w500, color: color ?? context.colors.ink, fontFeatures: tabular);
+      TextStyle(fontFamily: kFontFamily, fontSize: 22, height: 26 / 22, fontWeight: FontWeight.w500, color: color ?? context.colors.ink, fontFeatures: tabular);
 
   static TextStyle flavour(BuildContext context, {Color? color}) =>
-      GoogleFonts.manrope(fontSize: 14, height: 20 / 14, fontStyle: FontStyle.italic, color: color ?? context.colors.inkMuted);
+      TextStyle(fontFamily: kFontFamily, fontSize: 14, height: 20 / 14, fontStyle: FontStyle.italic, color: color ?? context.colors.inkMuted);
 }
