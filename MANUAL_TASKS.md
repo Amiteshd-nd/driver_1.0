@@ -105,6 +105,16 @@ supabase functions deploy illustrate
 
 To try the pipeline **with no key at all**, run `node tools/illustrate/serve.mjs` and open http://localhost:8790/workbench/ — it uses a mock provider that produces procedural emblems so you can see the whole flow working.
 
+**Fastest way to see real illustrations on this Mac (no Supabase needed, ≈ 5 minutes):**
+1. Create the key at OpenAI Platform → API keys → Create new secret key.
+2. In Finder, open `tools/illustrate/`, duplicate `.env.example`, rename the copy to `.env`, and paste the key after `OPENAI_API_KEY=`.
+3. In Terminal, from the project folder:
+```bash
+node tools/illustrate/serve.mjs
+```
+4. Open http://localhost:8790/workbench/ → Illustration Library → **Regenerate** the cheetah (the current cheetah art is a mock emblem), or **Generate missing** for everything. Approve what you like.
+5. Reload http://localhost:8790/web/marketing/ : every card whose animal has approved art shows it (the cards read `workbench/art/manifest.json`). Rough cost: about 4¢ per image.
+
 ## 8. Rename the GitHub repo to `flyingcobra` (1 minute)
 
 The code is pushed to https://github.com/Amiteshd-nd/driver_1.0. To rename: open that page → **Settings** (tab on the right) → under **General**, the first field is **Repository name** → change `driver_1.0` to `flyingcobra` → **Rename**. GitHub keeps the history and redirects the old URL. Then tell Claude "renamed", or run this yourself from the project folder:

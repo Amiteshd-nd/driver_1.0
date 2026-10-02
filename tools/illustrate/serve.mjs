@@ -19,6 +19,12 @@ import { nodeTracer } from '../../supabase/functions/illustrate/core/vectorise.m
 
 const here = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(here, '..', '..');
+// keys: a tools/illustrate/.env file (gitignored) is read into the environment, so the designer pastes
+// OPENAI_API_KEY=sk-... there once instead of typing it into the terminal every time
+const ENV_FILE = join(here, '.env');
+if (existsSync(ENV_FILE)) for (const line of readFileSync(ENV_FILE, 'utf8').split('\n')) {
+  const m = line.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*?)\s*$/); if (m && !process.env[m[1]]) process.env[m[1]] = m[2].replace(/^["']|["']$/g, '');
+}
 const ART = join(ROOT, 'workbench', 'art');
 const PORT = Number(process.env.PORT || 8790);
 mkdirSync(ART, { recursive: true });

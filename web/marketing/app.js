@@ -110,6 +110,25 @@
     });
   });
 
+  /* Illustrations: approved art from the illustration pipeline replaces the family placeholder.
+     The local runner writes workbench/art/manifest.json (production reads animals.art instead); only
+     rows with status approved are used, so what the admin approves is exactly what the page shows. */
+  var ART_BASE = '../../workbench/art/';
+  fetch(ART_BASE + 'manifest.json', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (m) {
+    if (!m || !m.rows) return;
+    document.querySelectorAll('.card[data-animal]').forEach(function (card) {
+      var slug = card.getAttribute('data-animal'), stage = card.getAttribute('data-stage') || 'adult';
+      var row = m.rows.find(function (x) { return x.slug === slug && x.stage === stage && x.status === 'approved' && (x.svg || x.png); })
+             || m.rows.find(function (x) { return x.slug === slug && x.status === 'approved' && (x.svg || x.png); });
+      if (!row) return;
+      var art = card.querySelector('.card__art'); if (!art) return;
+      var img = new Image();
+      img.alt = ''; img.decoding = 'async'; img.className = 'card__img';   // no loading=lazy: a detached lazy image never loads
+      img.onload = function () { art.innerHTML = ''; art.appendChild(img); art.classList.add('card__art--real'); };
+      img.src = ART_BASE + (row.svg || row.png);
+    });
+  }).catch(function () { /* no pipeline output yet: the placeholder stays */ });
+
   /* Serial lookup: trim and go (the form also works natively). */
   var form = document.getElementById('lookup-form');
   var q = document.getElementById('q');
