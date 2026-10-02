@@ -31,8 +31,9 @@ const PLATFORM_MOCK = `
   end $$;
 `;
 
-export async function loadDb({ skipPlatformFiles = true, log = () => {} } = {}) {
-  const db = new PGlite();
+export async function loadDb({ skipPlatformFiles = true, log = () => {}, dataDir = null } = {}) {
+  // dataDir persists the database across runs (used by the local pipeline runner); migrations are idempotent, so re-applying is safe
+  const db = dataDir ? new PGlite(dataDir) : new PGlite();
   await db.exec(PLATFORM_MOCK);
   const files = readdirSync(MIGRATIONS).filter(f => f.endsWith('.sql')).sort();
   for (const f of files) {

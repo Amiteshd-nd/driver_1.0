@@ -23,11 +23,12 @@ const ART = join(ROOT, 'workbench', 'art');
 const PORT = Number(process.env.PORT || 8790);
 mkdirSync(ART, { recursive: true });
 
-const db = await loadDb();
+const db = await loadDb({ dataDir: join(here, '.pgdata') });   // persisted: the ledger survives restarts, like production
 const q = async (s, p = []) => (await db.query(s, p)).rows;
 const one = async (s, p = []) => (await q(s, p))[0];
 // a local admin identity so admin-only RPCs work
-const admin = await createUser(db, 'local-admin@flyingcobra.test', 'Local admin');
+const existing = await one(`select id from auth.users where email = 'local-admin@flyingcobra.test'`);
+const admin = existing ? existing.id : await createUser(db, 'local-admin@flyingcobra.test', 'Local admin');
 await q(`update profiles set is_admin = true where id = $1`, [admin]); await signIn(db, admin);
 
 // providers
@@ -102,6 +103,6 @@ http.createServer(async (req, res) => {
   // static files from the repo root (the workbench, the design system, generated art)
   let p = decodeURIComponent(url.pathname); if (p.endsWith('/')) p += 'index.html';
   const f = resolve(ROOT, '.' + p); if (!f.startsWith(ROOT) || !existsSync(f) || statSync(f).isDirectory()) { res.writeHead(404); res.end('not found'); return; }
-  res.writeHead(200, { 'content-type': MIME[extname(f)] || 'application/octet-stream', 'cache-control': p.startsWith('/workbench/art/') ? 'public, max-age=31536000, immutable' : 'no-cache' });
+  res.writeHead(200, { 'content-type': MIME[extname(f)] || 'application/octet-stream', 'cache-control': p.startsWith('/workbench/art/') ? 'public, max-age=31536000, immutable' : 'no-store' });
   res.end(readFileSync(f));
 }).listen(PORT, () => console.log(`Flying Cobra local pipeline · provider=${provider.name} · QA=${anthropic ? 'claude-opus-5' : 'skipped'}\n→ http://localhost:${PORT}/workbench/   (Illustration Library is under Design system in the Pages list)`));
