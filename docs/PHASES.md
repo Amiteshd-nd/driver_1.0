@@ -14,6 +14,16 @@ Legend: ✅ built and tested · 🟡 built, awaiting Flutter SDK / Supabase keys
 | 7 | Admin panel (data-driven rules), seeded dummy users, internal web build, marketing site | ✅ DB · 🟡 app/web | `features/admin`, `0007_seed_dummy_users.sql`, `web/marketing` |
 | 8 | Polish (reveals, foil, celebrations), GPS dropouts, strict location permission, end-to-end test, manual checklist | 🟡 | `assets/shaders/foil.frag`, recorder dropout handling; checklist below |
 
+## UX prototype phase (added 2 Oct 2026, spec: docs/source/Running-App-UX-Prototype-PRD.md)
+
+| Step | Deliverable | Status | Where |
+|---|---|---|---|
+| 1 Design phase | Personas, journeys, screen inventory, interaction spec, by product / UX / UI designer agents | ✅ | `docs/ux/` |
+| 2 Workbench | Three columns: pages by journey · phone frame with every screen clickable · per-page properties (animations, toasts, triggers, Fire, state switcher) · simulate-run · persists and exports `interaction-config.json` · living catalogue | ✅ runs now (HTML/CSS/JS) | `workbench/` |
+| 3 Design system | `tokens.json` → generated `tokens.css` + `tokens.dart`; token-only components; patterns; catalogue | ✅ | `design_system/` |
+
+The spec asks for Flutter web. Without the SDK on this machine the workbench is hand-written web that runs today; the two files production consumes (`design_system/tokens.json`, `workbench/interaction-config.json`) are platform-neutral, so nothing decided in the workbench has to be re-decided when the Flutter shell is added.
+
 ## What "🟡" means
 The code exists but has not been compiled or run because this Mac has no Flutter SDK and no Supabase project yet. The first session after `MANUAL_TASKS.md` §1–5 are done should: run all migrations, `flutter pub get`, `flutter analyze`, fix compile errors, run on the iOS simulator, and walk the checklist below with the six dummy users.
 

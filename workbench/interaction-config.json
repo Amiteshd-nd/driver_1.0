@@ -1,0 +1,598 @@
+{
+  "$schema": "./interaction-config.schema.json",
+  "version": 1,
+  "updated": "2026-10-02",
+  "notes": "Source of truth for animation, toast and trigger behaviour. Edited live from the workbench right panel; exported with the Download button; the production app reads the same keys. Durations in ms. Easing names map to design_system/tokens.json motion.easing.",
+  "global": {
+    "reducedMotionCrossfadeMs": 200,
+    "hapticsEnabled": true,
+    "toastDefaultMs": 2600,
+    "toastPosition": "bottom",
+    "maxOneToastPerScreen": true,
+    "noToastsDuringReveal": true
+  },
+  "screens": {
+    "welcome": {
+      "animations": {
+        "promise-fade": {
+          "ms": 420,
+          "delay": 0,
+          "easing": "emphasised",
+          "enabled": true,
+          "trigger": "first-launch"
+        }
+      },
+      "toasts": {}
+    },
+    "sign-in": {
+      "animations": {
+        "inbox-card-in": {
+          "ms": 300,
+          "delay": 0,
+          "easing": "emphasised",
+          "enabled": true,
+          "trigger": "sign-in-complete"
+        }
+      },
+      "toasts": {
+        "link-sent": {
+          "text": "Check your inbox for the sign-in link.",
+          "ms": 3000,
+          "pos": "bottom",
+          "dismiss": "auto",
+          "trigger": "sign-in-complete"
+        }
+      }
+    },
+    "perm-location": {
+      "animations": {
+        "card-slide": {
+          "ms": 300,
+          "delay": 0,
+          "easing": "emphasised",
+          "enabled": true,
+          "trigger": "permission-granted"
+        }
+      },
+      "toasts": {
+        "denied-note": {
+          "text": "No problem. You can turn this on later in You → Permissions.",
+          "ms": 3200,
+          "pos": "bottom",
+          "dismiss": "auto",
+          "trigger": "permission-denied"
+        }
+      }
+    },
+    "perm-motion": {
+      "animations": {
+        "card-slide": {
+          "ms": 300,
+          "delay": 0,
+          "easing": "emphasised",
+          "enabled": true,
+          "trigger": "permission-granted"
+        }
+      },
+      "toasts": {}
+    },
+    "perm-activity": {
+      "animations": {
+        "card-slide": {
+          "ms": 300,
+          "delay": 0,
+          "easing": "emphasised",
+          "enabled": true,
+          "trigger": "permission-granted"
+        }
+      },
+      "toasts": {}
+    },
+    "perm-health": {
+      "animations": {
+        "card-slide": {
+          "ms": 300,
+          "delay": 0,
+          "easing": "emphasised",
+          "enabled": true,
+          "trigger": "permission-granted"
+        }
+      },
+      "toasts": {}
+    },
+    "perm-notifications": {
+      "animations": {
+        "card-slide": {
+          "ms": 300,
+          "delay": 0,
+          "easing": "emphasised",
+          "enabled": true,
+          "trigger": "permission-granted"
+        }
+      },
+      "toasts": {}
+    },
+    "fairness": {
+      "animations": {
+        "why-expand": {
+          "ms": 200,
+          "delay": 0,
+          "easing": "standard",
+          "enabled": true,
+          "trigger": "permission-toggled"
+        }
+      },
+      "toasts": {}
+    },
+    "onboarding-done": {
+      "animations": {
+        "bag-bounce": {
+          "ms": 900,
+          "delay": 200,
+          "easing": "spring",
+          "enabled": true,
+          "trigger": "sign-in-complete"
+        }
+      },
+      "toasts": {}
+    },
+    "today": {
+      "animations": {
+        "streak-dot-fill": {
+          "ms": 300,
+          "delay": 60,
+          "easing": "emphasised",
+          "enabled": true,
+          "trigger": "card-issued"
+        },
+        "envelope-glow": {
+          "ms": 2400,
+          "delay": 0,
+          "easing": "standard",
+          "enabled": true,
+          "trigger": "weekly-card-ready"
+        },
+        "banner-in": {
+          "ms": 300,
+          "delay": 0,
+          "easing": "emphasised",
+          "enabled": true,
+          "trigger": "animal-grew"
+        },
+        "hero-card-tilt": {
+          "ms": 200,
+          "delay": 0,
+          "easing": "standard",
+          "enabled": true,
+          "trigger": "card-issued"
+        }
+      },
+      "toasts": {
+        "offline-saved": {
+          "text": "Saved. We'll fetch your card when you're back online.",
+          "ms": 3200,
+          "pos": "bottom",
+          "dismiss": "auto",
+          "trigger": "offline-saved"
+        },
+        "back-online": {
+          "text": "Back online. Fetching your card…",
+          "ms": 2000,
+          "pos": "bottom",
+          "dismiss": "auto",
+          "trigger": "back-online"
+        },
+        "no-weekly": {
+          "text": "No weekly card this week — three run-days opens the weekly bag.",
+          "ms": 3600,
+          "pos": "bottom",
+          "dismiss": "tap",
+          "trigger": "no-weekly-card"
+        }
+      }
+    },
+    "run-ready": {
+      "animations": {
+        "start-pulse": {
+          "ms": 1600,
+          "delay": 0,
+          "easing": "standard",
+          "enabled": true,
+          "trigger": "run-started"
+        }
+      },
+      "toasts": {}
+    },
+    "run-recording": {
+      "animations": {
+        "gps-pill-pulse": {
+          "ms": 1200,
+          "delay": 0,
+          "easing": "standard",
+          "enabled": true,
+          "trigger": "gps-lost"
+        },
+        "autopause-dim": {
+          "ms": 300,
+          "delay": 0,
+          "easing": "standard",
+          "enabled": true,
+          "trigger": "run-auto-paused"
+        },
+        "km-tick": {
+          "ms": 420,
+          "delay": 0,
+          "easing": "spring",
+          "enabled": true,
+          "trigger": "run-started"
+        }
+      },
+      "toasts": {
+        "gps-lost": {
+          "text": "Looking for GPS… the timer keeps going.",
+          "ms": 0,
+          "pos": "top",
+          "dismiss": "tap",
+          "trigger": "gps-lost"
+        },
+        "gps-regained": {
+          "text": "GPS is back.",
+          "ms": 1600,
+          "pos": "top",
+          "dismiss": "auto",
+          "trigger": "gps-regained"
+        },
+        "auto-paused": {
+          "text": "Paused for you. Move to resume.",
+          "ms": 2200,
+          "pos": "top",
+          "dismiss": "auto",
+          "trigger": "run-auto-paused"
+        }
+      }
+    },
+    "run-finish": {
+      "animations": {
+        "reading-shimmer": {
+          "ms": 900,
+          "delay": 0,
+          "easing": "standard",
+          "enabled": true,
+          "trigger": "run-ended"
+        }
+      },
+      "toasts": {
+        "floor-not-met": {
+          "text": "Recorded. A run of 1 km or 10 minutes earns a card.",
+          "ms": 3600,
+          "pos": "bottom",
+          "dismiss": "tap",
+          "trigger": "run-floor-not-met"
+        },
+        "capped": {
+          "text": "Recorded and counted. Your card bag refills tomorrow.",
+          "ms": 3200,
+          "pos": "bottom",
+          "dismiss": "auto",
+          "trigger": "run-capped"
+        },
+        "rejected": {
+          "text": "We couldn't confirm this one was a run — no card this time.",
+          "ms": 4000,
+          "pos": "bottom",
+          "dismiss": "tap",
+          "trigger": "run-rejected"
+        },
+        "unverified": {
+          "text": "We couldn't fully verify this run, so it drew from the everyday bag.",
+          "ms": 3600,
+          "pos": "bottom",
+          "dismiss": "tap",
+          "trigger": "run-unverified"
+        }
+      }
+    },
+    "reveal": {
+      "animations": {
+        "shimmer": {
+          "ms": 900,
+          "delay": 0,
+          "easing": "standard",
+          "enabled": true,
+          "trigger": "run-ended"
+        },
+        "card-slide": {
+          "ms": 420,
+          "delay": 0,
+          "easing": "emphasised",
+          "enabled": true,
+          "trigger": "card-issued"
+        },
+        "pause-before-flip": {
+          "ms": 300,
+          "delay": 0,
+          "easing": "standard",
+          "enabled": true,
+          "trigger": "card-issued"
+        },
+        "card-flip": {
+          "ms": 600,
+          "delay": 0,
+          "easing": "standard",
+          "enabled": true,
+          "trigger": "card-issued"
+        },
+        "particle-burst": {
+          "ms": 900,
+          "delay": 0,
+          "easing": "decelerate",
+          "enabled": true,
+          "trigger": "rare-card-issued"
+        },
+        "caption-in": {
+          "ms": 300,
+          "delay": 400,
+          "easing": "emphasised",
+          "enabled": true,
+          "trigger": "discovery-time"
+        },
+        "growth-crossfade": {
+          "ms": 500,
+          "delay": 600,
+          "easing": "standard",
+          "enabled": true,
+          "trigger": "animal-grew"
+        }
+      },
+      "toasts": {},
+      "haptics": {
+        "slide": "light",
+        "flip": "medium",
+        "rarePlus": "heavy",
+        "growth": "success"
+      },
+      "captionGapMs": 2600
+    },
+    "card-detail": {
+      "animations": {
+        "foil-tilt": {
+          "ms": 200,
+          "delay": 0,
+          "easing": "standard",
+          "enabled": true,
+          "trigger": "card-issued"
+        }
+      },
+      "toasts": {
+        "link-copied": {
+          "text": "Verify link copied.",
+          "ms": 1800,
+          "pos": "bottom",
+          "dismiss": "auto",
+          "trigger": "link-copied"
+        },
+        "visibility": {
+          "text": "Hidden from the public verify page.",
+          "ms": 2200,
+          "pos": "bottom",
+          "dismiss": "auto",
+          "trigger": "card-visibility-toggled"
+        }
+      }
+    },
+    "poster": {
+      "animations": {
+        "poster-render": {
+          "ms": 300,
+          "delay": 0,
+          "easing": "emphasised",
+          "enabled": true,
+          "trigger": "poster-exported"
+        }
+      },
+      "toasts": {
+        "exported": {
+          "text": "Poster ready to share. No map, no start point.",
+          "ms": 2600,
+          "pos": "bottom",
+          "dismiss": "auto",
+          "trigger": "poster-exported"
+        }
+      }
+    },
+    "collection": {
+      "animations": {
+        "grid-stagger": {
+          "ms": 320,
+          "delay": 40,
+          "easing": "emphasised",
+          "enabled": true,
+          "trigger": "card-issued"
+        }
+      },
+      "toasts": {}
+    },
+    "serial-search": {
+      "animations": {
+        "result-in": {
+          "ms": 300,
+          "delay": 0,
+          "easing": "emphasised",
+          "enabled": true,
+          "trigger": "serial-found"
+        }
+      },
+      "toasts": {
+        "not-found": {
+          "text": "No such card. If someone showed you this, they're bluffing.",
+          "ms": 3600,
+          "pos": "bottom",
+          "dismiss": "tap",
+          "trigger": "serial-not-found"
+        }
+      }
+    },
+    "encyclopedia": {
+      "animations": {
+        "list-filter": {
+          "ms": 200,
+          "delay": 0,
+          "easing": "standard",
+          "enabled": true,
+          "trigger": "card-issued"
+        }
+      },
+      "toasts": {}
+    },
+    "animal-entry": {
+      "animations": {
+        "sheet-up": {
+          "ms": 420,
+          "delay": 0,
+          "easing": "emphasised",
+          "enabled": true,
+          "trigger": "card-issued"
+        }
+      },
+      "toasts": {}
+    },
+    "settings": {
+      "animations": {
+        "receipt-toggle": {
+          "ms": 200,
+          "delay": 0,
+          "easing": "standard",
+          "enabled": true,
+          "trigger": "permission-toggled"
+        }
+      },
+      "toasts": {
+        "perm-off": {
+          "text": "Turned off. Runs still earn cards with location alone.",
+          "ms": 3000,
+          "pos": "bottom",
+          "dismiss": "auto",
+          "trigger": "permission-toggled"
+        },
+        "exported": {
+          "text": "Your data is ready to share.",
+          "ms": 2400,
+          "pos": "bottom",
+          "dismiss": "auto",
+          "trigger": "data-exported"
+        }
+      }
+    },
+    "permission-receipt": {
+      "animations": {
+        "row-toggle": {
+          "ms": 200,
+          "delay": 0,
+          "easing": "standard",
+          "enabled": true,
+          "trigger": "permission-toggled"
+        }
+      },
+      "toasts": {}
+    },
+    "data-and-account": {
+      "animations": {},
+      "toasts": {
+        "deleted": {
+          "text": "Everything is gone. Thank you for running with us.",
+          "ms": 4000,
+          "pos": "bottom",
+          "dismiss": "tap",
+          "trigger": "account-deleted"
+        }
+      }
+    },
+    "celebration-growth": {
+      "animations": {
+        "crossfade": {
+          "ms": 500,
+          "delay": 0,
+          "easing": "standard",
+          "enabled": true,
+          "trigger": "animal-grew"
+        }
+      },
+      "toasts": {},
+      "autoDismissMs": 2600,
+      "haptic": "success"
+    },
+    "celebration-mastered": {
+      "animations": {
+        "crossfade": {
+          "ms": 500,
+          "delay": 0,
+          "easing": "standard",
+          "enabled": true,
+          "trigger": "animal-mastered"
+        }
+      },
+      "toasts": {},
+      "autoDismissMs": 3000,
+      "haptic": "success"
+    },
+    "celebration-welcome-back": {
+      "animations": {
+        "fade": {
+          "ms": 420,
+          "delay": 0,
+          "easing": "emphasised",
+          "enabled": true,
+          "trigger": "welcome-back"
+        }
+      },
+      "toasts": {},
+      "autoDismissMs": 3200,
+      "haptic": "light"
+    },
+    "celebration-discovery": {
+      "animations": {
+        "caption-in": {
+          "ms": 300,
+          "delay": 400,
+          "easing": "emphasised",
+          "enabled": true,
+          "trigger": "discovery-time"
+        }
+      },
+      "toasts": {},
+      "autoDismissMs": 2600,
+      "haptic": "medium"
+    },
+    "setup-needed": {
+      "animations": {},
+      "toasts": {}
+    },
+    "verify-web": {
+      "animations": {
+        "card-in": {
+          "ms": 300,
+          "delay": 0,
+          "easing": "emphasised",
+          "enabled": true,
+          "trigger": "serial-found"
+        },
+        "seal-stamp": {
+          "ms": 420,
+          "delay": 200,
+          "easing": "spring",
+          "enabled": true,
+          "trigger": "serial-found"
+        }
+      },
+      "toasts": {
+        "not-found": {
+          "text": "No such card. If someone showed you this, they're bluffing.",
+          "ms": 0,
+          "pos": "bottom",
+          "dismiss": "tap",
+          "trigger": "serial-not-found"
+        }
+      }
+    }
+  }
+}

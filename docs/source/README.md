@@ -1,6 +1,6 @@
 # Source documents (as written, unedited)
 
-The five original project documents by @amitesh, dated 2 Oct 2026. They are the authority for *what* Flying Cobra is. The derived docs one level up (`docs/ALGORITHMS.md`, `DESIGN.md`, `API.md`, `ARCHITECTURE.md`, `PHASES.md`) are the authority for *how* it was built. Where the two disagree, these files win and the derived docs should be corrected.
+The seven original project documents by @amitesh, dated 2 Oct 2026. They are the authority for *what* Flying Cobra is. The derived docs one level up (`docs/ALGORITHMS.md`, `DESIGN.md`, `API.md`, `ARCHITECTURE.md`, `PHASES.md`) are the authority for *how* it was built. Where the two disagree, these files win and the derived docs should be corrected.
 
 | File | What it is | Used to build |
 |---|---|---|
@@ -8,6 +8,8 @@ The five original project documents by @amitesh, dated 2 Oct 2026. They are the 
 | [Running-App-Full-Context-Master-Record.md](Running-App-Full-Context-Master-Record.md) | Every decision made in conversation, in one place. Includes the two open questions. | Cross-checked against the PRD; settled the duplicate-card and migratory-geography questions. |
 | [Running-App-Claude-Code-Prompts.md](Running-App-Claude-Code-Prompts.md) | The phase-by-phase build prompts and the fixed technical decisions. | Build order, and the rule that Flutter + Supabase + database-issued serials + data-driven rules are not to be changed. |
 | [Running-App-Design-Presentation.md](Running-App-Design-Presentation.md) | Presentation-ready walkthrough of the concept and its logic, with a full parameter reference appendix. | `docs/DESIGN.md` voice and the "slow is never shame" principle; the parameter table was used to audit the rules engine. |
+| [Running-App-UX-Prototype-PRD.md](Running-App-UX-Prototype-PRD.md) | Spec for the design prototype: design phase with specialised agents, the three-column workbench, the design-system package, `interaction-config.json`. | `/docs/ux`, `/workbench`, `/design_system`. |
+| [Running-App-UX-Prototype-Prompt.md](Running-App-UX-Prototype-Prompt.md) | The three-step build prompt for the workbench. | Build order for the UX prototype phase. |
 | [Running-App-Video-Treatment.md](Running-App-Video-Treatment.md) | Five scene-by-scene marketing films, tone, casting and locations. | The reveal moment in `docs/DESIGN.md` §6, the celebration copy, and the marketing site's hero and story sections. |
 
 ## Audit against the build

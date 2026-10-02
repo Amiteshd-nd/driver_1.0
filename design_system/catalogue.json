@@ -1,0 +1,35 @@
+{
+  "description": "What the living catalogue renders. Token groups come straight from tokens.json; components list their variants and states so every combination is visible and checkable.",
+  "tokenGroups": [
+    { "id": "color", "title": "Colour · chrome", "source": "color", "render": "swatch-modes" },
+    { "id": "family", "title": "Colour · families", "source": "family", "render": "swatch-family" },
+    { "id": "rarity", "title": "Rarity", "source": "rarity", "render": "table" },
+    { "id": "tier", "title": "Tier (scale)", "source": "tier", "render": "table" },
+    { "id": "finish", "title": "Finish (consistency)", "source": "finish", "render": "table" },
+    { "id": "typography", "title": "Typography", "source": "typography.scale", "render": "type-specimen" },
+    { "id": "space", "title": "Spacing", "source": "space", "render": "bars" },
+    { "id": "radius", "title": "Radius", "source": "radius", "render": "radius" },
+    { "id": "elevation", "title": "Elevation", "source": "elevation", "render": "elevation" },
+    { "id": "motion", "title": "Motion", "source": "motion", "render": "motion" },
+    { "id": "haptic", "title": "Haptics", "source": "haptic", "render": "table" }
+  ],
+  "components": [
+    { "id": "card", "title": "Animal card", "slots": ["art", "serial number", "run stats", "flavour line", "set name"],
+      "variants": { "rarity": ["common", "uncommon", "rare", "epic", "legendary"], "tier": ["baby", "young", "adult"], "finish": ["plain", "glow", "radiant"], "verdict": ["verified", "unverified"], "size": ["default", "tile"] },
+      "rule": "Same animal + tier + finish + season = identical template; only the serial differs." },
+    { "id": "button", "title": "Buttons", "variants": { "kind": ["primary", "ghost", "quiet", "danger"], "state": ["default", "hover", "active", "disabled"] } },
+    { "id": "chip", "title": "Chips", "variants": { "state": ["off", "on"] } },
+    { "id": "toast", "title": "Toast", "variants": { "position": ["top", "bottom"], "dismiss": ["auto", "tap", "both"], "with-title": [true, false] }, "rule": "One at a time. Never during the reveal." },
+    { "id": "banner", "title": "Inline banner", "variants": { "kind": ["growth", "mastered", "welcome-back"] } },
+    { "id": "sheet", "title": "Bottom sheet", "variants": { "state": ["open"] } },
+    { "id": "row", "title": "List row", "variants": { "with-avatar": [true, false], "with-end": [true, false] } },
+    { "id": "search", "title": "Search field", "variants": { "state": ["empty", "typing", "found", "not-found"] }, "rule": "Serial lookup is the only search in the product." },
+    { "id": "stat", "title": "Stat tile", "variants": { "columns": [3] } },
+    { "id": "ring", "title": "Progress ring", "variants": { "progress": [0, 43, 100] } },
+    { "id": "tabbar", "title": "Navigation bar", "variants": { "selected": ["today", "collection", "encyclopedia", "you"] } },
+    { "id": "celebration", "title": "Celebration overlay", "variants": { "kind": ["growth", "mastered", "welcome-back", "discovery"] } },
+    { "id": "reveal", "title": "Card reveal sequence", "variants": { "rarity": ["common", "legendary"], "reduced": [false, true] } },
+    { "id": "poster", "title": "Share poster", "rule": "No map. No start point. Serial + QR only." },
+    { "id": "permission", "title": "Permission card / receipt row", "variants": { "state": ["ask", "granted", "denied", "while-in-use"] } }
+  ]
+}

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flying Cobra — UX Workbench</title>
+<meta name="description" content="Every screen of the Flying Cobra app, clickable in a phone frame, with live control over animation and toast timing and the triggers that fire them. Mock data; no backend.">
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../design_system/tokens.css">
+<link rel="stylesheet" href="../design_system/components.css">
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="workbench.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='%23C8551B'%3E%3Cellipse cx='19' cy='36' rx='10' ry='12'/%3E%3Cellipse cx='39' cy='20' rx='10' ry='12'/%3E%3Cellipse cx='61' cy='20' rx='10' ry='12'/%3E%3Cellipse cx='81' cy='36' rx='10' ry='12'/%3E%3Cpath d='M38 52h24q16 0 19 16l3 10q2 16-14 16H30q-16 0-14-16l3-10q3-16 19-16z'/%3E%3C/g%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip-link" href="#screen">Skip to the phone</a>
+
+<header class="wb-top">
+  <div class="wb-brand"><svg viewBox="0 0 100 100" aria-hidden="true"><ellipse cx="19" cy="36" rx="10" ry="12"/><ellipse cx="39" cy="20" rx="10" ry="12"/><ellipse cx="61" cy="20" rx="10" ry="12"/><ellipse cx="81" cy="36" rx="10" ry="12"/><path d="M38 52h24q16 0 19 16l3 10q2 16-14 16H30q-16 0-14-16l3-10q3-16 19-16z"/></svg>Flying Cobra</div>
+  <span class="wb-top__label">UX workbench</span>
+  <span class="wb-pill">Mock data · no backend</span>
+  <span class="wb-spacer"></span>
+  <div class="seg" role="group" aria-label="Device"><button type="button" data-device="iphone" class="is-on">iPhone</button><button type="button" data-device="android">Android</button><button type="button" data-device="small">Small</button></div>
+  <button class="ghost" id="mode" type="button">App: light</button>
+  <button class="ghost" id="reset" type="button">Reset to start</button>
+</header>
+
+<main class="wb">
+  <aside class="wb-left" aria-label="Pages">
+    <section class="wb-group"><h2>Who is using it</h2><div id="personas" class="personas"></div></section>
+    <section class="wb-group"><h2>Pages</h2><p class="hint">Grouped by journey. Click one to load it and its properties.</p><nav id="pages" class="pages" aria-label="Pages by journey"></nav></section>
+    <section class="wb-group"><h2>Conditions</h2>
+      <label class="switch"><input type="checkbox" id="opt-reduced"><span>Reduced motion</span></label>
+      <label class="switch"><input type="checkbox" id="opt-nogps"><span>Location denied</span></label>
+      <label class="switch"><input type="checkbox" id="opt-offline"><span>Offline</span></label>
+      <p class="hint">The states that get skipped in reviews and then go wrong in the real app.</p></section>
+  </aside>
+
+  <section class="wb-stage" id="stage">
+    <div class="phone" id="phone" data-device="iphone">
+      <div class="phone__bezel">
+        <div class="phone__notch" aria-hidden="true"></div>
+        <div class="phone__viewport fc" id="viewport" data-mode="light">
+          <div class="statusbar" aria-hidden="true"><span id="clock">7:00</span><span class="statusbar__right"><span>▮▮▮</span><span class="statusbar__batt"></span></span></div>
+          <div class="screen" id="screen" role="region" aria-label="App screen"></div>
+          <div class="toast-host" id="toasts" data-pos="bottom" aria-live="polite"></div>
+        </div>
+        <div class="phone__home" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div class="stage__meta"><span id="screen-name">Today</span></div>
+    <div class="catalogue fc" id="catalogue" hidden></div>
+  </section>
+
+  <aside class="wb-right" aria-label="Properties"><div id="props"></div></aside>
+</main>
+
+<script src="../design_system/components.js"></script>
+<script src="engine.js"></script>
+<script src="data.js"></script>
+<script src="screens.js"></script>
+<script src="catalogue.js"></script>
+<script src="workbench.js"></script>
+</body>
+</html>

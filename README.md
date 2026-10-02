@@ -6,8 +6,17 @@
 - The math: [docs/ALGORITHMS.md](docs/ALGORITHMS.md) · Design system: [docs/DESIGN.md](docs/DESIGN.md) · Architecture: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · API: [docs/API.md](docs/API.md) · Progress: [docs/PHASES.md](docs/PHASES.md)
 - **Things only Amitesh can do:** [MANUAL_TASKS.md](MANUAL_TASKS.md)
 
+## Design and review it before the backend
+```bash
+python3 -m http.server 8790
+```
+Open **http://localhost:8790/workbench/**: every screen clickable in a phone frame, timings and triggers tunable live, the design-system catalogue, and a simulate-run control that plays real card reveals. See [workbench/README.md](workbench/README.md). The design phase documents are in [docs/ux/](docs/ux/README.md).
+
 ## Layout
 ```
+docs/ux/               personas, journeys, screen inventory, interaction spec
+design_system/         tokens.json → tokens.css + tokens.dart; token-only components; catalogue
+workbench/             the UX workbench (pages · phone · properties), interaction-config.json
 supabase/migrations/   the whole game engine lives in Postgres (apply 0001 → 0009 in order)
 supabase/functions/    verify page (Edge Function)
 app/                   Flutter: player app + admin panel
