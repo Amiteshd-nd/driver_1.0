@@ -101,7 +101,7 @@ The foil is a real shader, not an image overlay: a hue-rotating band whose angle
 | Verify fallback | Same, plus one `fetch` to the lookup function | Works even if the Edge Function is not deployed yet. |
 | Design document | Hand-written HTML, CSS, JavaScript | Same reasoning. See `web/design-doc/`. |
 
-No bundler, no `node_modules`, no transpile step anywhere in `web/`. Satoshi comes from Fontshare with a system fallback, so a blocked CDN degrades to readable rather than broken.
+No bundler, no `node_modules`, no transpile step anywhere in `web/`. Satoshi is self-hosted from `design_system/fonts/` with a system fallback, so a blocked CDN degrades to readable rather than broken.
 
 ---
 

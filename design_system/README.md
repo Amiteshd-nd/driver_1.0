@@ -8,6 +8,7 @@ design_system/
 ├── build-tokens.mjs    node design_system/build-tokens.mjs → regenerates the two files below
 ├── tokens.css          generated custom properties for the web
 ├── tokens.dart         generated constants for Flutter
+├── fonts/              Satoshi, self-hosted (woff2 + satoshi.css). Pages link this; no external font request.
 ├── components.css      the web components, token-only (card, button, chip, toast, sheet, list row, search field, stat tile, progress ring, celebration overlay, nav bar)
 ├── components.js       behaviour for the components that need it (card renderer, toast queue, reveal and celebration sequences, poster)
 └── catalogue.json      what the living catalogue in the workbench shows: every token group and every component with its variants and states
