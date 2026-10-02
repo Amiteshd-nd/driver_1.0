@@ -77,7 +77,7 @@ class _AgeFactorsSectionState extends ConsumerState<AgeFactorsSection> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final t = Theme.of(context).textTheme;
     final factors = ref.watch(adminAgeFactorsProvider);
 
@@ -206,7 +206,7 @@ class _FactorCellState extends State<_FactorCell> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final changed = _ctrl.text.trim() != (widget.value?.toStringAsFixed(3) ?? '');
     return SizedBox(
       width: 140,

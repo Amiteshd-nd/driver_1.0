@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'tokens.dart';
 
-/// Builds the Material theme from the Pugmark tokens (docs/DESIGN.md §3–4).
+/// Builds the Material theme from the Flying Cobra tokens (docs/DESIGN.md §3–4).
 ThemeData buildTheme(Brightness brightness) {
-  final c = brightness == Brightness.dark ? PugColors.dark : PugColors.light;
+  final c = brightness == Brightness.dark ? AppColors.dark : AppColors.light;
   final text = _textTheme(c);
   final scheme = ColorScheme(
     brightness: brightness,
@@ -93,7 +93,7 @@ ThemeData buildTheme(Brightness brightness) {
   );
 }
 
-TextTheme _textTheme(PugColors c) {
+TextTheme _textTheme(AppColors c) {
   TextStyle display(double size, double height, FontWeight w) => GoogleFonts.fraunces(fontSize: size, height: height / size, fontWeight: w, color: c.ink);
   TextStyle text(double size, double height, FontWeight w, {double spacing = 0}) =>
       GoogleFonts.manrope(fontSize: size, height: height / size, fontWeight: w, color: c.ink, letterSpacing: spacing);
@@ -103,7 +103,7 @@ TextTheme _textTheme(PugColors c) {
     displaySmall: display(28, 32, FontWeight.w600), // card animal name
     headlineMedium: display(24, 30, FontWeight.w600), // screen title
     headlineSmall: display(20, 26, FontWeight.w600),
-    titleLarge: display(22, 26, FontWeight.w500), // stat numerals (tabular via PugText.tabular)
+    titleLarge: display(22, 26, FontWeight.w500), // stat numerals (tabular via AppText.tabular)
     titleMedium: text(16, 22, FontWeight.w600),
     titleSmall: text(14, 20, FontWeight.w600),
     bodyLarge: text(18, 26, FontWeight.w400),
@@ -116,8 +116,8 @@ TextTheme _textTheme(PugColors c) {
 }
 
 /// Typographic helpers for banknote-style serials and stats.
-class PugText {
-  PugText._();
+class AppText {
+  AppText._();
   static const tabular = [FontFeature.tabularFigures()];
 
   /// `Fraunces` serial with tabular figures and wide tracking (DESIGN.md §4).
@@ -125,13 +125,13 @@ class PugText {
         fontSize: size,
         fontWeight: FontWeight.w500,
         letterSpacing: size * 0.08,
-        color: color ?? context.pug.ink,
+        color: color ?? context.colors.ink,
         fontFeatures: tabular,
       );
 
   static TextStyle stat(BuildContext context, {Color? color}) =>
-      GoogleFonts.fraunces(fontSize: 22, height: 26 / 22, fontWeight: FontWeight.w500, color: color ?? context.pug.ink, fontFeatures: tabular);
+      GoogleFonts.fraunces(fontSize: 22, height: 26 / 22, fontWeight: FontWeight.w500, color: color ?? context.colors.ink, fontFeatures: tabular);
 
   static TextStyle flavour(BuildContext context, {Color? color}) =>
-      GoogleFonts.manrope(fontSize: 14, height: 20 / 14, fontStyle: FontStyle.italic, color: color ?? context.pug.inkMuted);
+      GoogleFonts.manrope(fontSize: 14, height: 20 / 14, fontStyle: FontStyle.italic, color: color ?? context.colors.inkMuted);
 }

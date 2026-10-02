@@ -69,7 +69,7 @@ class _AnimalsSectionState extends ConsumerState<AnimalsSection> {
   Widget build(BuildContext context) {
     final animals = ref.watch(adminAnimalsProvider);
     final counts = ref.watch(adminIssuedCountsProvider).valueOrNull ?? const <String, int>{};
-    final c = context.pug;
+    final c = context.colors;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -159,7 +159,7 @@ class _AnimalsSectionState extends ConsumerState<AnimalsSection> {
 
   DataRow _row(BuildContext context, AdminAnimal a, int issued) {
     final an = a.animal;
-    final c = context.pug;
+    final c = context.colors;
     final repo = ref.read(adminRepoProvider);
     final adultArt = an.artPath(Stage.adult);
     final muted = TextStyle(color: c.inkMuted);

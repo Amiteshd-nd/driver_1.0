@@ -12,7 +12,7 @@ const bool kAppleSignInConfigured = false;
 const bool kGoogleSignInConfigured = false;
 
 /// Deep link registered for the magic-link redirect (iOS URL scheme / Android intent filter).
-const String kAuthRedirect = 'pugmark://login';
+const String kAuthRedirect = 'flyingcobra://login';
 
 class SignInScreen extends ConsumerStatefulWidget {
   const SignInScreen({super.key});
@@ -98,7 +98,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final text = Theme.of(context).textTheme;
     return Scaffold(
       body: SafeArea(
@@ -201,7 +201,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
   }
 
   Widget _testAccountExpander(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final text = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -229,7 +229,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Text('Pre-launch play accounts (arjun@pugmark.test …). Removed before public launch.',
+                      Text('Pre-launch play accounts (arjun@flyingcobra.test …). Removed before public launch.',
                           style: text.bodySmall?.copyWith(color: c.inkMuted)),
                       const SizedBox(height: Space.md),
                       TextField(
@@ -264,7 +264,7 @@ class _InboxCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final text = Theme.of(context).textTheme;
     return Container(
       padding: const EdgeInsets.all(Space.xl),

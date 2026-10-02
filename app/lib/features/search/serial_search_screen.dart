@@ -7,7 +7,7 @@ import '../../core/models/models.dart';
 import '../../core/repos/repos.dart';
 import '../../core/theme/theme.dart';
 import '../../core/theme/tokens.dart';
-import '../card/widgets/pug_card_view.dart';
+import '../card/widgets/collectible_card_view.dart';
 
 /// The only search in the product: look up a card by its serial. Never people.
 class SerialSearchScreen extends ConsumerStatefulWidget {
@@ -63,7 +63,7 @@ class _SerialSearchScreenState extends ConsumerState<SerialSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final tt = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(title: const Text('Verify a card')),
@@ -78,10 +78,10 @@ class _SerialSearchScreenState extends ConsumerState<SerialSearchScreen> {
             textInputAction: TextInputAction.search,
             textCapitalization: TextCapitalization.words,
             onSubmitted: (_) => _search(),
-            style: PugText.serial(context, size: 20),
+            style: AppText.serial(context, size: 20),
             decoration: InputDecoration(
               hintText: 'Tiger #0427',
-              hintStyle: PugText.serial(context, size: 20, color: c.inkMuted),
+              hintStyle: AppText.serial(context, size: 20, color: c.inkMuted),
               suffixIcon: IconButton(
                 tooltip: 'Look up',
                 onPressed: _loading ? null : _search,
@@ -104,7 +104,7 @@ class _ResultView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final tt = Theme.of(context).textTheme;
     final card = result.card;
 
@@ -136,18 +136,18 @@ class _ResultView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Center(child: PugCardView(card: card, width: width)),
+        Center(child: CollectibleCardView(card: card, width: width)),
         const SizedBox(height: Space.xl),
         Text(earned, textAlign: TextAlign.center, style: tt.bodyLarge),
         const SizedBox(height: Space.xs),
         Text(
           issued == null ? card.serialShort : '${card.serialShort} of $issued issued',
           textAlign: TextAlign.center,
-          style: PugText.serial(context, size: 16, color: c.inkMuted),
+          style: AppText.serial(context, size: 16, color: c.inkMuted),
         ),
         const SizedBox(height: Space.lg),
         Semantics(
-          label: 'Real. Lives in the Pugmark ledger.',
+          label: 'Real. Lives in the Flying Cobra ledger.',
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: Space.lg, vertical: Space.md),
             decoration: BoxDecoration(
@@ -160,7 +160,7 @@ class _ResultView extends StatelessWidget {
               children: [
                 Icon(Icons.verified_rounded, color: c.success),
                 const SizedBox(width: Space.sm),
-                Flexible(child: Text('Real ✓ · lives in the Pugmark ledger', style: tt.titleMedium?.copyWith(color: c.success))),
+                Flexible(child: Text('Real ✓ · lives in the Flying Cobra ledger', style: tt.titleMedium?.copyWith(color: c.success))),
               ],
             ),
           ),

@@ -42,10 +42,10 @@ class _EncyclopediaScreenState extends ConsumerState<EncyclopediaScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final tt = Theme.of(context).textTheme;
     final animalsAsync = ref.watch(animalsProvider);
-    final cards = ref.watch(myCardsProvider).asData?.value ?? const <PugCard>[];
+    final cards = ref.watch(myCardsProvider).asData?.value ?? const <CollectibleCard>[];
     final issued = ref.watch(issuedCountsProvider).asData?.value ?? const <String, int>{};
     final earnedCounts = <String, int>{};
     for (final card in cards) {
@@ -141,7 +141,7 @@ class _AnimalRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final tt = Theme.of(context).textTheme;
     final a = animal;
     return ListTile(

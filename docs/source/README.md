@@ -1,6 +1,6 @@
 # Source documents (as written, unedited)
 
-The five original project documents by @amitesh, dated 2 Oct 2026. They are the authority for *what* Pugmark is. The derived docs one level up (`docs/ALGORITHMS.md`, `DESIGN.md`, `API.md`, `ARCHITECTURE.md`, `PHASES.md`) are the authority for *how* it was built. Where the two disagree, these files win and the derived docs should be corrected.
+The five original project documents by @amitesh, dated 2 Oct 2026. They are the authority for *what* Flying Cobra is. The derived docs one level up (`docs/ALGORITHMS.md`, `DESIGN.md`, `API.md`, `ARCHITECTURE.md`, `PHASES.md`) are the authority for *how* it was built. Where the two disagree, these files win and the derived docs should be corrected.
 
 | File | What it is | Used to build |
 |---|---|---|

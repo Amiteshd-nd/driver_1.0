@@ -21,7 +21,7 @@ const _familyOrder = ['swift', 'steady', 'calm', 'gentle', 'time', 'explorer', '
 class _Entry {
   _Entry({required this.animalId, required this.family, required this.best, required this.count, required this.newest, required this.sortOrder});
   final String animalId, family;
-  final PugCard best;
+  final CollectibleCard best;
   final int count;
   final DateTime newest;
   final int sortOrder;
@@ -39,7 +39,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
   _Filter _filter = _Filter.all;
   _Sort _sort = _Sort.newest;
 
-  bool _passes(PugCard c) => switch (_filter) {
+  bool _passes(CollectibleCard c) => switch (_filter) {
         _Filter.all => true,
         _Filter.run => c.scope == CardScope.run,
         _Filter.weekly => c.scope == CardScope.weekly,
@@ -61,11 +61,11 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
     } catch (_) {}
   }
 
-  void _open(PugCard card) => context.pushNamed(Routes.card, pathParameters: {'id': card.id}, extra: card);
+  void _open(CollectibleCard card) => context.pushNamed(Routes.card, pathParameters: {'id': card.id}, extra: card);
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final tt = Theme.of(context).textTheme;
     final cardsAsync = ref.watch(myCardsProvider);
     final animals = ref.watch(animalsProvider).asData?.value ?? const <Animal>[];
@@ -99,7 +99,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
         ),
         data: (cards) {
           final filtered = cards.where(_passes).toList();
-          final byAnimal = <String, List<PugCard>>{};
+          final byAnimal = <String, List<CollectibleCard>>{};
           for (final card in filtered) {
             byAnimal.putIfAbsent(card.animalId, () => []).add(card);
           }
@@ -210,7 +210,7 @@ class _CollectionScreenState extends ConsumerState<CollectionScreen> {
   }
 
   Widget _emptyHero(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final tt = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.fromLTRB(Space.xl, Space.xxl, Space.xl, Space.sm),

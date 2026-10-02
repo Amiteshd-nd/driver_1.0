@@ -20,7 +20,7 @@ class AnimalEntrySheet extends StatelessWidget {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      backgroundColor: context.pug.surface,
+      backgroundColor: context.colors.surface,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(Radii.sheet))),
       builder: (_) => DraggableScrollableSheet(
         expand: false,
@@ -34,7 +34,7 @@ class AnimalEntrySheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final tt = Theme.of(context).textTheme;
     final a = animal;
     final facts = a.facts;
@@ -71,7 +71,7 @@ class AnimalEntrySheet extends StatelessWidget {
         ),
         if (a.flavourLine.isNotEmpty) ...[
           const SizedBox(height: Space.xs),
-          Text(a.flavourLine, style: PugText.flavour(context)),
+          Text(a.flavourLine, style: AppText.flavour(context)),
         ],
         const SizedBox(height: Space.lg),
         Wrap(
@@ -127,7 +127,7 @@ class _Section extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tt = Theme.of(context).textTheme;
-    final c = context.pug;
+    final c = context.colors;
     return Padding(
       padding: const EdgeInsets.only(top: Space.xl),
       child: Column(

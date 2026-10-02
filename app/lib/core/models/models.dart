@@ -86,8 +86,8 @@ class Animal {
 }
 
 /// A card as returned by `card_json` (RPC results) or joined from the `cards` table.
-class PugCard {
-  const PugCard({
+class CollectibleCard {
+  const CollectibleCard({
     required this.id,
     required this.animalId,
     required this.slug,
@@ -158,9 +158,9 @@ class PugCard {
     }
   }
 
-  factory PugCard.fromJson(Map<String, dynamic> j) {
+  factory CollectibleCard.fromJson(Map<String, dynamic> j) {
     final family = (j['family'] ?? 'calm') as String;
-    return PugCard(
+    return CollectibleCard(
       id: j['id'] as String,
       animalId: (j['animal_id'] ?? '') as String,
       slug: (j['slug'] ?? '') as String,
@@ -187,10 +187,10 @@ class PugCard {
   }
 
   /// Build from a `cards` row joined with `animals(*)` and `seasons(name)` via PostgREST select.
-  factory PugCard.fromRow(Map<String, dynamic> row) {
+  factory CollectibleCard.fromRow(Map<String, dynamic> row) {
     final a = (row['animals'] as Map?)?.cast<String, dynamic>() ?? const {};
     final s = (row['seasons'] as Map?)?.cast<String, dynamic>();
-    return PugCard.fromJson({
+    return CollectibleCard.fromJson({
       ...a,
       ...row,
       'animal_id': row['animal_id'] ?? a['id'],
@@ -252,7 +252,7 @@ class RunResult {
   final String runId;
   final Verdict verdict;
   final double trust;
-  final PugCard? card;
+  final CollectibleCard? card;
   final List<Celebration> celebrations;
   final String? message, band, timeWindow;
   final double? perfIndex;
@@ -264,7 +264,7 @@ class RunResult {
         runId: (j['run_id'] ?? '') as String,
         verdict: _enumFrom(Verdict.values, j['verdict'] as String?, Verdict.verified),
         trust: _num(j['trust']) ?? 0,
-        card: j['card'] is Map ? PugCard.fromJson((j['card'] as Map).cast<String, dynamic>()) : null,
+        card: j['card'] is Map ? CollectibleCard.fromJson((j['card'] as Map).cast<String, dynamic>()) : null,
         celebrations: ((j['celebrations'] as List?) ?? const []).map((e) => Celebration.fromJson((e as Map).cast<String, dynamic>())).toList(),
         message: j['message'] as String?,
         band: j['band'] as String?,
@@ -282,13 +282,13 @@ class RunResult {
 class PendingCard {
   const PendingCard({required this.scope, required this.card, this.celebrations = const [], this.runDays});
   final CardScope scope;
-  final PugCard card;
+  final CollectibleCard card;
   final List<Celebration> celebrations;
   final int? runDays;
 
   factory PendingCard.fromJson(Map<String, dynamic> j) => PendingCard(
         scope: _enumFrom(CardScope.values, j['scope'] as String?, CardScope.weekly),
-        card: PugCard.fromJson((j['card'] as Map).cast<String, dynamic>()),
+        card: CollectibleCard.fromJson((j['card'] as Map).cast<String, dynamic>()),
         celebrations: ((j['celebrations'] as List?) ?? const []).map((e) => Celebration.fromJson((e as Map).cast<String, dynamic>())).toList(),
         runDays: _int(j['run_days']),
       );
@@ -414,12 +414,12 @@ class AppEvent {
 class SerialLookup {
   const SerialLookup({required this.found, this.card, this.earnedBy, this.issuedSoFar, this.reason, this.hint, this.animalName});
   final bool found;
-  final PugCard? card;
+  final CollectibleCard? card;
   final String? earnedBy, reason, hint, animalName;
   final int? issuedSoFar;
   factory SerialLookup.fromJson(Map<String, dynamic> j) => SerialLookup(
         found: j['found'] == true,
-        card: j['card'] is Map ? PugCard.fromJson((j['card'] as Map).cast<String, dynamic>()) : null,
+        card: j['card'] is Map ? CollectibleCard.fromJson((j['card'] as Map).cast<String, dynamic>()) : null,
         earnedBy: j['earned_by'] as String?,
         issuedSoFar: _int(j['issued_so_far']),
         reason: j['reason'] as String?,
@@ -457,7 +457,7 @@ class RarityStyle {
 
 /// Convenience: a Color for a verdict badge.
 Color verdictColor(BuildContext context, Verdict v) => switch (v) {
-      Verdict.verified => context.pug.success,
-      Verdict.unverified => context.pug.warn,
-      Verdict.rejected => context.pug.danger,
+      Verdict.verified => context.colors.success,
+      Verdict.unverified => context.colors.warn,
+      Verdict.rejected => context.colors.danger,
     };

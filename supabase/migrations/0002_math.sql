@@ -1,4 +1,4 @@
--- Pugmark · 0002 math helpers
+-- Flying Cobra · 0002 math helpers
 -- Pure functions. All formulas are documented in docs/ALGORITHMS.md.
 
 -- ---------- config access ----------

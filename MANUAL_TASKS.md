@@ -5,7 +5,7 @@ Things only you can do (accounts, downloads, keys). Work top to bottom; tick as 
 ## 1. Create the Supabase project (≈ 10 minutes)
 
 1. Go to https://supabase.com → **Start your project** → sign in with GitHub or email.
-2. Click **New project**. Organization: your personal one. Name: `pugmark`. Database password: click **Generate a password** and save it in your password manager (you will rarely need it). Region: **Mumbai (ap-south-1)** — closest to users in India. Click **Create new project** and wait ~2 minutes.
+2. Click **New project**. Organization: your personal one. Name: `flyingcobra`. Database password: click **Generate a password** and save it in your password manager (you will rarely need it). Region: **Mumbai (ap-south-1)** — closest to users in India. Click **Create new project** and wait ~2 minutes.
 3. In the left sidebar click **Project Settings** (gear) → **API**. Copy three things into a note:
    - **Project URL** (looks like `https://abcdefgh.supabase.co`)
    - **anon public** key (long string starting `eyJ…`) — safe to ship in the app
@@ -32,7 +32,7 @@ Then, still in the SQL editor, run this to create the six dummy play-test users:
 select seed_dummy_users();
 ```
 
-You should see a JSON blob mentioning Arjun, Meera, Ravi, Priya, Kabir and Sana. Their emails are `arjun@pugmark.test` … `sana@pugmark.test`; the password for all six is written at the top of `supabase/migrations/0007_seed_dummy_users.sql`. Delete these accounts before public launch (Authentication → Users).
+You should see a JSON blob mentioning Arjun, Meera, Ravi, Priya, Kabir and Sana. Their emails are `arjun@flyingcobra.test` … `sana@flyingcobra.test`; the password for all six is written at the top of `supabase/migrations/0007_seed_dummy_users.sql`. Delete these accounts before public launch (Authentication → Users).
 
 ## 3. Make yourself admin (1 minute)
 
@@ -45,7 +45,7 @@ update profiles set is_admin = true where id = (select id from auth.users where 
 
 ## 4. Auth settings (3 minutes) and providers (optional)
 
-Dashboard → **Authentication → URL Configuration** → under **Redirect URLs** click **Add URL** and add `pugmark://login` (the app's magic-link return address). For the internal web build also add `http://localhost:*/**`.
+Dashboard → **Authentication → URL Configuration** → under **Redirect URLs** click **Add URL** and add `flyingcobra://login` (the app's magic-link return address). For the internal web build also add `http://localhost:*/**`.
 
 Then **Authentication → Providers**. Email is on by default (magic links work immediately). For **Apple** and **Google** sign-in follow the on-screen instructions; both need developer accounts. Skip for internal testing.
 
@@ -83,17 +83,17 @@ supabase functions deploy verify --no-verify-jwt
 ```
 Your verify URL base is then `https://YOUR-PROJECT.supabase.co/functions/v1/verify`. Paste it into the admin panel → Config → `app` → `verify_base_url` so QR codes point there.
 
-## 7. Rename the GitHub repo to `pugmark` (1 minute)
+## 7. Rename the GitHub repo to `flyingcobra` (1 minute)
 
-The code is pushed to https://github.com/Amiteshd-nd/driver_1.0. To rename: open that page → **Settings** (tab on the right) → under **General**, the first field is **Repository name** → change `driver_1.0` to `pugmark` → **Rename**. GitHub keeps the history and redirects the old URL. Then tell Claude "renamed", or run this yourself from the project folder:
+The code is pushed to https://github.com/Amiteshd-nd/driver_1.0. To rename: open that page → **Settings** (tab on the right) → under **General**, the first field is **Repository name** → change `driver_1.0` to `flyingcobra` → **Rename**. GitHub keeps the history and redirects the old URL. Then tell Claude "renamed", or run this yourself from the project folder:
 
 ```bash
-git remote set-url origin https://github.com/Amiteshd-nd/pugmark.git
+git remote set-url origin https://github.com/Amiteshd-nd/flyingcobra.git
 ```
 
 ## 8. Domain for verify links (later)
 
-Buy a short domain (e.g. `pugmark.run`) and point it at the marketing site host. Until then verify URLs use the Supabase Edge Function URL; update `config.app → verify_base_url` in the admin panel when the domain is live.
+Buy a short domain (e.g. `flyingcobra.run`) and point it at the marketing site host. Until then verify URLs use the Supabase Edge Function URL; update `config.app → verify_base_url` in the admin panel when the domain is live.
 
 ## 9. Card art (later)
 

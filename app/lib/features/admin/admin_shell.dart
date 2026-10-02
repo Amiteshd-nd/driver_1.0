@@ -82,7 +82,7 @@ class _AdminShellState extends ConsumerState<AdminShell> {
         if (p == null || !p.isAdmin) {
           return _Gate(
             title: 'Admin only',
-            body: 'This area is for the Pugmark design team. Your runs and cards are untouched — head back whenever you like.',
+            body: 'This area is for the Flying Cobra design team. Your runs and cards are untouched — head back whenever you like.',
             onBack: _back,
           );
         }
@@ -100,7 +100,7 @@ class _Gate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final t = Theme.of(context).textTheme;
     return Scaffold(
       body: Center(
@@ -153,7 +153,7 @@ class _AdminScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final wide = MediaQuery.sizeOf(context).width >= 900;
     final body = KeyedSubtree(key: ValueKey(section), child: _body());
 
@@ -195,7 +195,7 @@ class _AdminScaffold extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(Space.lg, Space.lg, Space.lg, Space.sm),
-                child: Text('Pugmark admin', style: Theme.of(context).textTheme.headlineSmall),
+                child: Text('Flying Cobra admin', style: Theme.of(context).textTheme.headlineSmall),
               ),
               for (final s in AdminSection.values)
                 ListTile(

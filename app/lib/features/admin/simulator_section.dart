@@ -98,7 +98,7 @@ class _SimulatorSectionState extends ConsumerState<SimulatorSection> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final t = Theme.of(context).textTheme;
     final regions = ref.watch(adminRegionsProvider).valueOrNull ?? const <RegionRow>[];
     final wide = MediaQuery.sizeOf(context).width >= 1100;
@@ -181,7 +181,7 @@ class _Inputs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final t = Theme.of(context).textTheme;
     final p = perf;
     return AdminCard(
@@ -325,7 +325,7 @@ class _Stat extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [Text(label, style: t.labelSmall?.copyWith(color: context.pug.inkMuted)), Text(value, style: monoStyle(context))],
+      children: [Text(label, style: t.labelSmall?.copyWith(color: context.colors.inkMuted)), Text(value, style: monoStyle(context))],
     );
   }
 }
@@ -338,7 +338,7 @@ class _PoolResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final t = Theme.of(context).textTheme;
     final p = pool;
     if (error != null) {
@@ -386,7 +386,7 @@ class _PoolRow extends StatelessWidget {
   final Map<String, dynamic> entry;
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final t = Theme.of(context).textTheme;
     final prob = _num(entry['p']).clamp(0.0, 1.0).toDouble();
     final rarity = Rarity.values.firstWhere((r) => r.name == entry['rarity'], orElse: () => Rarity.common);

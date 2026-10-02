@@ -1,4 +1,4 @@
--- Pugmark · 0005 animal seed
+-- Flying Cobra · 0005 animal seed
 -- The whole roster plus the rules that place each animal in a bag (docs/ALGORITHMS.md §3, §6–§9).
 -- Idempotent: animals upsert on slug; seed rules are wiped (note like 'seed:%') and re-inserted.
 -- animal_counters are created by the animals_counter trigger — never insert them here.

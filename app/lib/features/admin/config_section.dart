@@ -113,7 +113,7 @@ class _ConfigCardState extends ConsumerState<_ConfigCard> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final t = Theme.of(context).textTheme;
     final e = widget.entry;
     return AdminCard(
@@ -218,7 +218,7 @@ class _QuickEditsState extends ConsumerState<_QuickEdits> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final t = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

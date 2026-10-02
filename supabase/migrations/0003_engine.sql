@@ -1,4 +1,4 @@
--- Pugmark · 0003 rules engine
+-- Flying Cobra · 0003 rules engine
 -- Server-authoritative. The client submits a run; the database decides eligibility, trust, pool, draw,
 -- serial number and growth. A modified client cannot forge a card.
 -- Spec: docs/ALGORITHMS.md

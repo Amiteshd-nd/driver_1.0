@@ -1,4 +1,4 @@
-# Pugmark
+# Flying Cobra
 
 **Run. Get an animal. Collect India.** A jogging app for India where every run earns a collectible animal card with a database-issued serial number. No leaderboards, no rankings. Fun first.
 

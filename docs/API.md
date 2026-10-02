@@ -1,4 +1,4 @@
-# Pugmark — Client ↔ Supabase contract
+# Flying Cobra — Client ↔ Supabase contract
 
 All game logic runs in Postgres. Clients (Flutter app, admin panel, verify page) use the Supabase JS/Dart SDK: tables under row-level security, plus the RPC functions below. Nothing else is needed.
 
@@ -36,7 +36,7 @@ Response:
             "flavour_line": "...", "palette": {"bg":"#..","fg":"#..","accent":"#.."}, "art": {"baby":"card-art/indian-fox/baby.png", ...},
             "serial_no": 42, "serial": "Indian Fox #0042", "scope": "run", "stage": "young", "finish": "glow",
             "season": "Festival of Lights 2026", "stats": {"distance_km": 5.01, "duration_s": 1176, "pace_s_per_km": 235, "date": "2026-10-02"},
-            "verdict": "verified", "issued_at": "...", "verify_url": "https://pugmark.run/v/indian-fox/42" },
+            "verdict": "verified", "issued_at": "...", "verify_url": "https://flyingcobra.run/v/indian-fox/42" },
   "celebrations": [ {"kind": "growth", "stage": "adult", "animal": "Indian Fox", "message": "Your indian fox is all grown up!"},
                     {"kind": "discovery", "tier": 2, "trigger": "explorer"} ],
   "message": null

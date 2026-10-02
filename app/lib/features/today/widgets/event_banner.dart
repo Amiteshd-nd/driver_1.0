@@ -37,7 +37,7 @@ class EventBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final tt = Theme.of(context).textTheme;
     final text = copyFor(event);
     if (text.isEmpty) return const SizedBox.shrink();

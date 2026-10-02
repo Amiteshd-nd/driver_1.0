@@ -1,4 +1,4 @@
-# Pugmark — Architecture
+# Flying Cobra — Architecture
 
 ## One-paragraph shape
 
@@ -64,4 +64,4 @@ A thin Flutter client records a run and uploads **features, not raw sensor data*
 ## Testing strategy
 
 - Database: `tools/dbtest/test.mjs` — personas, anti-cheat scenarios, exploration flags, bonds/reset/mastery, pity math (Monte Carlo), serial uniqueness and rollback, lookup parsing, RLS, account deletion.
-- Flutter: once the SDK is installed, `flutter analyze` then widget tests for `PugCardView` and the recorder's feature extraction (pure Dart). Manual checklist in PHASES.md Phase 8.
+- Flutter: once the SDK is installed, `flutter analyze` then widget tests for `CollectibleCardView` and the recorder's feature extraction (pure Dart). Manual checklist in PHASES.md Phase 8.

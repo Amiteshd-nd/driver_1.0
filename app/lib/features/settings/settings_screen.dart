@@ -110,9 +110,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       };
       final bytes = Uint8List.fromList(utf8.encode(const JsonEncoder.withIndent('  ').convert(data)));
       await Share.shareXFiles(
-        [XFile.fromData(bytes, mimeType: 'application/json', name: 'pugmark-export.json')],
-        subject: 'My Pugmark data',
-        text: 'Your Pugmark profile, runs and cards.',
+        [XFile.fromData(bytes, mimeType: 'application/json', name: 'flyingcobra-export.json')],
+        subject: 'My Flying Cobra data',
+        text: 'Your Flying Cobra profile, runs and cards.',
       );
     } catch (_) {
       _snack('We couldn\'t build the export right now. Try again in a moment.');
@@ -144,7 +144,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       await supabase.auth.signOut();
       ref.read(onboardingDoneProvider.notifier).state = false;
     } catch (_) {
-      _snack('Deletion isn\'t automated yet. Email support@pugmark.run from your account address and we\'ll remove everything within 7 days.');
+      _snack('Deletion isn\'t automated yet. Email support@flyingcobra.run from your account address and we\'ll remove everything within 7 days.');
     } finally {
       if (mounted) setState(() => _working = false);
     }
@@ -162,12 +162,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final text = Theme.of(context).textTheme;
     final profileAsync = ref.watch(profileProvider);
     final profile = profileAsync.valueOrNull;
     final runs = ref.watch(myRunsProvider).valueOrNull ?? const <RunSummary>[];
-    final cards = ref.watch(myCardsProvider).valueOrNull ?? const <PugCard>[];
+    final cards = ref.watch(myCardsProvider).valueOrNull ?? const <CollectibleCard>[];
 
     return Scaffold(
       appBar: AppBar(title: const Text('You')),
@@ -227,7 +227,7 @@ class _Card extends StatelessWidget {
   final Widget child;
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     return Container(
       padding: const EdgeInsets.all(Space.lg),
       decoration: BoxDecoration(color: c.surface, borderRadius: BorderRadius.circular(Radii.card), border: Border.all(color: c.line)),
@@ -245,7 +245,7 @@ class _Action extends StatelessWidget {
   final bool danger;
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final color = danger ? c.danger : c.ink;
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: Space.sm),
@@ -268,7 +268,7 @@ class _Unavailable extends StatelessWidget {
   const _Unavailable();
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     return Padding(
       padding: const EdgeInsets.all(Space.lg),
       child: Text('Your profile will appear once we can reach the server. Pull to refresh.', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: c.inkMuted)),

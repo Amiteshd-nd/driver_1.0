@@ -1,4 +1,4 @@
-/* Pugmark verify — static fallback. Calls the public lookup_serial RPC and renders the card client-side.
+/* Flying Cobra verify — static fallback. Calls the public lookup_serial RPC and renders the card client-side.
    All dynamic text goes through textContent; nothing from the network touches innerHTML. */
 (function () {
   'use strict';
@@ -93,7 +93,7 @@
       : h('span', { class: 'tick tick--unverified' }, 'unverified');
     var label = v.name + ', ' + v.rarity + ', serial ' + v.serialNo + (v.issuedAt ? ', earned ' + fmtDate(v.issuedAt) : '');
     var card = h('article', { class: 'card card--' + v.rarity, style: '--fam-bg:' + v.bg + ';--fam-fg:' + v.fg + ';--fam-accent:' + v.accent, 'aria-label': label },
-      h('div', { class: 'card__cap' }, h('span', null, v.season || 'Pugmark'), h('span', { class: 'card__rarity' }, cap(v.rarity))),
+      h('div', { class: 'card__cap' }, h('span', null, v.season || 'Flying Cobra'), h('span', { class: 'card__rarity' }, cap(v.rarity))),
       h('div', { class: 'card__art', 'aria-hidden': 'true' }, h('span', { class: 'card__glyph' }, v.name.charAt(0).toUpperCase())),
       h('div', { class: 'card__body' },
         h('h2', { class: 'card__name' }, v.name),
@@ -116,7 +116,7 @@
   function viewFound(res) {
     var v = pick(res);
     var seal = v.verdict === 'verified'
-      ? h('span', { class: 'seal' }, svgTick(), 'Real ✓ · lives in the Pugmark ledger')
+      ? h('span', { class: 'seal' }, svgTick(), 'Real ✓ · lives in the Flying Cobra ledger')
       : h('span', { class: 'seal seal--warn' }, 'Real · lives in the ledger, drawn from the everyday bag');
     var facts = h('ul', { class: 'verify-facts' },
       h('li', null, h('span', null, 'Card'), h('b', null, v.name + ' #' + pad4(v.serialNo))),
@@ -159,7 +159,7 @@
   function viewNotConfigured() {
     return [h('div', { class: 'state', style: 'grid-column:1/-1;max-width:640px' },
       h('h2', null, 'Not connected to the ledger yet.'),
-      h('p', null, 'This page needs to know which Pugmark database to ask. Open ', h('code', null, 'verify-config.js'),
+      h('p', null, 'This page needs to know which Flying Cobra database to ask. Open ', h('code', null, 'verify-config.js'),
         ' and set ', h('code', null, 'SUPABASE_URL'), ' and ', h('code', null, 'SUPABASE_ANON_KEY'), ' to your project’s values.'),
       h('p', { class: 'muted' }, 'The anon key is public by design: the only thing it can read is a serial lookup.'))];
   }
@@ -221,10 +221,10 @@
     }).then(function (res) {
       if (res && res.found === true && res.card) {
         var v = pick(res);
-        document.title = v.name + ' #' + pad4(v.serialNo) + ' · Pugmark';
+        document.title = v.name + ' #' + pad4(v.serialNo) + ' · Flying Cobra';
         show(viewFound(res));
       } else {
-        document.title = 'No such card · Pugmark';
+        document.title = 'No such card · Flying Cobra';
         show(viewNotFound(res || {}, q));
       }
     }).catch(function (err) {

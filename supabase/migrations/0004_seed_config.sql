@@ -1,8 +1,8 @@
--- Pugmark · 0004 config seed
+-- Flying Cobra · 0004 config seed
 -- Every number here is editable in the admin panel (Config tab). Defaults per docs/ALGORITHMS.md.
 
 insert into config(key, value, description) values
-('app', '{"name":"Pugmark","verify_base_url":"https://pugmark.run/v","serial_pad":4}', 'Branding and public verify URL base'),
+('app', '{"name":"Flying Cobra","verify_base_url":"https://flyingcobra.run/v","serial_pad":4}', 'Branding and public verify URL base'),
 ('floor', '{"min_km":1.0,"min_moving_s":600,"min_speed_kmh":6.0}', '§1 eligibility floor for any card'),
 ('limits', '{"max_run_cards_per_day":2,"max_track_points":2000}', '§1 anti-farming caps'),
 ('age_grading', '{"d_ref_km":5,"riegel_exponent":1.06,"min_d_eff_km":1.5,"t_ref_s":{"male":755,"female":840,"unknown":796},"default_age":30}', '§2 Riegel open standards'),

@@ -56,7 +56,7 @@ class _ProfileCardState extends ConsumerState<ProfileCard> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final text = Theme.of(context).textTheme;
     final p = widget.profile;
     final regions = ref.watch(regionsProvider).valueOrNull ?? const <Map<String, dynamic>>[];

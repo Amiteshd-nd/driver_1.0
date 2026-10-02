@@ -10,20 +10,20 @@ import '../../core/repos/repos.dart';
 import '../../core/router.dart';
 import '../../core/theme/theme.dart';
 import '../../core/theme/tokens.dart';
-import 'widgets/pug_card_view.dart';
+import 'widgets/collectible_card_view.dart';
 
 /// Full card with stage, earn history, stats, season, verification and sharing.
 class CardDetailScreen extends ConsumerStatefulWidget {
   const CardDetailScreen({super.key, required this.cardId, this.initial});
   final String cardId;
-  final PugCard? initial;
+  final CollectibleCard? initial;
 
   @override
   ConsumerState<CardDetailScreen> createState() => _CardDetailScreenState();
 }
 
 class _CardDetailScreenState extends ConsumerState<CardDetailScreen> {
-  PugCard? _card;
+  CollectibleCard? _card;
   bool _loading = false;
   bool _missing = false;
   bool? _publicOverride;
@@ -77,7 +77,7 @@ class _CardDetailScreenState extends ConsumerState<CardDetailScreen> {
     }
   }
 
-  Future<void> _copyLink(PugCard card) async {
+  Future<void> _copyLink(CollectibleCard card) async {
     if (card.verifyUrl.isEmpty) return;
     await Clipboard.setData(ClipboardData(text: card.verifyUrl));
     if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Verify link copied.')));
@@ -86,7 +86,7 @@ class _CardDetailScreenState extends ConsumerState<CardDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final card = _card;
-    final c = context.pug;
+    final c = context.colors;
     final tt = Theme.of(context).textTheme;
 
     if (card == null) {
@@ -103,7 +103,7 @@ class _CardDetailScreenState extends ConsumerState<CardDetailScreen> {
       );
     }
 
-    final myCards = ref.watch(myCardsProvider).asData?.value ?? const <PugCard>[];
+    final myCards = ref.watch(myCardsProvider).asData?.value ?? const <CollectibleCard>[];
     final same = myCards.where((x) => x.animalId == card.animalId).toList();
     final earnCount = math.max(1, same.length);
     final bestSerial = same.isEmpty ? card.serialNo : same.map((x) => x.serialNo).reduce(math.min);
@@ -122,7 +122,7 @@ class _CardDetailScreenState extends ConsumerState<CardDetailScreen> {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(Space.xl, Space.lg, Space.xl, Space.xxxl),
           children: [
-            Center(child: PugCardView(card: card, width: width)),
+            Center(child: CollectibleCardView(card: card, width: width)),
             const SizedBox(height: Space.xl),
             Text(card.stage.label, style: tt.headlineSmall),
             const SizedBox(height: Space.xs),
@@ -163,11 +163,11 @@ class _CardDetailScreenState extends ConsumerState<CardDetailScreen> {
 
 class _StatsPanel extends StatelessWidget {
   const _StatsPanel({required this.card});
-  final PugCard card;
+  final CollectibleCard card;
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final tt = Theme.of(context).textTheme;
     final rows = <(String, String)>[];
     switch (card.scope) {
@@ -198,7 +198,7 @@ class _StatsPanel extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(child: Text(rows[i].$1, style: tt.bodyMedium?.copyWith(color: c.inkMuted))),
-                  Text(rows[i].$2, style: PugText.stat(context).copyWith(fontSize: 18)),
+                  Text(rows[i].$2, style: AppText.stat(context).copyWith(fontSize: 18)),
                 ],
               ),
             ),
@@ -215,7 +215,7 @@ class _VerdictBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final tt = Theme.of(context).textTheme;
     final color = verdictColor(context, verdict);
     final verified = verdict == Verdict.verified;

@@ -1,4 +1,4 @@
-// Pugmark — public verify page (Supabase Edge Function, Deno, no dependencies).
+// Flying Cobra — public verify page (Supabase Edge Function, Deno, no dependencies).
 //
 //   GET /verify/<animal-slug>/<serial>            → HTML page with Open Graph tags
 //   GET /verify/<animal-slug>/<serial>/card.svg   → 1200×630 SVG preview image
@@ -200,7 +200,7 @@ interface Meta { title: string; description: string; image?: string; url: string
 function page(meta: Meta, body: string, mount: string): Response {
   const og = `
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Pugmark">
+  <meta property="og:site_name" content="Flying Cobra">
   <meta property="og:title" content="${esc(meta.title)}">
   <meta property="og:description" content="${esc(meta.description)}">
   <meta property="og:url" content="${esc(meta.url)}">
@@ -228,11 +228,11 @@ function page(meta: Meta, body: string, mount: string): Response {
 </head>
 <body>
   <header class="nav"><div class="wrap">
-    <a class="brand" href="https://pugmark.run" aria-label="Pugmark home">${PAW}Pugmark</a>
+    <a class="brand" href="https://flyingcobra.run" aria-label="Flying Cobra home">${PAW}Flying Cobra</a>
     <a class="btn" href="${esc(mount)}">Verify another</a>
   </div></header>
   <main><div class="wrap">${body}</div></main>
-  <footer><div class="wrap"><span class="tag">Leave your pugmark.</span><span>© 2026 Pugmark</span></div></footer>
+  <footer><div class="wrap"><span class="tag">Run. Collect. Keep.</span><span>© 2026 Flying Cobra</span></div></footer>
 </body>
 </html>`;
   return new Response(html, {
@@ -253,7 +253,7 @@ function cardHtml(v: CardView): string {
     : `<span class="tick tick--unverified">unverified</span>`;
   const label = `${v.name}, ${v.rarity}, serial ${v.serialNo}${v.issuedAt ? `, earned ${fmtDate(v.issuedAt)}` : ""}`;
   return `<article class="card card--${esc(v.rarity)}" style="--fam-bg:${esc(v.palette.bg)};--fam-fg:${esc(v.palette.fg)};--fam-accent:${esc(v.palette.accent)}" aria-label="${esc(label)}">
-  <div class="card__cap"><span>${esc(v.season || "Pugmark")}</span><span class="card__rarity">${esc(cap(v.rarity))}</span></div>
+  <div class="card__cap"><span>${esc(v.season || "Flying Cobra")}</span><span class="card__rarity">${esc(cap(v.rarity))}</span></div>
   <div class="card__art" aria-hidden="true"><span class="card__glyph">${esc(v.name.charAt(0).toUpperCase())}</span></div>
   <div class="card__body">
     <h2 class="card__name">${esc(v.name)}</h2>
@@ -274,18 +274,18 @@ function searchForm(q: string, mount: string): string {
 }
 
 function storeButtons(): string {
-  return `<div class="actions"><a class="btn btn--primary" href="https://pugmark.run/#store" data-store="ios">App Store</a><a class="btn" href="https://pugmark.run/#store" data-store="android">Google Play</a></div>`;
+  return `<div class="actions"><a class="btn btn--primary" href="https://flyingcobra.run/#store" data-store="ios">App Store</a><a class="btn" href="https://flyingcobra.run/#store" data-store="android">Google Play</a></div>`;
 }
 
 function foundPage(v: CardView, mount: string, origin: string): Response {
   const date = fmtDate(v.issuedAt);
-  const title = `${v.name} #${pad4(v.serialNo)} · Pugmark`;
+  const title = `${v.name} #${pad4(v.serialNo)} · Flying Cobra`;
   const descBits = [`Earned by ${v.earnedBy}${date ? ` on ${date}` : ""}`];
   if (v.statsLine) descBits.push(v.statsLine.replace(" · ", " in ").replace(/ · .*$/, ""));
-  const description = `${descBits.join(" · ")}. Real — it lives in the Pugmark ledger.`;
+  const description = `${descBits.join(" · ")}. Real — it lives in the Flying Cobra ledger.`;
   const cardPath = `${mount}/${v.slug}/${v.serialNo}`;
   const seal = v.verdict === "verified"
-    ? `<span class="seal">${TICK_SVG}Real ✓ · lives in the Pugmark ledger</span>`
+    ? `<span class="seal">${TICK_SVG}Real ✓ · lives in the Flying Cobra ledger</span>`
     : `<span class="seal seal--warn">Real · lives in the ledger, drawn from the everyday bag</span>`;
   const body = `
     <p class="eyebrow">Verified card</p>
@@ -311,7 +311,7 @@ function foundPage(v: CardView, mount: string, origin: string): Response {
 
 function notFoundPage(nf: NotFound, q: string, mount: string, origin: string): Response {
   const isFormat = nf.reason === "format" || nf.reason === "empty";
-  const title = isFormat ? "That doesn’t look like a serial · Pugmark" : "No such card · Pugmark";
+  const title = isFormat ? "That doesn’t look like a serial · Flying Cobra" : "No such card · Flying Cobra";
   const lead = isFormat ? "Serials look like an animal name and a number." : "If someone showed you this, they’re bluffing.";
   let extra = "";
   if (nf.reason === "serial" && nf.animal) {
@@ -344,7 +344,7 @@ function idlePage(mount: string, origin: string): Response {
       <h2>Type a serial to begin.</h2>
       <p class="muted">You’ll see that single card — the animal, the number, who earned it and when. If it isn’t in the ledger, someone is bluffing.</p>
     </div>`;
-  return page({ title: "Verify a card · Pugmark", description: "Type a Pugmark serial to see whether the card is real.", url: `${origin}${mount}`, status: 200 }, body, mount);
+  return page({ title: "Verify a card · Flying Cobra", description: "Type a Flying Cobra serial to see whether the card is real.", url: `${origin}${mount}`, status: 200 }, body, mount);
 }
 
 function errorPage(mount: string, origin: string): Response {
@@ -352,7 +352,7 @@ function errorPage(mount: string, origin: string): Response {
     <p class="eyebrow">Verify a card</p>
     <h1>The ledger is taking a moment.</h1>
     <div class="state"><p>We couldn’t reach it just now. Try again in a little while.</p></div>`;
-  return page({ title: "Verify a card · Pugmark", description: "The ledger is taking a moment.", url: `${origin}${mount}`, status: 502 }, body, mount);
+  return page({ title: "Verify a card · Flying Cobra", description: "The ledger is taking a moment.", url: `${origin}${mount}`, status: 502 }, body, mount);
 }
 
 // ---------- 1200×630 SVG preview ----------
@@ -361,7 +361,7 @@ function cardSvg(v: CardView): Response {
   const date = fmtDate(v.issuedAt);
   const tickColor = v.verdict === "verified" ? "#2E7D5B" : "#B3791C";
   // Card: 300×420 scaled 1.25 → 375×525, left side; copy on the right.
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="${esc(`${v.name} #${pad4(v.serialNo)} · Pugmark`)}">
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="${esc(`${v.name} #${pad4(v.serialNo)} · Flying Cobra`)}">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${esc(p.bg)}"/><stop offset="1" stop-color="${esc(p.accent)}" stop-opacity=".55"/></linearGradient>
     <linearGradient id="bd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${esc(p.accent)}"/><stop offset=".6" stop-color="#ffffff"/><stop offset="1" stop-color="${esc(p.accent)}"/></linearGradient>
@@ -376,7 +376,7 @@ function cardSvg(v: CardView): Response {
       <rect x="12" y="38" width="276" height="210" rx="12" fill="${esc(p.bg)}"/>
       <circle cx="150" cy="143" r="78" fill="${esc(p.accent)}"/>
       <text x="150" y="176" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-weight="600" font-size="92" fill="${esc(p.bg)}">${esc(v.name.charAt(0).toUpperCase())}</text>
-      <text x="16" y="26" font-family="Manrope, system-ui, sans-serif" font-size="12" font-weight="500" letter-spacing=".5" fill="#6B6A63">${esc((v.season || "Pugmark").toUpperCase())}</text>
+      <text x="16" y="26" font-family="Manrope, system-ui, sans-serif" font-size="12" font-weight="500" letter-spacing=".5" fill="#6B6A63">${esc((v.season || "Flying Cobra").toUpperCase())}</text>
       <circle cx="${v.rarity.length > 6 ? 212 : 224}" cy="22" r="4" fill="${esc(p.accent)}"/>
       <text x="284" y="26" text-anchor="end" font-family="Manrope, system-ui, sans-serif" font-size="12" font-weight="500" letter-spacing=".5" fill="#6B6A63">${esc(v.rarity.toUpperCase())}</text>
       <text x="16" y="290" font-family="Fraunces, Georgia, serif" font-weight="600" font-size="28" fill="#1B1B18">${esc(v.name)}</text>
@@ -389,17 +389,17 @@ function cardSvg(v: CardView): Response {
     <rect x="1.25" y="1.25" width="297.5" height="417.5" rx="15" fill="none" stroke="url(#bd)" stroke-width="2.5"/>
   </g>
   <g transform="translate(560 150)" font-family="Manrope, system-ui, sans-serif" fill="${esc(p.fg)}">
-    <text y="0" font-size="20" font-weight="600" letter-spacing="2" opacity=".75">PUGMARK · VERIFIED CARD</text>
+    <text y="0" font-size="20" font-weight="600" letter-spacing="2" opacity=".75">FLYINGCOBRA · VERIFIED CARD</text>
     <text y="84" font-family="Fraunces, Georgia, serif" font-size="68" font-weight="600" letter-spacing="1">${esc(v.name)} #${pad4(v.serialNo)}</text>
     <text y="140" font-size="28">Earned by ${esc(v.earnedBy)}${date ? ` on ${esc(date)}` : ""}</text>
     ${v.statsLine ? `<text y="184" font-size="26" opacity=".85">${esc(v.statsLine)}</text>` : ""}
     <text y="236" font-size="22" opacity=".8">#${pad4(v.serialNo)} of ${v.issuedSoFar} issued</text>
     <g transform="translate(0 284)">
       <rect x="0" y="-30" width="${v.verdict === "verified" ? 420 : 470}" height="52" rx="26" fill="none" stroke="${tickColor}" stroke-width="2.5"/>
-      <text x="24" y="6" font-size="22" font-weight="700" fill="${tickColor}">${v.verdict === "verified" ? "Real ✓ · lives in the Pugmark ledger" : "Real · drawn from the everyday bag"}</text>
+      <text x="24" y="6" font-size="22" font-weight="700" fill="${tickColor}">${v.verdict === "verified" ? "Real ✓ · lives in the Flying Cobra ledger" : "Real · drawn from the everyday bag"}</text>
     </g>
   </g>
-  <text x="1150" y="590" text-anchor="end" font-family="Fraunces, Georgia, serif" font-size="24" font-weight="600" fill="${esc(p.fg)}" opacity=".7">pugmark.run</text>
+  <text x="1150" y="590" text-anchor="end" font-family="Fraunces, Georgia, serif" font-size="24" font-weight="600" fill="${esc(p.fg)}" opacity=".7">flyingcobra.run</text>
 </svg>`;
   return new Response(svg, {
     status: 200,

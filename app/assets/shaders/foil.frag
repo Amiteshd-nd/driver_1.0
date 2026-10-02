@@ -1,7 +1,7 @@
 #version 460 core
 #include <flutter/runtime_effect.glsl>
 
-// Pugmark holographic foil (DESIGN.md §6). A rainbow band whose angle follows device tilt,
+// Flying Cobra holographic foil (DESIGN.md §6). A rainbow band whose angle follows device tilt,
 // plus a slow time drift so it shimmers on web/desktop with no gyroscope.
 // Draw this over the card art with BlendMode.plus or screen, masked by the art's alpha in Dart.
 

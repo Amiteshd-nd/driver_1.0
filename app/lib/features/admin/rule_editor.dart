@@ -148,7 +148,7 @@ class _RuleEditorState extends ConsumerState<RuleEditor> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final t = Theme.of(context).textTheme;
     final regions = ref.watch(adminRegionsProvider).valueOrNull ?? const <RegionRow>[];
     final regionCodes = regions.where((r) => r.kind != 'country').map((r) => r.code).toList();

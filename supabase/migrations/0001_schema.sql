@@ -1,4 +1,4 @@
--- Pugmark · 0001 schema
+-- Flying Cobra · 0001 schema
 -- Core tables. Everything the card logic needs is linked: users → runs → cards → animals (+ serial counters).
 -- Rules are data (animal_rules, config), never code.
 

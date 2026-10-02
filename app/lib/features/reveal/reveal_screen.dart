@@ -9,7 +9,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/models/models.dart';
 import '../../core/router.dart';
 import '../../core/theme/tokens.dart';
-import '../card/widgets/pug_card_view.dart';
+import '../card/widgets/collectible_card_view.dart';
 import 'widgets/card_back.dart';
 import 'widgets/reveal_particles.dart';
 
@@ -36,7 +36,7 @@ class _RevealScreenState extends State<RevealScreen> with TickerProviderStateMix
   bool _reduce = false;
   bool _started = false;
 
-  PugCard? get _card => widget.result.card;
+  CollectibleCard? get _card => widget.result.card;
 
   @override
   void initState() {
@@ -146,7 +146,7 @@ class _RevealScreenState extends State<RevealScreen> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     final card = _card;
-    final c = context.pug;
+    final c = context.colors;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final scrim = isDark ? c.bg : c.ink;
     final onScrim = isDark ? c.ink : c.bg;
@@ -155,7 +155,7 @@ class _RevealScreenState extends State<RevealScreen> with TickerProviderStateMix
 
     final size = MediaQuery.sizeOf(context);
     final cardW = math.min(size.width - 48, 320.0);
-    final cardH = cardW * PugCardView.aspect;
+    final cardH = cardW * CollectibleCardView.aspect;
     final cardRect = Rect.fromCenter(center: Offset(size.width / 2, size.height / 2), width: cardW, height: cardH);
 
     return Scaffold(
@@ -199,12 +199,12 @@ class _RevealScreenState extends State<RevealScreen> with TickerProviderStateMix
     );
   }
 
-  Widget _cardArea(PugCard card, double cardW, Color onScrim) {
+  Widget _cardArea(CollectibleCard card, double cardW, Color onScrim) {
     final face = AnimatedSwitcher(
       duration: const Duration(milliseconds: 500),
       switchInCurve: Curves.easeOut,
       switchOutCurve: Curves.easeIn,
-      child: PugCardView(
+      child: CollectibleCardView(
         key: ValueKey(_displayStage),
         card: card,
         width: cardW,
@@ -280,7 +280,7 @@ class _NoCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final tt = Theme.of(context).textTheme;
     return Scaffold(
       body: SafeArea(

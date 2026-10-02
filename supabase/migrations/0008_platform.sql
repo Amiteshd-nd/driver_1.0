@@ -1,4 +1,4 @@
--- Pugmark · 0008 Supabase-platform-only objects (skipped by the PGlite test harness)
+-- Flying Cobra · 0008 Supabase-platform-only objects (skipped by the PGlite test harness)
 -- Storage bucket for card art + scheduled period close.
 
 -- Card art bucket: public read (cards are shared), admin write
@@ -17,8 +17,8 @@ create policy "card art admin write" on storage.objects for all
 -- Weekly/monthly close every day at 03:10 IST (21:40 UTC) — belt and braces alongside claim_pending_cards()
 do $$ begin
   create extension if not exists pg_cron;
-  perform cron.unschedule('pugmark-close-periods');
+  perform cron.unschedule('flyingcobra-close-periods');
 exception when others then null; end $$;
 do $$ begin
-  perform cron.schedule('pugmark-close-periods', '40 21 * * *', $cron$ select public.close_periods(); $cron$);
+  perform cron.schedule('flyingcobra-close-periods', '40 21 * * *', $cron$ select public.close_periods(); $cron$);
 exception when others then raise notice 'pg_cron not available: enable it in Dashboard → Database → Extensions, then re-run this file'; end $$;

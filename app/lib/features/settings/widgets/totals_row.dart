@@ -8,7 +8,7 @@ import '../../../core/theme/tokens.dart';
 class TotalsRow extends StatelessWidget {
   const TotalsRow({super.key, required this.runs, required this.cards});
   final List<RunSummary> runs;
-  final List<PugCard> cards;
+  final List<CollectibleCard> cards;
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +28,12 @@ class _Tile extends StatelessWidget {
   final String label, value;
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: Space.lg),
       decoration: BoxDecoration(color: c.surface, borderRadius: BorderRadius.circular(Radii.card), border: Border.all(color: c.line)),
       child: Column(children: [
-        Text(value, style: PugText.stat(context)),
+        Text(value, style: AppText.stat(context)),
         const SizedBox(height: 2),
         Text(label, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: c.inkMuted)),
       ]),

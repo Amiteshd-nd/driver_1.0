@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 /// Semantic colour tokens from docs/DESIGN.md §3.1. Family palettes come from the
 /// database (`animals.palette`); these are the app chrome only.
-class PugColors extends ThemeExtension<PugColors> {
-  const PugColors({
+class AppColors extends ThemeExtension<AppColors> {
+  const AppColors({
     required this.bg,
     required this.surface,
     required this.surfaceAlt,
@@ -19,7 +19,7 @@ class PugColors extends ThemeExtension<PugColors> {
 
   final Color bg, surface, surfaceAlt, ink, inkMuted, line, accent, accentInk, success, warn, danger;
 
-  static const light = PugColors(
+  static const light = AppColors(
     bg: Color(0xFFF7F3EC),
     surface: Color(0xFFFFFFFF),
     surfaceAlt: Color(0xFFEFE9DE),
@@ -33,7 +33,7 @@ class PugColors extends ThemeExtension<PugColors> {
     danger: Color(0xFFA33A2B),
   );
 
-  static const dark = PugColors(
+  static const dark = AppColors(
     bg: Color(0xFF121311),
     surface: Color(0xFF1C1E1B),
     surfaceAlt: Color(0xFF262925),
@@ -48,8 +48,8 @@ class PugColors extends ThemeExtension<PugColors> {
   );
 
   @override
-  PugColors copyWith({Color? bg, Color? surface, Color? surfaceAlt, Color? ink, Color? inkMuted, Color? line, Color? accent, Color? accentInk, Color? success, Color? warn, Color? danger}) {
-    return PugColors(
+  AppColors copyWith({Color? bg, Color? surface, Color? surfaceAlt, Color? ink, Color? inkMuted, Color? line, Color? accent, Color? accentInk, Color? success, Color? warn, Color? danger}) {
+    return AppColors(
       bg: bg ?? this.bg,
       surface: surface ?? this.surface,
       surfaceAlt: surfaceAlt ?? this.surfaceAlt,
@@ -65,9 +65,9 @@ class PugColors extends ThemeExtension<PugColors> {
   }
 
   @override
-  PugColors lerp(PugColors? other, double t) {
+  AppColors lerp(AppColors? other, double t) {
     if (other == null) return this;
-    return PugColors(
+    return AppColors(
       bg: Color.lerp(bg, other.bg, t)!,
       surface: Color.lerp(surface, other.surface, t)!,
       surfaceAlt: Color.lerp(surfaceAlt, other.surfaceAlt, t)!,
@@ -131,6 +131,6 @@ class FamilyPalette {
       };
 }
 
-extension PugTheme on BuildContext {
-  PugColors get pug => Theme.of(this).extension<PugColors>() ?? PugColors.light;
+extension AppTheme on BuildContext {
+  AppColors get colors => Theme.of(this).extension<AppColors>() ?? AppColors.light;
 }

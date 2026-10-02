@@ -1,4 +1,4 @@
-/* Pugmark marketing — tiny progressive enhancements. Works without this file. */
+/* Flying Cobra marketing — tiny progressive enhancements. Works without this file. */
 (function () {
   'use strict';
 

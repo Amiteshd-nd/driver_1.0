@@ -1,6 +1,6 @@
--- Pugmark · 0007 dummy users (pre-launch play)
+-- Flying Cobra · 0007 dummy users (pre-launch play)
 -- Six personas from PRD §12. Run `select seed_dummy_users();` with the service role (SQL editor) to create them.
--- Password for every dummy account: pugmark-test-2026   (test accounts only; delete before public launch)
+-- Password for every dummy account: flyingcobra-test-2026   (test accounts only; delete before public launch)
 
 -- Synthetic GPS track generator: points every 5 s as [lat, lon, alt, t, accuracy]
 create or replace function seed_track(p_lat double precision, p_lon double precision, p_km numeric, p_kmh numeric,
@@ -62,7 +62,7 @@ begin
   if has_pw then
     execute $sql$
       insert into auth.users(id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change)
-      values ($1, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', $2, crypt('pugmark-test-2026', gen_salt('bf')), now(),
+      values ($1, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', $2, crypt('flyingcobra-test-2026', gen_salt('bf')), now(),
               '{"provider":"email","providers":["email"]}', jsonb_build_object('display_name', $3), now(), now(), '', '', '', '')
       on conflict (id) do nothing $sql$ using p_id, p_email, p_name;
     execute $sql$ insert into auth.identities(id, user_id, provider_id, identity_data, provider, last_sign_in_at, created_at, updated_at)
@@ -91,20 +91,20 @@ declare
   function_result jsonb;
 begin
   -- 1. Arjun, 24, fast young sprinter (cheetah family): 5 km at 3:55/km, three evening runs this week (daytime window, so the swift bag shows)
-  perform seed_user(arjun, 'arjun@pugmark.test', 'Arjun', extract(year from today)::int - 24, 'male', 'IN-KA', allc);
+  perform seed_user(arjun, 'arjun@flyingcobra.test', 'Arjun', extract(year from today)::int - 24, 'male', 'IN-KA', allc);
   for i in 1..3 loop
     r := submit_run_for(arjun, seed_payload('arjun-'||i, ((today - (i*2 - 1)) + time '17:30') at time zone ist, 12.976, 77.593, 5.0, 15.3, 'loop', 'IN-KA', 182, 166, allc));
   end loop;
   out := out || jsonb_build_object('arjun', r - 'card' || jsonb_build_object('card', r->'card'->>'name'));
 
   -- 2. Meera, 62, older endurance runner (elephant): 12 km at 7:10/km on the Marina, twice
-  perform seed_user(meera, 'meera@pugmark.test', 'Meera', extract(year from today)::int - 62, 'female', 'IN-TN', allc);
+  perform seed_user(meera, 'meera@flyingcobra.test', 'Meera', extract(year from today)::int - 62, 'female', 'IN-TN', allc);
   r := submit_run_for(meera, seed_payload('meera-1', ((today - 4) + time '05:50') at time zone ist, 13.052, 80.282, 12.0, 8.4, 'line', 'IN-TN', 152, 141, allc));
   r := submit_run_for(meera, seed_payload('meera-2', ((today - 1) + time '05:55') at time zone ist, 13.052, 80.282, 12.0, 8.4, 'line', 'IN-TN', 152, 139, allc));
   out := out || jsonb_build_object('meera', r - 'card' || jsonb_build_object('card', r->'card'->>'name'));
 
   -- 3. Ravi, 7-day streak: ran every day of last ISO week in Pune, 5 km at 5:27/km
-  perform seed_user(ravi, 'ravi@pugmark.test', 'Ravi', extract(year from today)::int - 35, 'male', 'IN-MH', basic);
+  perform seed_user(ravi, 'ravi@flyingcobra.test', 'Ravi', extract(year from today)::int - 35, 'male', 'IN-MH', basic);
   for i in 0..6 loop
     r := submit_run_for(ravi, seed_payload('ravi-'||i, ((wk + i) + time '06:40') at time zone ist, 18.52 + i*0.004, 73.86, 5.0, 11.0, 'loop', 'IN-MH', 168, null, basic));
   end loop;
@@ -112,19 +112,19 @@ begin
   out := out || jsonb_build_object('ravi_weekly', jsonb_build_object('run_days', r->'run_days', 'card', r->'card'->>'name', 'finish', r->'card'->>'finish'));
 
   -- 4. Priya, traveller: Bengaluru → Kochi → Goa inside 21 days (souvenirs + migratory bird)
-  perform seed_user(priya, 'priya@pugmark.test', 'Priya', extract(year from today)::int - 30, 'female', 'IN-KA', allc);
+  perform seed_user(priya, 'priya@flyingcobra.test', 'Priya', extract(year from today)::int - 30, 'female', 'IN-KA', allc);
   r := submit_run_for(priya, seed_payload('priya-1', ((today - 14) + time '07:10') at time zone ist, 12.934, 77.610, 5.0, 10.5, 'loop', 'IN-KA', 170, 150, allc));
   r := submit_run_for(priya, seed_payload('priya-2', ((today - 7)  + time '06:50') at time zone ist,  9.965, 76.280, 5.0, 10.5, 'loop', 'IN-KL', 170, 152, allc));
   r := submit_run_for(priya, seed_payload('priya-3', ((today - 2)  + time '07:00') at time zone ist, 15.492, 73.818, 5.0, 10.5, 'loop', 'IN-GA', 170, 149, allc));
   out := out || jsonb_build_object('priya', jsonb_build_object('flags', r->'flags', 'tier', r->'tier', 'card', r->'card'->>'name'));
 
   -- 5. Kabir, night owl: 22:15 start in Delhi, 4 km at 6:00/km
-  perform seed_user(kabir, 'kabir@pugmark.test', 'Kabir', extract(year from today)::int - 38, 'male', 'IN-DL', allc);
+  perform seed_user(kabir, 'kabir@flyingcobra.test', 'Kabir', extract(year from today)::int - 38, 'male', 'IN-DL', allc);
   r := submit_run_for(kabir, seed_payload('kabir-1', ((today - 1) + time '22:15') at time zone ist, 28.613, 77.209, 4.0, 10.0, 'loop', 'IN-DL', 165, 148, allc));
   out := out || jsonb_build_object('kabir', jsonb_build_object('time_window', r->'time_window', 'tier', r->'tier', 'card', r->'card'->>'name'));
 
   -- 6. Sana, collector deliberately running slow for a rabbit: 3 km at 7:30/km
-  perform seed_user(sana, 'sana@pugmark.test', 'Sana', extract(year from today)::int - 26, 'female', 'IN-TG', basic);
+  perform seed_user(sana, 'sana@flyingcobra.test', 'Sana', extract(year from today)::int - 26, 'female', 'IN-TG', basic);
   r := submit_run_for(sana, seed_payload('sana-1', ((today - 3) + time '17:00') at time zone ist, 17.425, 78.450, 3.0, 8.0, 'loop', 'IN-TG', 150, null, basic));
   r := submit_run_for(sana, seed_payload('sana-2', ((today - 1) + time '17:05') at time zone ist, 17.425, 78.450, 3.0, 8.0, 'loop', 'IN-TG', 150, null, basic));
   out := out || jsonb_build_object('sana', jsonb_build_object('band', r->'band', 'perf_index', r->'perf_index', 'card', r->'card'->>'name'));

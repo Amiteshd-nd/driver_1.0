@@ -156,7 +156,7 @@ class _AnimalEditorState extends ConsumerState<AnimalEditor> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final t = Theme.of(context).textTheme;
     final repo = ref.read(adminRepoProvider);
     final a = _a;
@@ -324,7 +324,7 @@ class _ArtTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final t = Theme.of(context).textTheme;
     return SizedBox(
       width: 180,

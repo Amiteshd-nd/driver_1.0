@@ -19,13 +19,13 @@ Future<void> main() async {
         supabaseReadyProvider.overrideWith((_) => ready),
         onboardingDoneProvider.overrideWith((_) => onboarded),
       ],
-      child: const PugmarkApp(),
+      child: const FlyingCobraApp(),
     ),
   );
 }
 
-class PugmarkApp extends ConsumerWidget {
-  const PugmarkApp({super.key});
+class FlyingCobraApp extends ConsumerWidget {
+  const FlyingCobraApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

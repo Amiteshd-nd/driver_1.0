@@ -108,7 +108,7 @@ class _Ready extends StatelessWidget {
   final VoidCallback onStart;
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final text = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(title: const Text('Run')),
@@ -139,7 +139,7 @@ class _Recording extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final text = Theme.of(context).textTheme;
     final km = rec.distanceM / 1000;
     final pace = rec.currentPaceSPerKm;
@@ -158,7 +158,7 @@ class _Recording extends StatelessWidget {
             padding: const EdgeInsets.all(Space.xl),
             child: Column(children: [
               const Spacer(),
-              Text(fmtDuration(rec.moving.inSeconds), style: text.displayLarge?.copyWith(fontSize: 72, height: 1.1, fontFeatures: PugText.tabular)),
+              Text(fmtDuration(rec.moving.inSeconds), style: text.displayLarge?.copyWith(fontSize: 72, height: 1.1, fontFeatures: AppText.tabular)),
               Text('moving · ${fmtDuration(rec.elapsed.inSeconds)} total', style: text.labelMedium?.copyWith(color: c.inkMuted)),
               const SizedBox(height: Space.xxl),
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -204,9 +204,9 @@ class _Stat extends StatelessWidget {
   final String label, value;
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     return Column(children: [
-      Text(value, style: PugText.stat(context).copyWith(fontSize: 30)),
+      Text(value, style: AppText.stat(context).copyWith(fontSize: 30)),
       Text(label, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: c.inkMuted)),
     ]);
   }
@@ -218,7 +218,7 @@ class _Hint extends StatelessWidget {
   final String text;
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     return Container(
       margin: const EdgeInsets.only(bottom: Space.sm),
       padding: const EdgeInsets.all(Space.md),
@@ -237,7 +237,7 @@ class _GpsPill extends StatelessWidget {
   final GpsStatus status;
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final (label, color) = switch (status) {
       GpsStatus.good => ('GPS', c.success),
       GpsStatus.foregroundOnly => ('GPS · open app', c.warn),
@@ -265,7 +265,7 @@ class _ReadingRun extends StatelessWidget {
   const _ReadingRun();
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final text = Theme.of(context).textTheme;
     return Scaffold(
       body: Center(

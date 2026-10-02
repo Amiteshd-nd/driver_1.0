@@ -1,4 +1,4 @@
-// End-to-end tests for the Pugmark rules engine, run against PGlite.
+// End-to-end tests for the Flying Cobra rules engine, run against PGlite.
 //   node test.mjs
 import { loadDb, signIn, createUser } from './harness.mjs';
 import assert from 'node:assert/strict';

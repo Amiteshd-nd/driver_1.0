@@ -31,7 +31,7 @@ Two variables, both already present in every Supabase project's function runtime
 | `SUPABASE_URL` | Project URL, e.g. `https://abcd.supabase.co`. The function POSTs to `${SUPABASE_URL}/rest/v1/rpc/lookup_serial`. |
 | `SUPABASE_ANON_KEY` | Anon key, sent as `apikey` and `Authorization: Bearer`. `lookup_serial` is the only RPC granted to `anon`. |
 
-Optional: `PUBLIC_BASE_URL` (e.g. `https://pugmark.run`) overrides the origin used for absolute `og:image` / `og:url` URLs when the function sits behind a custom domain or proxy. Set with `supabase secrets set PUBLIC_BASE_URL=https://pugmark.run`.
+Optional: `PUBLIC_BASE_URL` (e.g. `https://flyingcobra.run`) overrides the origin used for absolute `og:image` / `og:url` URLs when the function sits behind a custom domain or proxy. Set with `supabase secrets set PUBLIC_BASE_URL=https://flyingcobra.run`.
 
 ## Local
 
@@ -41,6 +41,6 @@ supabase functions serve verify --no-verify-jwt --env-file supabase/.env.local
 open "http://localhost:54321/functions/v1/verify?q=Tiger%20%230427"
 ```
 
-## Pointing `pugmark.run/v/...` here
+## Pointing `flyingcobra.run/v/...` here
 
-`cfg('app').verify_base_url` produces `https://pugmark.run/v/<slug>/<serial>`. Rewrite `/v/*` at the CDN/host to `https://<project>.supabase.co/functions/v1/verify/*` and set `PUBLIC_BASE_URL=https://pugmark.run`. The static fallback at `web/marketing/verify.html` reads the same `#/<slug>/<serial>` shape if the rewrite is unavailable.
+`cfg('app').verify_base_url` produces `https://flyingcobra.run/v/<slug>/<serial>`. Rewrite `/v/*` at the CDN/host to `https://<project>.supabase.co/functions/v1/verify/*` and set `PUBLIC_BASE_URL=https://flyingcobra.run`. The static fallback at `web/marketing/verify.html` reads the same `#/<slug>/<serial>` shape if the rewrite is unavailable.

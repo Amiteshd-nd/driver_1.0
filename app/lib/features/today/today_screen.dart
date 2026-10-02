@@ -8,7 +8,7 @@ import '../../core/models/models.dart';
 import '../../core/repos/repos.dart';
 import '../../core/router.dart';
 import '../../core/theme/tokens.dart';
-import '../card/widgets/pug_card_view.dart';
+import '../card/widgets/collectible_card_view.dart';
 import 'widgets/envelope_card.dart';
 import 'widgets/event_banner.dart';
 import 'widgets/streak_row.dart';
@@ -92,7 +92,7 @@ class _TodayScreenState extends ConsumerState<TodayScreen> with WidgetsBindingOb
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final tt = Theme.of(context).textTheme;
     final cardsAsync = ref.watch(myCardsProvider);
     final runs = ref.watch(myRunsProvider).asData?.value ?? const <RunSummary>[];
@@ -133,7 +133,7 @@ class _TodayScreenState extends ConsumerState<TodayScreen> with WidgetsBindingOb
               const SizedBox(height: Space.sm),
             ],
             cardsAsync.when(
-              loading: () => SizedBox(height: heroWidth * PugCardView.aspect, child: const Center(child: CircularProgressIndicator())),
+              loading: () => SizedBox(height: heroWidth * CollectibleCardView.aspect, child: const Center(child: CircularProgressIndicator())),
               error: (_, __) => _EmptyBag(width: heroWidth, message: "Couldn't load your cards. Pull down to try again."),
               data: (cards) {
                 if (cards.isEmpty) return _EmptyBag(width: heroWidth, message: 'Your first run opens the bag.');
@@ -146,7 +146,7 @@ class _TodayScreenState extends ConsumerState<TodayScreen> with WidgetsBindingOb
                         hint: 'Opens card details',
                         child: GestureDetector(
                           onTap: () => context.pushNamed(Routes.card, pathParameters: {'id': latest.id}, extra: latest),
-                          child: PugCardView(card: latest, width: heroWidth),
+                          child: CollectibleCardView(card: latest, width: heroWidth),
                         ),
                       ),
                     ),
@@ -183,7 +183,7 @@ class _EmptyBag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final tt = Theme.of(context).textTheme;
     return Center(
       child: Container(

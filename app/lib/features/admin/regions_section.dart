@@ -36,7 +36,7 @@ class _RegionsSectionState extends ConsumerState<RegionsSection> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final regions = ref.watch(adminRegionsProvider);
     String f(double? v) => v == null ? '—' : v.toStringAsFixed(2);
     return Column(
@@ -198,7 +198,7 @@ class _RegionDialogState extends ConsumerState<_RegionDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     Widget numField(String key, String label) => Expanded(
           child: Field(label: label, child: TextField(controller: _nums[key], decoration: denseInput(), style: monoStyle(context), keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true))),
         );

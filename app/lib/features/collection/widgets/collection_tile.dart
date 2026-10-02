@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/models/models.dart';
 import '../../../core/theme/tokens.dart';
-import '../../card/widgets/pug_card_view.dart';
+import '../../card/widgets/collectible_card_view.dart';
 
 /// Tile width used by the collection grid.
 const double kCollectionTileWidth = 150;
@@ -11,13 +11,13 @@ const double kCollectionTileWidth = 150;
 class OwnedAnimalTile extends StatelessWidget {
   const OwnedAnimalTile({super.key, required this.best, required this.count, required this.onTap});
 
-  final PugCard best;
+  final CollectibleCard best;
   final int count;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final tt = Theme.of(context).textTheme;
     return Semantics(
       button: true,
@@ -29,7 +29,7 @@ class OwnedAnimalTile extends StatelessWidget {
           child: Stack(
             clipBehavior: Clip.none,
             children: [
-              PugCardView(card: best, width: kCollectionTileWidth, interactive: false, showStats: false),
+              CollectibleCardView(card: best, width: kCollectionTileWidth, interactive: false, showStats: false),
               if (count > 1)
                 Positioned(
                   top: -6,
@@ -57,7 +57,7 @@ class UnknownAnimalTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final tt = Theme.of(context).textTheme;
     const w = kCollectionTileWidth;
     const h = w * 7 / 5;

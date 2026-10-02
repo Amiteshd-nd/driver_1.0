@@ -35,7 +35,7 @@ class RunQueue with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
   }
 
-  final PugApi _api;
+  final AppApi _api;
   static const _prefsKey = 'run_queue_web';
   bool _flushing = false;
 
@@ -58,7 +58,7 @@ class RunQueue with WidgetsBindingObserver {
     if (kIsWeb) return null;
     try {
       final base = await getApplicationDocumentsDirectory();
-      final d = Directory('${base.path}/pugmark_queue');
+      final d = Directory('${base.path}/flyingcobra_queue');
       if (!await d.exists()) await d.create(recursive: true);
       return d;
     } catch (_) {

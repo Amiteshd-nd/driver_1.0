@@ -9,8 +9,8 @@ import '../supabase.dart';
 
 const _cardSelect = '*, animals(*), seasons(name)';
 
-class PugApi {
-  PugApi(this._db);
+class AppApi {
+  AppApi(this._db);
   final SupabaseClient _db;
 
   String? get uid => _db.auth.currentUser?.id;
@@ -62,14 +62,14 @@ class PugApi {
   }
 
   // ---------- cards ----------
-  Future<List<PugCard>> myCards({int limit = 500}) async {
+  Future<List<CollectibleCard>> myCards({int limit = 500}) async {
     final r = await _db.from('cards').select(_cardSelect).order('issued_at', ascending: false).limit(limit);
-    return (r as List).map((e) => PugCard.fromRow((e as Map).cast<String, dynamic>())).toList();
+    return (r as List).map((e) => CollectibleCard.fromRow((e as Map).cast<String, dynamic>())).toList();
   }
 
-  Future<PugCard?> card(String id) async {
+  Future<CollectibleCard?> card(String id) async {
     final r = await _db.from('cards').select(_cardSelect).eq('id', id).maybeSingle();
-    return r == null ? null : PugCard.fromRow(r);
+    return r == null ? null : CollectibleCard.fromRow(r);
   }
 
   Future<void> setCardPublic(String id, bool isPublic) => _db.from('cards').update({'is_public': isPublic}).eq('id', id);
@@ -112,14 +112,14 @@ class PugApi {
   }
 }
 
-final apiProvider = Provider<PugApi>((ref) => PugApi(supabase));
+final apiProvider = Provider<AppApi>((ref) => AppApi(supabase));
 
 final profileProvider = FutureProvider<Profile?>((ref) {
   ref.watch(authStateProvider);
   return ref.watch(apiProvider).myProfile();
 });
 
-final myCardsProvider = FutureProvider<List<PugCard>>((ref) {
+final myCardsProvider = FutureProvider<List<CollectibleCard>>((ref) {
   ref.watch(authStateProvider);
   return ref.watch(apiProvider).myCards();
 });

@@ -13,7 +13,7 @@ class PaceTrend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final text = Theme.of(context).textTheme;
     final usable = runs.where((r) => r.distanceM >= 1000 && r.movingS > 0).toList()
       ..sort((a, b) => a.startedAt.compareTo(b.startedAt));

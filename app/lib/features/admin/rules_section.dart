@@ -47,7 +47,7 @@ class _RulesSectionState extends ConsumerState<RulesSection> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final t = Theme.of(context).textTheme;
     final animals = ref.watch(adminAnimalsProvider);
     final a = _animal;
@@ -140,7 +140,7 @@ class _AnimalPicker extends StatelessWidget {
         onSubmitted: (_) => onSubmit(),
       ),
       optionsViewBuilder: (context, select, options) {
-        final c = context.pug;
+        final c = context.colors;
         final list = options.toList();
         return Align(
           alignment: Alignment.topLeft,
@@ -182,7 +182,7 @@ class _RuleTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final t = Theme.of(context).textTheme;
     final r = rule;
     final tierLabel = r.scope == CardScope.run ? (kRunTierLabels[r.tier] ?? 'tier ${r.tier}') : r.scope == CardScope.weekly ? '${r.tier}-day bag' : 'regional';

@@ -21,7 +21,7 @@ class _HistorySectionState extends ConsumerState<HistorySection> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final t = Theme.of(context).textTheme;
     final history = ref.watch(adminHistoryProvider);
     const tables = ['animals', 'animal_rules', 'config', 'seasons', 'age_factors', 'regions'];
@@ -74,7 +74,7 @@ class _HistoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final t = Theme.of(context).textTheme;
     final r = row;
     final actionColor = switch (r.action) { 'INSERT' => c.success, 'DELETE' => c.danger, _ => c.accent };
@@ -116,7 +116,7 @@ class _Diff extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final t = Theme.of(context).textTheme;
     final o = oldRow ?? const <String, dynamic>{};
     final n = newRow ?? const <String, dynamic>{};
@@ -146,7 +146,7 @@ class _DiffRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     Widget side(dynamic v, bool present, Color color) => Expanded(
           child: Container(
             padding: const EdgeInsets.all(Space.sm),

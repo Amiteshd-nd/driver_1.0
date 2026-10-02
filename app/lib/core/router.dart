@@ -69,8 +69,8 @@ final routerProvider = Provider<GoRouter>((ref) {
           transitionsBuilder: (_, a, __, child) => FadeTransition(opacity: a, child: child),
         ),
       ),
-      GoRoute(path: '/card/:id', name: Routes.card, builder: (_, state) => CardDetailScreen(cardId: state.pathParameters['id']!, initial: state.extra as PugCard?)),
-      GoRoute(path: '/poster/:id', name: Routes.poster, builder: (_, state) => PosterScreen(cardId: state.pathParameters['id']!, initial: state.extra as PugCard?)),
+      GoRoute(path: '/card/:id', name: Routes.card, builder: (_, state) => CardDetailScreen(cardId: state.pathParameters['id']!, initial: state.extra as CollectibleCard?)),
+      GoRoute(path: '/poster/:id', name: Routes.poster, builder: (_, state) => PosterScreen(cardId: state.pathParameters['id']!, initial: state.extra as CollectibleCard?)),
       GoRoute(path: '/verify', name: Routes.search, builder: (_, state) => SerialSearchScreen(initialQuery: state.uri.queryParameters['q'])),
       GoRoute(path: '/admin', name: Routes.admin, builder: (_, state) => AdminShell(section: state.uri.queryParameters['s'])),
       StatefulShellRoute.indexedStack(
@@ -91,7 +91,7 @@ class RevealPayload {
   const RevealPayload({this.result, this.pending});
   final RunResult? result;
   final PendingCard? pending;
-  PugCard? get card => result?.card ?? pending?.card;
+  CollectibleCard? get card => result?.card ?? pending?.card;
   List<Celebration> get celebrations => result?.celebrations ?? pending?.celebrations ?? const [];
 }
 
@@ -135,7 +135,7 @@ class SetupNeededScreen extends StatelessWidget {
   const SetupNeededScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     return Scaffold(
       body: Center(
         child: Padding(
@@ -148,7 +148,7 @@ class SetupNeededScreen extends StatelessWidget {
               Text('Almost there', style: Theme.of(context).textTheme.headlineMedium),
               const SizedBox(height: Space.sm),
               Text(
-                'Pugmark needs its Supabase keys. Copy app/.env.example to app/.env and paste the Project URL and anon key (MANUAL_TASKS.md, step 1), then restart the app.',
+                'Flying Cobra needs its Supabase keys. Copy app/.env.example to app/.env and paste the Project URL and anon key (MANUAL_TASKS.md, step 1), then restart the app.',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: c.inkMuted),
               ),

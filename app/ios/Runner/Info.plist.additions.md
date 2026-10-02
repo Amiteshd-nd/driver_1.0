@@ -6,19 +6,19 @@ Purpose strings follow DESIGN.md §8: *what*, *why*, *what we store*, no pressur
 ```xml
 <!-- Location: distance, route, explorer animals -->
 <key>NSLocationWhenInUseUsageDescription</key>
-<string>Pugmark uses your location while you run to measure distance and notice when you explore somewhere new. Your route is stored privately and is visible to you alone.</string>
+<string>Flying Cobra uses your location while you run to measure distance and notice when you explore somewhere new. Your route is stored privately and is visible to you alone.</string>
 <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-<string>Allowing location in the background lets a run keep recording with the screen off. Pugmark reads location during a run you started, never between runs. Your route stays private to you.</string>
+<string>Allowing location in the background lets a run keep recording with the screen off. Flying Cobra reads location during a run you started, never between runs. Your route stays private to you.</string>
 
 <!-- Motion & fitness: steps and footfall rhythm (two numbers per run, never raw samples) -->
 <key>NSMotionUsageDescription</key>
-<string>Pugmark counts steps and senses the rhythm of your footfall to confirm a run was a run. We keep a step count and two rhythm numbers per run — never raw sensor data.</string>
+<string>Flying Cobra counts steps and senses the rhythm of your footfall to confirm a run was a run. We keep a step count and two rhythm numbers per run — never raw sensor data.</string>
 
 <!-- Health: heart rate (read) and workouts for the optional import -->
 <key>NSHealthShareUsageDescription</key>
-<string>Pugmark can read heart rate and running workouts from Health to grade effort and import runs you recorded elsewhere. We keep an average and a peak heart rate per run. Nothing is written back.</string>
+<string>Flying Cobra can read heart rate and running workouts from Health to grade effort and import runs you recorded elsewhere. We keep an average and a peak heart rate per run. Nothing is written back.</string>
 <key>NSHealthUpdateUsageDescription</key>
-<string>Pugmark does not write to Health.</string>
+<string>Flying Cobra does not write to Health.</string>
 
 <!-- Background location so a run survives the screen turning off -->
 <key>UIBackgroundModes</key>
@@ -26,7 +26,7 @@ Purpose strings follow DESIGN.md §8: *what*, *why*, *what we store*, no pressur
   <string>location</string>
 </array>
 
-<!-- Magic-link redirect (supabase emailRedirectTo: pugmark://login) -->
+<!-- Magic-link redirect (supabase emailRedirectTo: flyingcobra://login) -->
 <key>CFBundleURLTypes</key>
 <array>
   <dict>
@@ -34,7 +34,7 @@ Purpose strings follow DESIGN.md §8: *what*, *why*, *what we store*, no pressur
     <string>Editor</string>
     <key>CFBundleURLSchemes</key>
     <array>
-      <string>pugmark</string>
+      <string>flyingcobra</string>
     </array>
   </dict>
 </array>

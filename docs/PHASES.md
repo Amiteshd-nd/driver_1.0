@@ -34,9 +34,9 @@ The code exists but has not been compiled or run because this Mac has no Flutter
 1. Sign in with a magic link; complete onboarding; decline Motion and Health; confirm the app still records a run with Location only.
 2. Record a 1.2 km walk-jog outdoors. Expect: a card (calm or gentle family), stage baby, serial #0001 for that animal if nobody else earned it.
 3. Record a 400 m stroll. Expect: "Recorded. A run of 1 km or 10 minutes earns a card." and no card.
-4. Sign in as `kabir@pugmark.test`; open Collection. Expect: a night-family card (owl bag) from the seed.
-5. Sign in as `ravi@pugmark.test`; open Today. Expect: a weekly card with radiant finish from last week; Collection shows it under "Weekly".
-6. Sign in as `priya@pugmark.test`. Expect: a Kerala souvenir, a Goa souvenir and a migratory bird.
+4. Sign in as `kabir@flyingcobra.test`; open Collection. Expect: a night-family card (owl bag) from the seed.
+5. Sign in as `ravi@flyingcobra.test`; open Today. Expect: a weekly card with radiant finish from last week; Collection shows it under "Weekly".
+6. Sign in as `priya@flyingcobra.test`. Expect: a Kerala souvenir, a Goa souvenir and a migratory bird.
 7. On any card, tap Share poster; confirm the PNG has the serial and QR, and no map. Scan the QR; the verify page shows the same card and "Earned by …".
 8. Type `Horse #0003`, `horse 3` and a bogus `Tiger #9999` into Verify a card. Expect: found / found / "No such card … bluffing".
 9. Settings → turn Location off → start a run → expect the graceful "timer-only" explanation. Turn it back on.

@@ -11,8 +11,8 @@ import 'tilt_source.dart';
 
 /// The hero: a 5:7 collectible card per DESIGN.md §5. Scales as a unit from
 /// [width] (300 = design size). Rarity is carried by border and finish only.
-class PugCardView extends StatefulWidget {
-  const PugCardView({
+class CollectibleCardView extends StatefulWidget {
+  const CollectibleCardView({
     super.key,
     required this.card,
     this.width = 300,
@@ -21,7 +21,7 @@ class PugCardView extends StatefulWidget {
     this.stageOverride,
   });
 
-  final PugCard card;
+  final CollectibleCard card;
   final double width;
 
   /// Enables the subtle 3-D tilt that follows the device.
@@ -36,7 +36,7 @@ class PugCardView extends StatefulWidget {
   static const aspect = 7 / 5;
 
   /// Accessibility label per DESIGN.md §10.
-  static String semanticsLabel(PugCard c) {
+  static String semanticsLabel(CollectibleCard c) {
     final v = c.verdict == Verdict.verified ? '' : ', unverified';
     return '${c.name}, ${c.stage.label.toLowerCase()}, ${c.rarity.label.toLowerCase()}, serial ${c.serialNo}, earned ${fullDate(c.issuedAt)}$v';
   }
@@ -47,10 +47,10 @@ class PugCardView extends StatefulWidget {
   }
 
   @override
-  State<PugCardView> createState() => _PugCardViewState();
+  State<CollectibleCardView> createState() => _CollectibleCardViewState();
 }
 
-class _PugCardViewState extends State<PugCardView> with TickerProviderStateMixin {
+class _CollectibleCardViewState extends State<CollectibleCardView> with TickerProviderStateMixin {
   AnimationController? _legendary;
   AnimationController? _breath;
   bool _reduce = false;
@@ -62,7 +62,7 @@ class _PugCardViewState extends State<PugCardView> with TickerProviderStateMixin
   }
 
   @override
-  void didUpdateWidget(covariant PugCardView old) {
+  void didUpdateWidget(covariant CollectibleCardView old) {
     super.didUpdateWidget(old);
     if (old.card.rarity != widget.card.rarity || old.card.finish != widget.card.finish) _ensureControllers();
   }
@@ -113,9 +113,9 @@ class _PugCardViewState extends State<PugCardView> with TickerProviderStateMixin
   Widget build(BuildContext context) {
     final card = widget.card;
     final w = widget.width;
-    final h = w * PugCardView.aspect;
+    final h = w * CollectibleCardView.aspect;
     final s = w / 300;
-    final c = context.pug;
+    final c = context.colors;
     final style = RarityStyle.of(card.rarity);
     final bw = style.width * s.clamp(0.6, 1.5);
     final radius = math.max(10.0, Radii.card * s);
@@ -161,13 +161,13 @@ class _PugCardViewState extends State<PugCardView> with TickerProviderStateMixin
     }
 
     return Semantics(
-      label: PugCardView.semanticsLabel(card),
+      label: CollectibleCardView.semanticsLabel(card),
       container: true,
       child: ExcludeSemantics(child: MediaQuery.withNoTextScaling(child: body)),
     );
   }
 
-  Color? _borderColor(PugColors c) {
+  Color? _borderColor(AppColors c) {
     if (widget.card.rarity == Rarity.common) return c.line;
     if (widget.card.rarity == Rarity.uncommon) return widget.card.palette.accent;
     return null;
@@ -202,7 +202,7 @@ class _PugCardViewState extends State<PugCardView> with TickerProviderStateMixin
 
   Widget _face(BuildContext context, {required double innerW, required double innerH, required double s, required RarityStyle style}) {
     final card = widget.card;
-    final c = context.pug;
+    final c = context.colors;
     final tt = Theme.of(context).textTheme;
     final pal = card.palette;
     final stage = widget.stageOverride ?? card.stage;
@@ -253,7 +253,7 @@ class _PugCardViewState extends State<PugCardView> with TickerProviderStateMixin
             alignment: Alignment.centerLeft,
             child: FittedBox(
               fit: BoxFit.scaleDown,
-              child: Text(card.serial.toUpperCase().replaceFirst(' #', '  #'), maxLines: 1, style: PugText.serial(context, size: 18 * s)),
+              child: Text(card.serial.toUpperCase().replaceFirst(' #', '  #'), maxLines: 1, style: AppText.serial(context, size: 18 * s)),
             ),
           ),
         ),
@@ -278,7 +278,7 @@ class _PugCardViewState extends State<PugCardView> with TickerProviderStateMixin
               card.flavourLine,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: PugText.flavour(context).copyWith(fontSize: 14 * s, height: 20 / 14),
+              style: AppText.flavour(context).copyWith(fontSize: 14 * s, height: 20 / 14),
             ),
           ],
           const Spacer(),
@@ -289,7 +289,7 @@ class _PugCardViewState extends State<PugCardView> with TickerProviderStateMixin
               alignment: Alignment.centerLeft,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
-                child: Text(card.statsLine, maxLines: 1, style: PugText.stat(context).copyWith(fontSize: 22 * s, height: 26 / 22)),
+                child: Text(card.statsLine, maxLines: 1, style: AppText.stat(context).copyWith(fontSize: 22 * s, height: 26 / 22)),
               ),
             ),
             SizedBox(height: 6 * s),

@@ -41,14 +41,14 @@ the *why* lives on our onboarding cards (DESIGN.md §8), so the in-app copy is l
 Inside `<application>`:
 
 ```xml
-<!-- Magic-link redirect: supabase emailRedirectTo = pugmark://login -->
+<!-- Magic-link redirect: supabase emailRedirectTo = flyingcobra://login -->
 <activity android:name=".MainActivity" ...>
   ...
   <intent-filter>
     <action android:name="android.intent.action.VIEW" />
     <category android:name="android.intent.category.DEFAULT" />
     <category android:name="android.intent.category.BROWSABLE" />
-    <data android:scheme="pugmark" android:host="login" />
+    <data android:scheme="flyingcobra" android:host="login" />
   </intent-filter>
 </activity>
 

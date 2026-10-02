@@ -32,7 +32,7 @@ class HealthImport {
 
   /// Imports running workouts from the last [lookback]. Submits each; queues on network trouble.
   static Future<HealthImportSummary> importRecent(
-    PugApi api,
+    AppApi api,
     RunQueue queue, {
     Duration lookback = const Duration(days: 14),
     String timezone = 'Asia/Kolkata',
@@ -82,7 +82,7 @@ class HealthImport {
 
       final hr = await _heartRate(h, p.dateFrom, p.dateTo);
       final payload = <String, dynamic>{
-        'client_run_id': const Uuid().v5(Namespace.url.value, 'pugmark:health:${p.uuid}'),
+        'client_run_id': const Uuid().v5(Namespace.url.value, 'flyingcobra:health:${p.uuid}'),
         'source': source,
         'started_at': isoWithOffset(p.dateFrom),
         'elapsed_s': durationS,

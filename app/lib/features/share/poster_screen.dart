@@ -13,14 +13,14 @@ import '../../core/models/models.dart';
 import '../../core/repos/repos.dart';
 import '../../core/theme/theme.dart';
 import '../../core/theme/tokens.dart';
-import '../card/widgets/pug_card_view.dart';
+import '../card/widgets/collectible_card_view.dart';
 
 /// 1080 × 1920 story poster (DESIGN.md §7): family gradient, card at 70 % width,
 /// serial large beneath, QR to the verify URL bottom-right, wordmark. Zero location.
 class PosterScreen extends ConsumerStatefulWidget {
   const PosterScreen({super.key, required this.cardId, this.initial});
   final String cardId;
-  final PugCard? initial;
+  final CollectibleCard? initial;
 
   @override
   ConsumerState<PosterScreen> createState() => _PosterScreenState();
@@ -28,7 +28,7 @@ class PosterScreen extends ConsumerStatefulWidget {
 
 class _PosterScreenState extends ConsumerState<PosterScreen> {
   final GlobalKey _posterKey = GlobalKey();
-  PugCard? _card;
+  CollectibleCard? _card;
   bool _sharing = false;
 
   @override
@@ -63,7 +63,7 @@ class _PosterScreenState extends ConsumerState<PosterScreen> {
     try {
       final bytes = await _render();
       if (bytes == null) throw StateError('no image');
-      final fileName = 'pugmark-${card.slug.isEmpty ? 'card' : card.slug}-${card.serialNo.toString().padLeft(4, '0')}.png';
+      final fileName = 'flyingcobra-${card.slug.isEmpty ? 'card' : card.slug}-${card.serialNo.toString().padLeft(4, '0')}.png';
       final text = '${card.serial} · ${card.verifyUrl}'.trim();
       if (kIsWeb) {
         await Share.shareXFiles([XFile.fromData(bytes, mimeType: 'image/png', name: fileName)], text: text);
@@ -86,7 +86,7 @@ class _PosterScreenState extends ConsumerState<PosterScreen> {
   @override
   Widget build(BuildContext context) {
     final card = _card;
-    final c = context.pug;
+    final c = context.colors;
     return Scaffold(
       appBar: AppBar(title: const Text('Share poster')),
       body: card == null
@@ -133,7 +133,7 @@ class _PosterScreenState extends ConsumerState<PosterScreen> {
 
 class _Poster extends StatelessWidget {
   const _Poster({required this.card});
-  final PugCard card;
+  final CollectibleCard card;
 
   @override
   Widget build(BuildContext context) {
@@ -152,12 +152,12 @@ class _Poster extends StatelessWidget {
           Column(
             children: [
               const Spacer(flex: 3),
-              Center(child: PugCardView(card: card, width: 1080 * 0.70, interactive: false)),
+              Center(child: CollectibleCardView(card: card, width: 1080 * 0.70, interactive: false)),
               const SizedBox(height: 72),
               Text(
                 card.serial.toUpperCase().replaceFirst(' #', '  #'),
                 textAlign: TextAlign.center,
-                style: PugText.serial(context, size: 64, color: pal.fg),
+                style: AppText.serial(context, size: 64, color: pal.fg),
               ),
               const SizedBox(height: 16),
               Text(
@@ -174,7 +174,7 @@ class _Poster extends StatelessWidget {
               children: [
                 SizedBox(width: 44, height: 44, child: CustomPaint(painter: _WordmarkPawPainter(color: pal.fg))),
                 const SizedBox(width: 16),
-                Text('pugmark.run', style: (tt.headlineMedium ?? const TextStyle()).copyWith(fontSize: 40, color: pal.fg)),
+                Text('flyingcobra.run', style: (tt.headlineMedium ?? const TextStyle()).copyWith(fontSize: 40, color: pal.fg)),
               ],
             ),
           ),

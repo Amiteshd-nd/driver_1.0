@@ -1,6 +1,6 @@
-# Pugmark — Algorithms & Math Specification
+# Flying Cobra — Algorithms & Math Specification
 
-Working product name: **Pugmark** (a tiger's footprint, the unit of India's wildlife census; a run leaves a track). Renamable in one place (`app/lib/core/brand.dart`, `config.app_name`).
+Working product name: **Flying Cobra** (named for Chrysopelea, the gliding snakes of India that launch from a branch, flatten their bodies into a wing and sail between trees). Renamable in one place (`app/lib/core/brand.dart`, `config.app`).
 
 Everything below is **data-driven**: every threshold lives in the `config` table or in `animal_rules.predicates`, and is editable from the admin panel. The numbers here are the shipped defaults with the reasoning behind them. The authoritative implementation is in Postgres (`supabase/migrations/`), so a modified client can never forge a card.
 

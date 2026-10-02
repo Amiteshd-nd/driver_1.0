@@ -11,7 +11,7 @@ class RunHeatmap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final text = Theme.of(context).textTheme;
     final today = DateTime.now();
     final todayD = DateTime(today.year, today.month, today.day);

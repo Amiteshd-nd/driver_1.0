@@ -1,5 +1,5 @@
 # Supabase CLI config (used by `supabase link` / `supabase functions deploy`)
-project_id = "pugmark"
+project_id = "flyingcobra"
 
 [functions.verify]
 verify_jwt = false

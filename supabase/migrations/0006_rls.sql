@@ -1,4 +1,4 @@
--- Pugmark · 0006 row-level security & grants
+-- Flying Cobra · 0006 row-level security & grants
 -- Principle: users read their own rows; cards are issued only by SECURITY DEFINER functions; the only public read is lookup_serial().
 
 alter table profiles        enable row level security;

@@ -211,7 +211,7 @@ class RunRecorder extends ChangeNotifier {
           distanceFilter: 0,
           intervalDuration: const Duration(seconds: 1),
           foregroundNotificationConfig: ForegroundNotificationConfig(
-            notificationTitle: 'Pugmark is recording your run',
+            notificationTitle: 'Flying Cobra is recording your run',
             notificationText: 'Distance and route are measured on your phone.',
             enableWakeLock: true,
           ),

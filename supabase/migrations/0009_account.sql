@@ -1,4 +1,4 @@
--- Pugmark · 0009 account lifecycle (DPDP: the user can erase everything)
+-- Flying Cobra · 0009 account lifecycle (DPDP: the user can erase everything)
 
 -- Deletes the signed-in user's auth account; every table cascades from profiles → auth.users.
 -- Cards already issued keep their serial numbers reserved (the counter never decrements) but the rows are removed,

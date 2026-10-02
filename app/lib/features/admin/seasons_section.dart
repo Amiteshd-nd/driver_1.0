@@ -13,7 +13,7 @@ class SeasonsSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final c = context.pug;
+    final c = context.colors;
     final t = Theme.of(context).textTheme;
     final seasons = ref.watch(adminSeasonsProvider);
     void refresh() => ref.invalidate(adminSeasonsProvider);
@@ -180,7 +180,7 @@ class _SeasonDialogState extends ConsumerState<_SeasonDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     return AlertDialog(
       title: Text(_s == null ? 'New season' : 'Edit season'),
       content: SizedBox(

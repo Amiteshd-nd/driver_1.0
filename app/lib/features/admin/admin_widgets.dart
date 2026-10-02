@@ -30,7 +30,7 @@ void showOk(BuildContext context, String message) {
 
 void showErr(BuildContext context, Object error) {
   if (!context.mounted) return;
-  final c = context.pug;
+  final c = context.colors;
   ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()
     ..showSnackBar(SnackBar(backgroundColor: c.danger, content: Text(friendlyError(error))));
@@ -54,7 +54,7 @@ String fmtDay(DateTime d) =>
 String prettyJson(dynamic v) => const JsonEncoder.withIndent('  ').convert(v);
 
 TextStyle monoStyle(BuildContext context, {double size = 13, Color? color}) =>
-    GoogleFonts.jetBrainsMono(fontSize: size, height: 1.45, color: color ?? context.pug.ink);
+    GoogleFonts.jetBrainsMono(fontSize: size, height: 1.45, color: color ?? context.colors.ink);
 
 // ---------- async states ----------
 class AsyncBody<T> extends StatelessWidget {
@@ -74,7 +74,7 @@ class AsyncBody<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     return value.when(
       loading: () => const Center(child: Padding(padding: EdgeInsets.all(Space.xxl), child: CircularProgressIndicator())),
       error: (e, _) => Center(
@@ -119,7 +119,7 @@ class SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = Theme.of(context).textTheme;
-    final c = context.pug;
+    final c = context.colors;
     return Padding(
       padding: const EdgeInsets.fromLTRB(Space.xl, Space.lg, Space.xl, Space.md),
       child: Row(
@@ -157,7 +157,7 @@ class Field extends StatelessWidget {
   final Widget child;
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final t = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,7 +212,7 @@ class RarityPill extends StatelessWidget {
   final Rarity rarity;
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final color = switch (rarity) {
       Rarity.common => c.inkMuted,
       Rarity.uncommon => c.success,
@@ -238,7 +238,7 @@ class TagPill extends StatelessWidget {
   final Color? color;
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final col = color ?? c.inkMuted;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: Space.sm, vertical: 2),
@@ -264,7 +264,7 @@ class HexField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final color = parse(controller.text);
     return Field(
       label: label,
@@ -297,7 +297,7 @@ class JsonBlock extends StatelessWidget {
   final dynamic value;
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(Space.md),
@@ -342,7 +342,7 @@ Future<bool> confirmDialog(BuildContext context, {required String title, require
       actions: [
         TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: const Text('Cancel')),
         FilledButton(
-          style: FilledButton.styleFrom(backgroundColor: ctx.pug.danger),
+          style: FilledButton.styleFrom(backgroundColor: ctx.colors.danger),
           onPressed: () => Navigator.of(ctx).pop(true),
           child: Text(confirm),
         ),

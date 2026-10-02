@@ -110,7 +110,7 @@ class _PermissionReceiptState extends ConsumerState<PermissionReceipt> with Widg
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final text = Theme.of(context).textTheme;
     final dataPurposes = Purpose.values.where((p) => p != Purpose.notifications);
     final fully = dataPurposes.every(_isOn);
@@ -157,7 +157,7 @@ class _Row extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final text = Theme.of(context).textTheme;
     final String status;
     if (on) {
@@ -203,7 +203,7 @@ class _FullyConnected extends StatelessWidget {
   final bool fully;
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final text = Theme.of(context).textTheme;
     return Container(
       padding: const EdgeInsets.all(Space.lg),

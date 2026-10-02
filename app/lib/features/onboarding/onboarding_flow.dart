@@ -94,7 +94,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -169,7 +169,7 @@ class _PromisePage extends StatelessWidget {
   final VoidCallback onContinue;
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final text = Theme.of(context).textTheme;
     return _Frame(children: [
       Icon(Icons.pets, size: 72, color: c.accent),
@@ -207,7 +207,7 @@ class _PermissionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final text = Theme.of(context).textTheme;
     return _Frame(children: [
       Container(
@@ -257,7 +257,7 @@ class _Row extends StatelessWidget {
   final String label, value;
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final text = Theme.of(context).textTheme;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(label.toUpperCase(), style: text.labelSmall?.copyWith(color: c.inkMuted)),
@@ -291,7 +291,7 @@ class _FairnessPageState extends State<_FairnessPage> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final text = Theme.of(context).textTheme;
     final thisYear = DateTime.now().year;
     final years = [for (var y = thisYear - 10; y >= thisYear - 95; y--) y];
@@ -357,7 +357,7 @@ class _DonePage extends StatelessWidget {
   final VoidCallback onFinish;
   @override
   Widget build(BuildContext context) {
-    final c = context.pug;
+    final c = context.colors;
     final text = Theme.of(context).textTheme;
     return _Frame(children: [
       Center(

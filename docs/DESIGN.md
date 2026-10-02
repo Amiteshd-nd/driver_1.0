@@ -1,4 +1,4 @@
-# Pugmark — Design System & Experience Spec
+# Flying Cobra — Design System & Experience Spec
 
 The card is the hero. Everything else is furniture. This document is the single source for visual language, motion, information architecture, copy voice and the consent experience. Flutter implementation lives in `app/lib/core/theme/`.
 
@@ -17,8 +17,8 @@ The card is the hero. Everything else is furniture. This document is the single 
 
 ## 2. Brand
 
-- **Name:** Pugmark (working). A pugmark is a tiger's footprint, the unit of India's wildlife census. "Leave your pugmark" is the tagline.
-- **Mark:** a four-toed paw print whose pad is a rounded trapezoid, drawn with the same corner radius as the card (16 pt). Single colour. Never animated except on first launch.
+- **Name:** Flying Cobra (working), named for Chrysopelea, the gliding snakes of India that launch from a branch, flatten their bodies into a wing and sail between trees. An ordinary animal doing something that looks impossible, which is the feeling a good run leaves behind. Tagline: "Run. Collect. Keep." (from the video treatment).
+- **Mark:** a four-toed paw print whose pad is a rounded trapezoid, drawn with the same corner radius as the card (16 pt). Single colour. Never animated except on first launch. It deliberately does not depict the name: the app collects a whole roster of animals, so a mark that stands for all of them beats one that illustrates only the wordmark. A gliding-snake mark remains an option if the brand should read more literally.
 - **Voice:** warm, brief, a little playful, never sarcastic. Second person. Celebrates without exclamation-mark spam (max one `!` per screen).
 
 ---
@@ -168,10 +168,10 @@ Bottom tabs (4): **Today · Collection · Encyclopedia · You**. The run recorde
 - Notifications, export my data, delete my account (DPDP).
 
 ### Verify (public web)
-`/v/<animal>/<serial>`: calm page, the card, "Earned by Priya on 28 Sep 2026", "Pugmark #0042 of 118 issued", a "Real ✓ · lives in the Pugmark ledger" seal, store badges. No route, no location, no health data. If not found: "No such card. If someone showed you this, they're bluffing."
+`/v/<animal>/<serial>`: calm page, the card, "Earned by Priya on 28 Sep 2026", "Flying Cobra #0042 of 118 issued", a "Real ✓ · lives in the Flying Cobra ledger" seal, store badges. No route, no location, no health data. If not found: "No such card. If someone showed you this, they're bluffing."
 
 ### Poster (share)
-1080 × 1920 story: family gradient background, card centred at 70 % width, serial large beneath, QR to verify URL bottom-right, small "pugmark.run" wordmark. Zero location.
+1080 × 1920 story: family gradient background, card centred at 70 % width, serial large beneath, QR to verify URL bottom-right, small "flyingcobra.run" wordmark. Zero location.
 
 ---
 
