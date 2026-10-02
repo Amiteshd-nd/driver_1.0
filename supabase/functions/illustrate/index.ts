@@ -55,6 +55,23 @@ Deno.serve(async (req) => {
     return error ? json({ error: error.message }, 500) : json({ created: data });
   }
 
+  // ---- style preview: compose the prompt for one animal with a draft template and generate once, nothing persisted ----
+  if (body.action === 'preview') {
+    const { data: animal, error: aErr } = await sb.from('animals').select('id,slug,name,family,encyclopedia').eq('slug', body.slug ?? 'cheetah').single();
+    if (aErr) return json({ error: aErr.message }, 404);
+    let tpl = body.template ? body : null;
+    if (!tpl) { const { data } = await sb.from('style_templates').select('*').eq('is_active', true).order('version', { ascending: false }).limit(1).single(); tpl = data; }
+    const { composePrompt } = await import('./core/style.mjs');
+    const { prompt, negative } = composePrompt(tpl, animal, body.stage ?? 'adult', 1);
+    const openaiKey0 = Deno.env.get('OPENAI_API_KEY');
+    const prov = (Deno.env.get('ILLUSTRATION_PROVIDER') ?? (openaiKey0 ? 'openai' : 'mock')) === 'openai' ? openaiProvider({ apiKey: openaiKey0 }) : mockProvider();
+    try {
+      const gen = await prov.generate({ prompt, negative, size: '1024x1024', animal, stage: body.stage ?? 'adult' });
+      const png = gen.png ? btoa(String.fromCharCode(...gen.png)) : null;
+      return json({ prompt, negative, svg: gen.svg ?? null, png, provider: prov.name, model: prov.model, cost_cents: gen.costCents ?? 0 });
+    } catch (e) { return json({ prompt, negative, svg: null, png: null, provider: prov.name, error: String((e as Error).message) }); }
+  }
+
   // ---- the worker ----
   const openaiKey = Deno.env.get('OPENAI_API_KEY');
   const providerName = Deno.env.get('ILLUSTRATION_PROVIDER') ?? (openaiKey ? 'openai' : 'mock');
