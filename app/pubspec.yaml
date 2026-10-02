@@ -1,0 +1,60 @@
+name: pugmark
+description: Run. Get an animal. Collect India. A jogging app where every run earns a collectible animal card.
+publish_to: none
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.5.0
+  flutter: ">=3.24.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # backend
+  supabase_flutter: ^2.8.0
+  flutter_dotenv: ^5.2.1
+
+  # state & navigation
+  flutter_riverpod: ^2.6.1
+  go_router: ^14.6.0
+
+  # sensors & health (run recording)
+  geolocator: ^13.0.2
+  sensors_plus: ^6.1.1
+  pedometer: ^4.0.2
+  health: ^11.1.0
+  flutter_activity_recognition: ^4.0.0
+  geocoding: ^3.0.0
+  permission_handler: ^11.3.1
+
+  # ui
+  google_fonts: ^6.2.1
+  flutter_animate: ^4.5.0
+  fl_chart: ^0.69.2
+  qr_flutter: ^4.1.0
+  share_plus: ^10.1.2
+  url_launcher: ^6.3.1
+  cached_network_image: ^3.4.1
+
+  # utils
+  intl: ^0.19.0
+  uuid: ^4.5.1
+  shared_preferences: ^2.3.3
+  path_provider: ^2.1.5
+  collection: ^1.18.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - .env
+    - assets/shaders/
+  shaders:
+    - assets/shaders/foil.frag

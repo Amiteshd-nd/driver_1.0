@@ -1,0 +1,11 @@
+import { loadDb, createUser } from './harness.mjs';
+const db = await loadDb(); const one = async (s,p=[]) => (await db.query(s,p)).rows[0];
+const u = await createUser(db, 'dbg@test.local', 'Dbg'); await db.query(`update profiles set connected='{location,steps}' where id=$1`,[u]);
+const mk = async (id, day, lat, lon, km, kmh, shape='loop') => { const moving=Math.ceil(km/kmh*3600); const track=(await one(`select seed_track($1,$2,$3,$4,$5) t`,[lat,lon,km,kmh,shape])).t;
+  return (await one(`select submit_run_for($1,$2) r`,[u,{client_run_id:id, started_at:`2026-09-${day}T09:00:00+05:30`, elapsed_s:moving+30, moving_s:moving, timezone:'Asia/Kolkata', track, steps:Math.round(170*moving/60), splits_kmh:[10,10.2,9.9]}])).r; };
+for (let i=0;i<3;i++) console.log('base', (await mk('b'+i, 20+i, 12.95, 77.60, 3, 10)).verdict);
+const r = await mk('novel', 25, 12.99, 77.70, 3, 10); console.log('novel', r.flags, r.novelty, r.tier, r.verdict, r.card?.family);
+console.log(await one(`select count(*) prior from runs where user_id=$1 and verdict='verified' and eligible`,[u]));
+console.log(await one(`select array_length(cells,1) n, turns_per_km, novelty, flags from runs where client_run_id='novel'`));
+const z = await mk('zz', 26, 19.07, 72.87, 2.5, 9, 'zigzag'); console.log('zigzag', z.flags, (await one(`select turns_per_km, array_length(cells,1) n from runs where client_run_id='zz'`)));
+const d1 = await mk('dup', 27, 12.95, 77.60, 3, 10); const d2 = await mk('dup', 27, 12.95, 77.60, 3, 10); console.log('dup', d2.duplicate, d2.card?.serial_no, d1.card?.serial_no);

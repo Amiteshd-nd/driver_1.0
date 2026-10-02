@@ -1,0 +1,7 @@
+node_modules/
+tools/dbtest/node_modules/
+app/.env
+app/build/
+app/.dart_tool/
+.DS_Store
+supabase/.temp/
