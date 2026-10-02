@@ -24,6 +24,18 @@ Legend: ✅ built and tested · 🟡 built, awaiting Flutter SDK / Supabase keys
 
 The spec asks for Flutter web. Without the SDK on this machine the workbench is hand-written web that runs today; the two files production consumes (`design_system/tokens.json`, `workbench/interaction-config.json`) are platform-neutral, so nothing decided in the workbench has to be re-decided when the Flutter shell is added.
 
+## Illustration pipeline (added 2 Oct 2026, spec: docs/source/Running-App-Illustration-Pipeline-PRD.md)
+
+| Prompt | Deliverable | Status | Where |
+|---|---|---|---|
+| 1 Architecture & backend | design note · `animal_illustrations` with UNIQUE (animal, stage, variant, style_version) · claim/retry RPCs · review · `animal_art` view · `card_json.illustration` · worker with provider adapter, QA, vectorisation | ✅ 11 PGlite tests | `docs/illustration-pipeline.md`, `0010_illustrations.sql`, `supabase/functions/illustrate/` |
+| 2 Style template & Illustrator Agent | versioned template v1 · agent composes prompts, runs Claude vision QA, decides retry, writes reasons · first three animals generated (mock) | ✅ | `design_system/illustration-style.json`, `core/agent.mjs` |
+| 3 Admin review | Illustration Library section with generate / regenerate / approve / reject and the style editor | 🟡 Flutter (uncompiled) | `app/lib/features/admin/illustrations_section.dart` |
+| 4 Flutter widget & workbench | `AnimalArt` prefers SVG → PNG → placeholder; workbench Illustration Library + real approved art inside the phone | ✅ workbench · 🟡 Flutter | `workbench/library.js`, `tools/illustrate/serve.mjs` |
+| 5 Dedup proof & README | create animal → rows appear once; second request creates none; generate-all summary | ✅ (mock provider) | `supabase/functions/illustrate/README.md` |
+
+Real illustrations need the provider key (MANUAL_TASKS §7). Everything else is proven with the mock provider, whose rows are tagged `provider = mock` so they can never be mistaken for final art.
+
 ## What "🟡" means
 The code exists but has not been compiled or run because this Mac has no Flutter SDK and no Supabase project yet. The first session after `MANUAL_TASKS.md` §1–5 are done should: run all migrations, `flutter pub get`, `flutter analyze`, fix compile errors, run on the iOS simulator, and walk the checklist below with the six dummy users.
 

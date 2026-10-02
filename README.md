@@ -16,9 +16,10 @@ Open **http://localhost:8790/workbench/**: every screen clickable in a phone fra
 ```
 docs/ux/               personas, journeys, screen inventory, interaction spec
 design_system/         tokens.json → tokens.css + tokens.dart; token-only components; catalogue
-workbench/             the UX workbench (pages · phone · properties), interaction-config.json
+workbench/             the UX workbench (pages · phone · properties · Illustration Library), interaction-config.json
+tools/illustrate/      local illustration pipeline: `node tools/illustrate/serve.mjs` (PGlite + mock provider + workbench)
 supabase/migrations/   the whole game engine lives in Postgres (apply 0001 → 0009 in order)
-supabase/functions/    verify page (Edge Function)
+supabase/functions/    verify page · illustrate worker (Edge Functions)
 app/                   Flutter: player app + admin panel
 web/marketing/         static marketing site + verify fallback
 tools/dbtest/          PGlite test harness — `cd tools/dbtest && npm install && node test.mjs`

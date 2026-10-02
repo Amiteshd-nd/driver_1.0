@@ -19,9 +19,9 @@
     ['Settings', ['settings','permission-receipt','data-and-account']],
     ['Celebrations', ['celebration-growth','celebration-mastered','celebration-welcome-back','celebration-discovery']],
     ['System', ['setup-needed']],
-    ['Design system', ['catalogue']]
+    ['Design system', ['catalogue','library']]
   ];
-  const TITLES = { welcome: 'Welcome', 'sign-in': 'Sign in', 'perm-location': 'Permission · Location', 'perm-motion': 'Permission · Motion', 'perm-activity': 'Permission · Activity', 'perm-health': 'Permission · Health', 'perm-notifications': 'Permission · Notifications', fairness: 'Fairness (age & sex)', 'onboarding-done': 'Onboarding done', today: 'Today', 'run-ready': 'Run · ready', 'run-recording': 'Run · recording', 'run-finish': 'Run · finish', reveal: 'Card reveal', 'card-detail': 'Card detail', poster: 'Share poster', collection: 'Collection', 'serial-search': 'Serial search', 'verify-web': 'Public verify page (web)', encyclopedia: 'Encyclopedia', 'animal-entry': 'Animal entry', settings: 'You (settings)', 'permission-receipt': 'Permission receipt', 'data-and-account': 'Data & account', 'celebration-growth': 'Celebration · growth', 'celebration-mastered': 'Celebration · mastered', 'celebration-welcome-back': 'Celebration · welcome back', 'celebration-discovery': 'Celebration · discovery', 'setup-needed': 'Setup needed', catalogue: 'Living catalogue' };
+  const TITLES = { welcome: 'Welcome', 'sign-in': 'Sign in', 'perm-location': 'Permission · Location', 'perm-motion': 'Permission · Motion', 'perm-activity': 'Permission · Activity', 'perm-health': 'Permission · Health', 'perm-notifications': 'Permission · Notifications', fairness: 'Fairness (age & sex)', 'onboarding-done': 'Onboarding done', today: 'Today', 'run-ready': 'Run · ready', 'run-recording': 'Run · recording', 'run-finish': 'Run · finish', reveal: 'Card reveal', 'card-detail': 'Card detail', poster: 'Share poster', collection: 'Collection', 'serial-search': 'Serial search', 'verify-web': 'Public verify page (web)', encyclopedia: 'Encyclopedia', 'animal-entry': 'Animal entry', settings: 'You (settings)', 'permission-receipt': 'Permission receipt', 'data-and-account': 'Data & account', 'celebration-growth': 'Celebration · growth', 'celebration-mastered': 'Celebration · mastered', 'celebration-welcome-back': 'Celebration · welcome back', 'celebration-discovery': 'Celebration · discovery', 'setup-needed': 'Setup needed', catalogue: 'Living catalogue', library: 'Illustration Library' };
   const STATES = { 'sign-in': ['sent','error'], 'perm-location': ['denied'], today: ['loading','error'], 'run-recording': ['gps-searching','auto-paused','paused','offline'], 'run-finish': ['confirm'], collection: ['loading'], 'serial-search': ['loading','found','not-found'], 'data-and-account': ['confirm'] };
   const TRIGGERS = ['first-launch','sign-in-complete','permission-granted','permission-denied','run-started','run-auto-paused','gps-lost','gps-regained','run-ended','run-floor-not-met','run-rejected','run-unverified','run-capped','card-issued','rare-card-issued','animal-grew','animal-mastered','welcome-back','discovery-time','discovery-explorer','discovery-souvenir','discovery-migratory','weekly-card-ready','monthly-card-ready','no-weekly-card','serial-found','serial-not-found','link-copied','card-visibility-toggled','poster-exported','offline-saved','back-online','permission-toggled','data-exported','account-deleted'];
   const EASINGS = ['standard','decelerate','accelerate','emphasised','spring'];
@@ -73,7 +73,9 @@
   function renderPhone() {
     const vp = $('viewport'); vp.setAttribute('data-mode', W.mode); vp.setAttribute('data-reduced', String(W.opts.reduced));
     $('phone').setAttribute('data-device', W.device);
+    $('library').hidden = true; $('catalogue').hidden = true;
     if (W.page === 'catalogue') { $('stage').classList.add('is-catalogue'); Catalogue.render($('catalogue'), W.mode); return; }
+    if (W.page === 'library') { $('stage').classList.add('is-catalogue'); Library.render($('library'), W.mode).then(() => applyArt()); return; }
     $('stage').classList.remove('is-catalogue');
     const fn = SCREENS[W.page] || SCREENS.today;
     $('screen').innerHTML = fn({ state: W.state }, W);
@@ -83,6 +85,7 @@
   }
   function renderProps() {
     const id = W.page, pc = pageCfg(id), panel = $('props');
+    if (id === 'library') { panel.innerHTML = `<h2>Illustration Library</h2><p class="hint">Every animal × stage × variant with its status, provider, attempts and cost. <b>Generate missing</b> enqueues (idempotently) and runs the worker; <b>Approve</b> is what puts art on cards. The phone frame reads the same approved paths users will see.</p><p class="hint">Local: <code>node tools/illustrate/serve.mjs</code> is the backend (PGlite + mock provider). Production: Supabase RPCs + the <code>illustrate</code> Edge Function, same shapes.</p>`; return; }
     if (id === 'catalogue') { panel.innerHTML = `<h2>Living catalogue</h2><p class="hint">Every token and component, every variant and state, light and dark. Edit <code>design_system/tokens.json</code> and run the build to change anything here.</p>`; return; }
     const anims = Object.entries(pc.animations), toasts = Object.entries(pc.toasts);
     const field = (label, inner) => `<label class="field"><span>${esc(label)}</span>${inner}</label>`;
@@ -252,9 +255,18 @@
   ['reduced','nogps','offline'].forEach(k => $('opt-' + k).addEventListener('change', e => { W.opts[k] = e.target.checked; renderPhone(); }));
   $('reset').addEventListener('click', () => { clearInterval(W.ticker); setPersona(W.personaId); go(W.user.fresh ? 'welcome' : 'today'); });
 
+  // ---------- real illustrations (approved only) ----------
+  function applyArt() {
+    for (const a of DATA.animals) a.artUrls = {};
+    for (const r of Library.rows()) { if (r.status === 'approved' && (r.svg || r.png)) { const a = DATA.animals.find(x => x.slug === r.slug); if (a) a.artUrls[r.stage] = Library.urlFor(r.svg || r.png); } }
+    if (W.user && W.page !== 'library' && W.page !== 'catalogue') renderPhone();   // no persona yet during boot → nothing to repaint
+  }
+  window.addEventListener('fc:art-changed', applyArt);
+
   // ---------- boot ----------
-  loadConfig().then(() => {
+  loadConfig().then(() => Library.load().catch(() => {})).then(() => {
     $('personas').innerHTML = DATA.personas.map(p => `<button class="persona${p.id === 'arjun' ? ' is-on' : ''}" data-persona="${p.id}"><b>${esc(p.name)}</b><span>${esc(p.blurb)}</span></button>`).join('');
     setPersona('arjun');
+    applyArt();   // now that a persona is loaded, paint any approved art onto the cards
   });
 })();

@@ -1,6 +1,6 @@
 # Source documents (as written, unedited)
 
-The seven original project documents by @amitesh, dated 2 Oct 2026. They are the authority for *what* Flying Cobra is. The derived docs one level up (`docs/ALGORITHMS.md`, `DESIGN.md`, `API.md`, `ARCHITECTURE.md`, `PHASES.md`) are the authority for *how* it was built. Where the two disagree, these files win and the derived docs should be corrected.
+The nine original project documents by @amitesh, dated 2 Oct 2026. They are the authority for *what* Flying Cobra is. The derived docs one level up (`docs/ALGORITHMS.md`, `DESIGN.md`, `API.md`, `ARCHITECTURE.md`, `PHASES.md`) are the authority for *how* it was built. Where the two disagree, these files win and the derived docs should be corrected.
 
 | File | What it is | Used to build |
 |---|---|---|
@@ -10,6 +10,8 @@ The seven original project documents by @amitesh, dated 2 Oct 2026. They are the
 | [Running-App-Design-Presentation.md](Running-App-Design-Presentation.md) | Presentation-ready walkthrough of the concept and its logic, with a full parameter reference appendix. | `docs/DESIGN.md` voice and the "slow is never shame" principle; the parameter table was used to audit the rules engine. |
 | [Running-App-UX-Prototype-PRD.md](Running-App-UX-Prototype-PRD.md) | Spec for the design prototype: design phase with specialised agents, the three-column workbench, the design-system package, `interaction-config.json`. | `/docs/ux`, `/workbench`, `/design_system`. |
 | [Running-App-UX-Prototype-Prompt.md](Running-App-UX-Prototype-Prompt.md) | The three-step build prompt for the workbench. | Build order for the UX prototype phase. |
+| [Running-App-Illustration-Pipeline-PRD.md](Running-App-Illustration-Pipeline-PRD.md) | Spec for automatic, deduplicated animal illustrations: data model with a unique constraint, claim/retry worker, provider adapter, QA, vectorisation, admin review. | `supabase/migrations/0010_illustrations.sql`, `supabase/functions/illustrate/`, `docs/illustration-pipeline.md`, the workbench Illustration Library. |
+| [Running-App-Illustration-Pipeline-Prompts.md](Running-App-Illustration-Pipeline-Prompts.md) | The five build prompts for the pipeline. | Build order for the illustration phase. |
 | [Running-App-Video-Treatment.md](Running-App-Video-Treatment.md) | Five scene-by-scene marketing films, tone, casting and locations. | The reveal moment in `docs/DESIGN.md` §6, the celebration copy, and the marketing site's hero and story sections. |
 
 ## Audit against the build

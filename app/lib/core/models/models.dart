@@ -22,6 +22,49 @@ T _enumFrom<T extends Enum>(List<T> values, String? name, T fallback) =>
 double? _num(dynamic v) => v == null ? null : (v is num ? v.toDouble() : double.tryParse(v.toString()));
 int? _int(dynamic v) => v == null ? null : (v is num ? v.toInt() : int.tryParse(v.toString()));
 
+/// Reads one stage's art path out of an `animals.art` map. Supports both shapes:
+/// the legacy plain string (`"card-art/<slug>/adult.png"`) and the pipeline's
+/// `{"png": path, "svg": path}` object (paths inside bucket `animal-art`).
+/// Prefers svg (crisp at any size) unless [preferPng] is set (e.g. for `Image.network` thumbs).
+String? artPathIn(Map<String, dynamic> art, Stage stage, {bool preferPng = false}) {
+  final v = art[stage.name];
+  if (v == null) return null;
+  if (v is String) return v.trim().isEmpty ? null : v;
+  if (v is Map) {
+    final png = v['png']?.toString(), svg = v['svg']?.toString();
+    final first = preferPng ? png : svg, second = preferPng ? svg : png;
+    if (first != null && first.trim().isNotEmpty) return first;
+    if (second != null && second.trim().isNotEmpty) return second;
+  }
+  return null;
+}
+
+/// The approved illustration for one (animal, stage) as returned by `illustration_urls`
+/// and carried on `card_json.illustration`. Paths live inside bucket `animal-art`.
+/// `status` is `approved` when art exists, otherwise the pipeline state (`queued`,
+/// `pending_review`, `none`, …) — only approved art is ever shown to players.
+class Illustration {
+  const Illustration({this.png, this.svg, this.status = 'none'});
+
+  final String? png, svg;
+  final String status;
+
+  bool get isApproved => status == 'approved';
+
+  /// svg first, then png; null when neither is usable.
+  String? get bestPath {
+    if (svg != null && svg!.trim().isNotEmpty) return svg;
+    if (png != null && png!.trim().isNotEmpty) return png;
+    return null;
+  }
+
+  factory Illustration.fromJson(Map<String, dynamic> j) => Illustration(
+        png: j['png'] as String?,
+        svg: j['svg'] as String?,
+        status: (j['status'] ?? 'none') as String,
+      );
+}
+
 extension RarityX on Rarity {
   bool get isRarePlus => index >= Rarity.rare.index;
   String get label => switch (this) {
@@ -67,7 +110,8 @@ class Animal {
   String? get superpower => encyclopedia['superpower'] as String?;
   String? get indiaNote => encyclopedia['india_note'] as String?;
   String? get size => encyclopedia['size'] as String?;
-  String? artPath(Stage stage) => art[stage.name] as String?;
+  /// Storage path for this stage's approved art (svg preferred, then png; legacy string ok).
+  String? artPath(Stage stage, {bool preferPng = false}) => artPathIn(art, stage, preferPng: preferPng);
 
   factory Animal.fromJson(Map<String, dynamic> j) => Animal(
         id: j['id'] as String,
@@ -110,12 +154,17 @@ class CollectibleCard {
     required this.issuedAt,
     required this.verifyUrl,
     this.isPublic = true,
+    this.illustration,
   });
 
   final String id, animalId, slug, name, code, family, flavourLine, periodKey;
   final Rarity rarity;
   final FamilyPalette palette;
   final Map<String, dynamic> art;
+
+  /// Approved illustration for this card's stage (from `card_json`); null when built
+  /// from a plain `cards` row join, in which case [art] is the fallback.
+  final Illustration? illustration;
   final int serialNo, tier;
   final CardScope scope;
   final Stage stage;
@@ -130,7 +179,7 @@ class CollectibleCard {
   /// "Cheetah #0042" — the serial as printed on the card.
   String get serial => '$name #${serialNo.toString().padLeft(Brand.serialPad, '0')}';
   String get serialShort => '#${serialNo.toString().padLeft(Brand.serialPad, '0')}';
-  String? artPath(Stage s) => art[s.name] as String?;
+  String? artPath(Stage s, {bool preferPng = false}) => artPathIn(art, s, preferPng: preferPng);
 
   double? get distanceKm => _num(stats['distance_km']);
   int? get durationS => _int(stats['duration_s']);
@@ -183,6 +232,7 @@ class CollectibleCard {
       issuedAt: DateTime.tryParse((j['issued_at'] ?? '') as String)?.toLocal() ?? DateTime.now(),
       verifyUrl: (j['verify_url'] ?? '') as String,
       isPublic: (j['is_public'] ?? true) as bool,
+      illustration: j['illustration'] is Map ? Illustration.fromJson((j['illustration'] as Map).cast<String, dynamic>()) : null,
     );
   }
 

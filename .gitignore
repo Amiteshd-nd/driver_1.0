@@ -5,3 +5,4 @@ app/build/
 app/.dart_tool/
 .DS_Store
 supabase/.temp/
+tools/illustrate/node_modules/

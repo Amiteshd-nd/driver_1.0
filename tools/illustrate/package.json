@@ -1,0 +1,5 @@
+{ "name": "flyingcobra-illustrate-local", "private": true, "type": "module",
+  "description": "Local runner for the illustration pipeline: PGlite + filesystem storage + the shared worker. Optional deps enable real generation and QA.",
+  "scripts": { "serve": "node serve.mjs" },
+  "dependencies": { "@electric-sql/pglite": "^0.5.8" },
+  "optionalDependencies": { "@anthropic-ai/sdk": "latest", "zod": "^3.23.8", "potrace": "^2.1.8" } }

@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "name": "Flying Cobra illustration style v1",
+  "notes": "Locked, versioned. Changing any text here means a new version in style_templates (the admin editor does this); existing art is never overwritten. Never name brands, franchises, studios or artists.",
+
+  "template": "A single {animal_name}, {stage_cues}. {features}. Flat vector illustration with clean geometric shapes and smooth curves, limited harmonious palette, soft cel shading, no outlines or thin consistent outlines. Light, airy background in a pale warm tone with a soft radial glow behind the animal, gentle light rays and a few small sparkles for a quiet majestic feel. The animal is centred, facing slightly left, whole body visible, in a calm confident pose. No text, no letters, no logo, no watermark, no border, no frame, no people, no other animals. Not photorealistic, not 3D render, not painterly. Square composition with generous margin.",
+
+  "stage_cues": {
+    "baby":  "as a baby: rounder body, noticeably bigger head and eyes, shorter limbs, soft and curious",
+    "young": "as a young animal: lighter build, slightly oversized paws or feet, alert and playful",
+    "adult": "as a full-grown adult: true proportions, strong confident stance, calm and majestic"
+  },
+
+  "negative": "photo, photorealistic, realistic fur texture, 3D, render, painterly, sketch, text, letters, caption, watermark, signature, logo, border, frame, dark background, busy background, scenery, multiple animals, people, hands, blurry, cropped, deformed, extra limbs",
+
+  "qa_criteria": [
+    "the species is recognisably {animal_name}",
+    "exactly one animal, whole body visible, centred",
+    "light background (pale, airy), not dark or busy",
+    "flat vector illustration look: clean shapes, not a photograph, not a 3D render",
+    "no text, letters, watermark, logo, border or frame",
+    "subtle majestic effect present: a soft glow, light rays or sparkles",
+    "stage cues read correctly for {stage} (baby = rounder with bigger head and eyes; adult = true proportions)"
+  ],
+
+  "retry_adjustments": [
+    "Emphasise: 'exactly one animal, whole body visible, centred, nothing else in the frame'.",
+    "Emphasise: 'flat vector illustration, simple shapes, absolutely not a photograph'.",
+    "Emphasise: 'plain pale background, no scenery, no text anywhere'."
+  ],
+
+  "output": { "size": "1024x1024", "format": "png", "background": "opaque" }
+}

@@ -161,7 +161,7 @@ class _AnimalsSectionState extends ConsumerState<AnimalsSection> {
     final an = a.animal;
     final c = context.colors;
     final repo = ref.read(adminRepoProvider);
-    final adultArt = an.artPath(Stage.adult);
+    final adultArt = an.artPath(Stage.adult, preferPng: true); // ArtThumb uses Image.network, which cannot decode svg
     final muted = TextStyle(color: c.inkMuted);
     return DataRow(
       cells: [

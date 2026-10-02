@@ -142,6 +142,65 @@ class RuleHistoryRow {
       );
 }
 
+/// One row of `admin_illustration_library()`: an (animal × stage × variant × style version) ledger entry.
+class IllustrationRow {
+  const IllustrationRow({
+    required this.id,
+    required this.animalId,
+    required this.slug,
+    required this.name,
+    required this.family,
+    required this.stage,
+    required this.variant,
+    required this.styleVersion,
+    required this.status,
+    required this.attempts,
+    required this.costCents,
+    this.png,
+    this.svg,
+    this.provider,
+    this.model,
+    this.lastError,
+    this.qaNotes,
+    this.updatedAt,
+  });
+
+  final String id, animalId, slug, name, family, stage, variant, status;
+  final int styleVersion, attempts;
+  final double costCents;
+  final String? png, svg, provider, model, lastError, qaNotes;
+  final DateTime? updatedAt;
+
+  static const statuses = ['queued', 'generating', 'pending_review', 'approved', 'rejected', 'failed'];
+
+  Stage get stageEnum => Stage.values.firstWhere((s) => s.name == stage, orElse: () => Stage.adult);
+  bool get hasArt => (svg != null && svg!.isNotEmpty) || (png != null && png!.isNotEmpty);
+
+  /// svg first (crisp), then png.
+  String? get bestPath => (svg != null && svg!.isNotEmpty) ? svg : ((png != null && png!.isNotEmpty) ? png : null);
+
+  factory IllustrationRow.fromJson(Map<String, dynamic> j) => IllustrationRow(
+        id: j['id'] as String,
+        animalId: (j['animal_id'] ?? '') as String,
+        slug: (j['slug'] ?? '') as String,
+        name: (j['name'] ?? '') as String,
+        family: (j['family'] ?? 'calm') as String,
+        stage: (j['stage'] ?? 'adult') as String,
+        variant: (j['variant'] ?? 'base') as String,
+        styleVersion: _int(j['style_version']) ?? 1,
+        status: (j['status'] ?? 'queued') as String,
+        attempts: _int(j['attempts']) ?? 0,
+        costCents: _num(j['cost_cents']) ?? 0,
+        png: j['png'] as String?,
+        svg: j['svg'] as String?,
+        provider: j['provider'] as String?,
+        model: j['model'] as String?,
+        lastError: j['last_error'] as String?,
+        qaNotes: j['qa_notes'] as String?,
+        updatedAt: _ts(j['updated_at']),
+      );
+}
+
 /// `profiles` row as seen by support (adds created_at; never shows age/sex).
 class AdminUser {
   const AdminUser({required this.profile, required this.createdAt});
@@ -259,10 +318,72 @@ class AdminRepo {
     return '$artBucket/$objectPath';
   }
 
-  /// Public URL for an `animals.art` path (`card-art/<slug>/<stage>.png`).
+  /// Public URL for an `animals.art` path. Legacy uploads are `card-art/<slug>/<stage>.png`;
+  /// pipeline paths (`<slug>/<stage>/<variant>/vN.png|svg`) live in `animal-art`.
   String artUrl(String path) {
-    final p = path.startsWith('$artBucket/') ? path.substring(artBucket.length + 1) : path;
-    return _db.storage.from(artBucket).getPublicUrl(p);
+    if (path.startsWith('http://') || path.startsWith('https://')) return path;
+    if (path.startsWith('$artBucket/')) return _db.storage.from(artBucket).getPublicUrl(path.substring(artBucket.length + 1));
+    final p = path.startsWith('$illustrationBucket/') ? path.substring(illustrationBucket.length + 1) : path;
+    return _db.storage.from(illustrationBucket).getPublicUrl(p);
+  }
+
+  // ---------- illustration pipeline (migration 0010) ----------
+  static const illustrationBucket = 'animal-art';
+  static const illustrateFunction = 'illustrate';
+
+  Future<List<IllustrationRow>> illustrationLibrary() async {
+    final r = await _db.rpc('admin_illustration_library');
+    return _rows(r).map(IllustrationRow.fromJson).toList();
+  }
+
+  /// Enqueues a queued row per missing (animal, stage) for the active style. Returns how many NEW rows were created.
+  Future<int> enqueueMissing({String variant = 'base'}) async {
+    final r = await _db.rpc('illustrations_enqueue_missing', params: {'p_variant': variant});
+    return _int(r) ?? 0;
+  }
+
+  /// decision: 'approve' | 'reject' | 'regenerate'.
+  Future<void> review(String id, String decision) => _db.rpc('illustrations_review', params: {'p_id': id, 'p_decision': decision});
+
+  /// Asks the `illustrate` Edge Function to run up to [passes] claim→generate→QA passes.
+  /// Never throws: on failure returns `{'ok': false, 'error': message}`.
+  Future<Map<String, dynamic>> runWorker({int passes = 5}) => _invokeIllustrate({'action': 'run', 'passes': passes});
+
+  /// Renders one preview with an unsaved template. Body: {slug, stage, name, template, stage_cues, negative}.
+  Future<Map<String, dynamic>> previewIllustration(Map<String, dynamic> body) => _invokeIllustrate({...body, 'action': 'preview'});
+
+  Future<Map<String, dynamic>> _invokeIllustrate(Map<String, dynamic> body) async {
+    try {
+      final res = await _db.functions.invoke(illustrateFunction, body: body);
+      final d = res.data;
+      if (d is Map) return {'ok': true, ...d.cast<String, dynamic>()};
+      return {'ok': true, 'status': res.status, 'data': d};
+    } on FunctionException catch (e) {
+      final detail = e.details == null ? (e.reasonPhrase ?? '') : e.details.toString();
+      return {'ok': false, 'error': 'Edge Function "$illustrateFunction" returned ${e.status}${detail.isEmpty ? '' : ': $detail'}'};
+    } catch (e) {
+      return {'ok': false, 'error': e.toString()};
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> styleTemplates() async {
+    final r = await _db.from('style_templates').select().order('version', ascending: false);
+    return _rows(r);
+  }
+
+  /// Inserts [draft] as version max+1 and makes it the only active template.
+  /// Existing illustrations keep their own style_version, so nothing already approved changes.
+  Future<int> saveStyleTemplate(Map<String, dynamic> draft) async {
+    final latest = await _db.from('style_templates').select('version').order('version', ascending: false).limit(1).maybeSingle();
+    final next = (_int(latest?['version']) ?? 0) + 1;
+    await _db.from('style_templates').update({'is_active': false}).eq('is_active', true);
+    await _db.from('style_templates').insert({
+      ...draft,
+      'version': next,
+      'is_active': true,
+      'created_by': _db.auth.currentUser?.id,
+    });
+    return next;
   }
 }
 
@@ -277,3 +398,5 @@ final adminRegionsProvider = FutureProvider<List<RegionRow>>((ref) => ref.watch(
 final adminAgeFactorsProvider = FutureProvider<List<AgeFactor>>((ref) => ref.watch(adminRepoProvider).ageFactors());
 final adminHistoryProvider = FutureProvider<List<RuleHistoryRow>>((ref) => ref.watch(adminRepoProvider).history());
 final adminUsersProvider = FutureProvider<List<AdminUser>>((ref) => ref.watch(adminRepoProvider).users());
+final adminIllustrationsProvider = FutureProvider<List<IllustrationRow>>((ref) => ref.watch(adminRepoProvider).illustrationLibrary());
+final adminStyleTemplatesProvider = FutureProvider<List<Map<String, dynamic>>>((ref) => ref.watch(adminRepoProvider).styleTemplates());

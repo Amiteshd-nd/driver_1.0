@@ -168,6 +168,8 @@
   flex: 1 1 auto; min-height: 0; margin: 0 5cqw; border-radius: var(--radius-art);
   background: var(--fam-bg); position: relative; overflow: hidden; display: grid; place-items: center;
 }
+.card__art--real { background: var(--fam-bg); }
+.card__img { width: 100%; height: 100%; object-fit: cover; display: block; }   /* rarity border, foil and glow stay as overlays — never baked into the image */
 .card__blob { border-radius: 50%; background: var(--fam-accent); aspect-ratio: 1; display: grid; place-items: center; width: calc(var(--tier-art, var(--tier-young-art)) * 100%); }
 .card[data-tier='baby']  .card__blob { --tier-art: var(--tier-baby-art); }
 .card[data-tier='young'] .card__blob { --tier-art: var(--tier-young-art); }

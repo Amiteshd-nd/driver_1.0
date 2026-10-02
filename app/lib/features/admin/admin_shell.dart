@@ -11,6 +11,7 @@ import 'age_factors_section.dart';
 import 'animals_section.dart';
 import 'config_section.dart';
 import 'history_section.dart';
+import 'illustrations_section.dart';
 import 'regions_section.dart';
 import 'rules_section.dart';
 import 'seasons_section.dart';
@@ -19,6 +20,7 @@ import 'users_section.dart';
 
 enum AdminSection {
   animals('animals', 'Animals', Icons.pets_outlined, Icons.pets),
+  illustrations('illustrations', 'Illustrations', Icons.brush_outlined, Icons.brush),
   rules('rules', 'Rules', Icons.rule_outlined, Icons.rule),
   config('config', 'Config', Icons.tune_outlined, Icons.tune),
   seasons('seasons', 'Seasons', Icons.calendar_month_outlined, Icons.calendar_month),
@@ -141,6 +143,7 @@ class _AdminScaffold extends StatelessWidget {
 
   Widget _body() => switch (section) {
         AdminSection.animals => const AnimalsSection(),
+        AdminSection.illustrations => const IllustrationsSection(),
         AdminSection.rules => const RulesSection(),
         AdminSection.config => const ConfigSection(),
         AdminSection.seasons => const SeasonsSection(),

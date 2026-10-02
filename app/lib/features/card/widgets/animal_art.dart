@@ -2,14 +2,23 @@ import 'dart:math' as math;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/models/models.dart';
 import '../../../core/supabase.dart';
 import '../../../core/theme/tokens.dart';
 
-/// The animal illustration for one stage. Loads commissioned art from the
-/// `card-art` bucket when a path exists; otherwise (or on any error) renders the
-/// deterministic procedural placeholder from DESIGN.md §5.
+/// The animal illustration for one stage.
+///
+/// Source order: an approved [illustration] (svg, then png) → [path] from
+/// `animals.art` → the deterministic [ProceduralArt] placeholder (DESIGN.md §5).
+/// Storage paths live in the public bucket `animal-art` (legacy `card-art/…`
+/// paths still resolve). `.svg` renders via flutter_svg, `.png` via
+/// cached_network_image; any load error falls back to the placeholder.
+///
+/// NOTE: rarity border, foil and glow are NOT painted here. They stay in
+/// `CollectibleCardView` as overlays around/over this widget, so the art file
+/// itself never carries rarity.
 class AnimalArt extends StatelessWidget {
   const AnimalArt({
     super.key,
@@ -18,33 +27,80 @@ class AnimalArt extends StatelessWidget {
     required this.family,
     required this.stage,
     this.path,
+    this.illustration,
     required this.palette,
   });
 
   final String slug, name, family;
   final Stage stage;
+
+  /// Storage path (svg or png) inside bucket `animal-art`, a legacy
+  /// `card-art/<slug>/<stage>.png` path, or a full http(s) URL.
   final String? path;
+
+  /// Pipeline pointer from `card_json.illustration`; used only when approved.
+  final Illustration? illustration;
+
   final FamilyPalette palette;
 
-  /// Public URL for a storage path (`<slug>/<stage>.png`, with or without the
-  /// bucket prefix). Full URLs pass through. Returns null when unusable.
+  static const bucket = 'animal-art';
+  static const legacyBucket = 'card-art';
+
+  /// Public URL for a storage path. Strips a leading `animal-art/`; a leading
+  /// `card-art/` routes to the legacy bucket. Full URLs pass through.
+  /// Returns null when the path is unusable.
   static String? resolveUrl(String? path) {
     if (path == null || path.trim().isEmpty) return null;
     final p = path.trim();
     if (p.startsWith('http://') || p.startsWith('https://')) return p;
-    final rel = p.startsWith('card-art/') ? p.substring('card-art/'.length) : p;
+    var b = bucket;
+    var rel = p;
+    if (p.startsWith('$bucket/')) {
+      rel = p.substring(bucket.length + 1);
+    } else if (p.startsWith('$legacyBucket/')) {
+      b = legacyBucket;
+      rel = p.substring(legacyBucket.length + 1);
+    }
     try {
-      return supabase.storage.from('card-art').getPublicUrl(rel);
+      return supabase.storage.from(b).getPublicUrl(rel);
     } catch (_) {
       return null;
     }
   }
 
+  /// True when the path (or URL, ignoring any query string) ends in `.svg`.
+  static bool isSvgPath(String? path) {
+    if (path == null) return false;
+    final q = path.indexOf('?');
+    final clean = (q >= 0 ? path.substring(0, q) : path).toLowerCase();
+    return clean.endsWith('.svg');
+  }
+
+  /// The path we will actually load: approved illustration first, then [path].
+  String? get effectivePath {
+    final i = illustration;
+    if (i != null && i.isApproved) {
+      final best = i.bestPath;
+      if (best != null) return best;
+    }
+    return path;
+  }
+
   @override
   Widget build(BuildContext context) {
     final placeholder = ProceduralArt(slug: slug, name: name, stage: stage, palette: palette);
-    final url = resolveUrl(path);
+    final chosen = effectivePath;
+    final url = resolveUrl(chosen);
     if (url == null) return placeholder;
+
+    if (isSvgPath(chosen)) {
+      return SvgPicture.network(
+        url,
+        fit: BoxFit.contain,
+        placeholderBuilder: (_) => placeholder,
+        errorBuilder: (_, __, ___) => placeholder,
+      );
+    }
     return CachedNetworkImage(
       imageUrl: url,
       fit: BoxFit.contain,

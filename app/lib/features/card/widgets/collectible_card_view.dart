@@ -218,7 +218,7 @@ class _CollectibleCardViewState extends State<CollectibleCardView> with TickerPr
           ColoredBox(color: pal.bg),
           Padding(
             padding: EdgeInsets.fromLTRB(pad, 28 * s, pad, 8 * s),
-            child: AnimalArt(slug: card.slug, name: card.name, family: card.family, stage: stage, path: card.artPath(stage), palette: pal),
+            child: AnimalArt(slug: card.slug, name: card.name, family: card.family, stage: stage, path: card.artPath(stage), illustration: card.illustration, palette: pal),
           ),
           if (style.foil) Positioned.fill(child: FoilOverlay(tilt: widget.interactive)),
           if (card.rarity == Rarity.epic || card.rarity == Rarity.legendary)

@@ -16,6 +16,8 @@
 
   /** Procedural placeholder art: deterministic per animal name (DESIGN.md §5). */
   function art(animal, tier) {
+    const url = animal.artUrls && animal.artUrls[tier];
+    if (url) return `<div class="card__art card__art--real"><img class="card__img" src="${esc(url)}" alt="" loading="lazy">${(animal.rarity === 'epic' || animal.rarity === 'legendary') ? '<div class="card__foil"></div>' : ''}</div>`;
     const h = hash(animal.name);
     const dots = [];
     const count = 2 + (h % 3);
