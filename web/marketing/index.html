@@ -3,21 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Flying Cobra — Run. Get an animal. Collect India.</title>
-  <meta name="description" content="Every run earns a collectible animal card with a serial number only you hold. No leaderboards. No rankings. Just a growing wild collection.">
+  <title>Flying Cobra: Run. Get an animal. Collect India.</title>
+  <meta name="description" content="Every run earns a collectible animal card with a serial number only you hold. No leaderboards, no rankings. A jogging app for India.">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#F7F3EC" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#121311" media="(prefers-color-scheme: dark)">
-  <meta property="og:title" content="Flying Cobra — Run. Get an animal. Collect India.">
+  <meta property="og:title" content="Flying Cobra: Run. Get an animal. Collect India.">
   <meta property="og:description" content="Every run earns a collectible animal card with a serial number only you hold. No leaderboards.">
   <meta property="og:type" content="website">
   <link rel="stylesheet" href="../../design_system/fonts/satoshi.css">
+  <link rel="stylesheet" href="../../design_system/tokens.css">
   <link rel="stylesheet" href="styles.css">
-<script src="../../design_system/typeface.js"></script>
+  <script src="../../design_system/typeface.js"></script>
+  <script type="importmap">{ "imports": { "three": "../vendor/three/three.module.js" } }</script>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='%23C8551B'%3E%3Cellipse cx='19' cy='36' rx='10' ry='12'/%3E%3Cellipse cx='39' cy='20' rx='10' ry='12'/%3E%3Cellipse cx='61' cy='20' rx='10' ry='12'/%3E%3Cellipse cx='81' cy='36' rx='10' ry='12'/%3E%3Cpath d='M38 52h24q16 0 19 16l3 10q2 16-14 16H30q-16 0-14-16l3-10q3-16 19-16z'/%3E%3C/g%3E%3C/svg%3E">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+  <canvas id="scene-canvas" aria-hidden="true"></canvas>
 
   <header class="nav">
     <div class="wrap">
@@ -37,140 +40,326 @@
           <li><a href="#privacy">Privacy</a></li>
         </ul>
       </nav>
-      <div class="nav-cta">
-        <a class="btn btn--primary" href="#" data-store="ios">App Store</a>
-        <a class="btn" href="#" data-store="android">Google Play</a>
-      </div>
+      <div class="nav-cta"><a class="btn btn--primary" href="#download">Get the app</a></div>
     </div>
   </header>
 
   <main id="main">
+
+    <!-- Scene 1: the dawn road -->
     <section class="hero" id="top" aria-labelledby="hero-h">
       <div class="wrap">
         <div class="hero-copy">
           <p class="eyebrow">A jogging app for India</p>
           <h1 id="hero-h">Run. Get an animal. Collect India.</h1>
-          <p class="lede">Every run earns a collectible animal card with a serial number only you hold. No leaderboards. No rankings. Just a growing wild collection.</p>
+          <p class="lede">Every run earns a collectible animal card with a serial number only you hold. No leaderboards, no rankings.</p>
           <div class="hero-actions">
-            <a class="btn btn--primary btn--store" href="#" data-store="ios">
+            <a class="btn btn--primary btn--store" href="#download" data-store="ios">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.2-.8s1.9.8 3.2.8c1.3 0 2.2-1.2 3-2.4.9-1.3 1.3-2.6 1.3-2.7 0 0-2.6-1-2.6-3.9zM14 5.4c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1 .1 2.1-.6 2.8-1.4z"/></svg>
               <span><small>Download on the</small>App Store</span>
             </a>
-            <a class="btn btn--store" href="#" data-store="android">
+            <a class="btn btn--store" href="#download" data-store="android">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3.5v17c0 .4.2.7.5.9L13.8 12 4.5 2.6c-.3.2-.5.5-.5.9zm11.3 6.9L6.4 5.3l7.2 7.2 1.7-2.1zm3.9 1.1-2.5-1.4-2 2.4 2 2.3 2.5-1.4c.7-.4.7-1.5 0-1.9zM6.4 19.2l8.9-5.1-1.7-2-7.2 7.1z"/></svg>
               <span><small>Get it on</small>Google Play</span>
             </a>
           </div>
-          <p class="hero-note">Free. Works with just location. Everything else is optional and asked for separately.</p>
         </div>
+        <div class="stage hero-stage" data-scene="hero" aria-hidden="true">
+          <p class="stage-fallback">A runner and a cheetah on a dawn road. Your browser cannot show the 3D scene.</p>
+        </div>
+        <p class="visually-hidden">Illustration: a runner jogs along a quiet road at dawn with a cheetah loping beside them.</p>
+      </div>
+    </section>
 
-        <div class="hero-card">
-          <article class="card card--epic" style="--fam-bg:#F5E2C8;--fam-fg:#5A2E0C;--fam-accent:#E0902F"
-                   aria-label="Cheetah, epic, serial 42. 5.0 kilometres in 19 minutes 35 seconds at 3:55 per kilometre. Verified.">
+    <!-- Scene 2: one moment per run -->
+    <section class="how" id="how" aria-labelledby="how-h" data-beat="0">
+      <div class="wrap">
+        <div class="how-sticky">
+          <div class="flip" data-family="swift" aria-hidden="true">
+            <div class="flip__inner">
+              <div class="flip__face flip__back">
+                <svg viewBox="0 0 100 100" focusable="false">
+                  <ellipse cx="19" cy="36" rx="10" ry="12"/><ellipse cx="39" cy="20" rx="10" ry="12"/>
+                  <ellipse cx="61" cy="20" rx="10" ry="12"/><ellipse cx="81" cy="36" rx="10" ry="12"/>
+                  <path d="M38 52h24q16 0 19 16l3 10q2 16-14 16H30q-16 0-14-16l3-10q3-16 19-16z"/>
+                </svg>
+              </div>
+              <div class="flip__face flip__front">
+                <article class="card card--epic">
+                  <div class="card__cap"><span>Monsoon 2026</span><span class="card__rarity">Epic</span></div>
+                  <div class="card__art"><span class="card__glyph">C</span></div>
+                  <div class="card__body">
+                    <h3 class="card__name">Cheetah</h3>
+                    <p class="card__flavour">the comeback sprinter</p>
+                    <hr class="card__rule">
+                    <p class="card__stats">5.0 km in 19:35 · 3:55 per km</p>
+                    <p class="card__serial"><span>Cheetah</span><span>#0312</span><span class="tick">✓</span></p>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+          <p class="visually-hidden">Example card: Cheetah, epic, serial number 312, from a 5 kilometre run in 19 minutes 35 seconds, verified.</p>
+        </div>
+        <div class="beats">
+          <div class="beat" data-beat-index="1">
+            <h2 id="how-h">One moment per run.</h2>
+            <p>Three seconds after you stop, a card turns over. Everything else in the app is quieter than that.</p>
+          </div>
+          <div class="beat" data-beat-index="2">
+            <h3>You run.</h3>
+            <p>No start button needed. Flying Cobra notices a run on its own, measures it and stays out of your way. A big Start exists for people who like intent.</p>
+          </div>
+          <div class="beat" data-beat-index="3">
+            <h3>It turns over.</h3>
+            <p>Which animal you get depends on the run you did: where, when, how far, how steady. Earn the same animal again and your bond grows, from baby to young to adult.</p>
+            <p class="hint">Some animals only come out at night.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scene 3: your pace picks the animal -->
+    <section id="animals" aria-labelledby="animals-h">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <h2 id="animals-h">Your pace picks the animal, not the prize.</h2>
+          <p class="lede">Fast and slow are different families, never high and low tiers. Same foil, same celebration, same card weight.</p>
+        </div>
+        <div class="segmented" role="radiogroup" aria-label="Pick a pace" id="pace">
+          <button type="button" role="radio" aria-checked="true" data-family="gentle">Gentle</button>
+          <button type="button" role="radio" aria-checked="false" data-family="calm">Calm</button>
+          <button type="button" role="radio" aria-checked="false" data-family="steady">Steady</button>
+          <button type="button" role="radio" aria-checked="false" data-family="swift">Swift</button>
+        </div>
+        <div class="pace-grid">
+          <div class="stage pace-stage" data-scene="pace" data-family="gentle" aria-hidden="true">
+            <p class="stage-fallback">A runner with a different animal beside them for each pace. Your browser cannot show the 3D scene.</p>
+          </div>
+          <div class="pace-side" aria-live="polite">
+            <div class="pick" id="pick" data-family="gentle">
+              <span class="pick__family" id="pick-family">Gentle family</span>
+              <span class="pick__name" id="pick-name">Star Tortoise</span>
+              <p class="pick__flavour" id="pick-flavour">unstoppable</p>
+            </div>
+            <p class="pick__also"><b>Also in this family:</b> <span id="pick-also">Hamster, Porcupine, Pangolin, Sloth Bear, Elephant</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scene 4: night and day -->
+    <section id="hours" aria-labelledby="hours-h">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <h2 id="hours-h">The hour you run changes what you find.</h2>
+          <p class="lede">Dawn has its birds and night has its own. Run before sunrise or after dark and a different bag opens.</p>
+        </div>
+        <div class="stage hours-stage" data-scene="daynight" aria-hidden="true">
+          <p class="stage-fallback">A rooster on a branch at dawn becomes an owl as the sky turns to night. Your browser cannot show the 3D scene.</p>
+        </div>
+        <div class="hours-cards">
+          <figure data-reveal data-family="dawn">
+            <article class="card">
+              <div class="card__cap"><span>Dawn</span><span class="card__rarity">Common</span></div>
+              <div class="card__art" aria-hidden="true"><span class="card__glyph">R</span></div>
+              <div class="card__body">
+                <h3 class="card__name">Rooster</h3>
+                <p class="card__flavour">the one who wakes the sun</p>
+                <hr class="card__rule">
+                <p class="card__stats">12.0 km in 1:25:40 · dawn</p>
+                <p class="card__serial"><span>Rooster</span><span>#1187</span><span class="tick">✓</span></p>
+              </div>
+            </article>
+            <figcaption>You found this one because you ran at dawn.</figcaption>
+          </figure>
+          <figure data-reveal data-family="time" style="--delay: 80ms">
+            <article class="card">
+              <div class="card__cap"><span>Night</span><span class="card__rarity">Common</span></div>
+              <div class="card__art" aria-hidden="true"><span class="card__glyph">O</span></div>
+              <div class="card__body">
+                <h3 class="card__name">Indian Eagle-Owl</h3>
+                <p class="card__flavour">the keeper of the dark</p>
+                <hr class="card__rule">
+                <p class="card__stats">6.2 km in 36:10 · night</p>
+                <p class="card__serial"><span>Owl</span><span>#0409</span><span class="tick">✓</span></p>
+              </div>
+            </article>
+            <figcaption>You found this one because you ran after dark.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scene 5: everywhere you run -->
+    <section id="everywhere" aria-labelledby="everywhere-h">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <h2 id="everywhere-h">Every place you run leaves you something to keep.</h2>
+          <p class="lede">A new state gives you its animal. A full week gives you a rarer one. Cross India over three weeks and a bird that crosses it too turns up.</p>
+        </div>
+        <div class="river-wrap">
+          <ul class="river" tabindex="0" aria-label="Example cards from across India" id="river">
+            <li data-family="regional">
+              <figure>
+                <article class="card card--rare">
+                  <div class="card__cap"><span>Monsoon 2026</span><span class="card__rarity">Rare</span></div>
+                  <div class="card__art" aria-hidden="true"><span class="card__glyph">H</span></div>
+                  <div class="card__body">
+                    <h3 class="card__name">Great Hornbill</h3>
+                    <p class="card__flavour">the great one of the canopy</p>
+                    <hr class="card__rule">
+                    <p class="card__stats">5.1 km in 29:08 · Kerala</p>
+                    <p class="card__serial"><span>Hornbill</span><span>#0076</span><span class="tick">✓</span></p>
+                  </div>
+                </article>
+                <figcaption><b>A souvenir from Kerala.</b> Your first run in a new state hands you that state's animal.</figcaption>
+              </figure>
+            </li>
+            <li data-family="weekly">
+              <figure>
+                <article class="card card--legendary card--radiant">
+                  <div class="card__cap"><span>Monsoon 2026</span><span class="card__rarity">Legendary</span></div>
+                  <div class="card__art" aria-hidden="true"><span class="card__glyph">T</span></div>
+                  <div class="card__body">
+                    <h3 class="card__name">Bengal Tiger</h3>
+                    <p class="card__flavour">the striped king</p>
+                    <hr class="card__rule">
+                    <p class="card__stats">7 run-days · 35 km</p>
+                    <p class="card__serial"><span>Tiger</span><span>#0041</span><span class="tick">✓</span></p>
+                  </div>
+                </article>
+                <figcaption><b>The weekly card.</b> Seven days of showing up mints what no single run can, with a radiant finish only consistency earns.</figcaption>
+              </figure>
+            </li>
+            <li data-family="regional">
+              <figure>
+                <article class="card card--rare">
+                  <div class="card__cap"><span>Winter 2026</span><span class="card__rarity">Rare</span></div>
+                  <div class="card__art" aria-hidden="true"><span class="card__glyph">C</span></div>
+                  <div class="card__body">
+                    <h3 class="card__name">Camel</h3>
+                    <p class="card__flavour">the ship of the desert</p>
+                    <hr class="card__rule">
+                    <p class="card__stats">10.4 km in 1:14:02 · Rajasthan</p>
+                    <p class="card__serial"><span>Camel</span><span>#0133</span><span class="tick">✓</span></p>
+                  </div>
+                </article>
+                <figcaption><b>Rajasthan, at a steady pace.</b> Effort is age-graded, so a long endurance jog at sixty counts in full.</figcaption>
+              </figure>
+            </li>
+            <li data-family="migratory">
+              <figure>
+                <article class="card card--rare">
+                  <div class="card__cap"><span>Winter 2026</span><span class="card__rarity">Rare</span></div>
+                  <div class="card__art" aria-hidden="true"><span class="card__glyph">G</span></div>
+                  <div class="card__body">
+                    <h3 class="card__name">Bar-headed Goose</h3>
+                    <p class="card__flavour">the one who crosses the Himalaya</p>
+                    <hr class="card__rule">
+                    <p class="card__stats">Three states · 21 days</p>
+                    <p class="card__serial"><span>Goose</span><span>#0058</span><span class="tick">✓</span></p>
+                  </div>
+                </article>
+                <figcaption><b>The migratory bird.</b> Run in three states inside three weeks and a bird that makes the same journey finds you.</figcaption>
+              </figure>
+            </li>
+            <li data-family="explorer">
+              <figure>
+                <article class="card">
+                  <div class="card__cap"><span>Monsoon 2026</span><span class="card__rarity">Common</span></div>
+                  <div class="card__art" aria-hidden="true"><span class="card__glyph">F</span></div>
+                  <div class="card__body">
+                    <h3 class="card__name">Indian Fox</h3>
+                    <p class="card__flavour">the clever path-finder</p>
+                    <hr class="card__rule">
+                    <p class="card__stats">4.4 km in 27:51 · new route</p>
+                    <p class="card__serial"><span>Fox</span><span>#0921</span><span class="tick">✓</span></p>
+                  </div>
+                </article>
+                <figcaption><b>A new route.</b> Zigzag through streets you have never traced and an explorer animal notices.</figcaption>
+              </figure>
+            </li>
+          </ul>
+          <div class="river-nav">
+            <button type="button" data-river="-1" aria-label="Previous cards"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <button type="button" data-river="1" aria-label="Next cards"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scene 6: trust -->
+    <section id="verify" aria-labelledby="verify-h">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <h2 id="verify-h">Real cards have serial numbers.</h2>
+          <p class="lede">Anyone can fake a card image. Nobody can fake a serial that lives in the Flying Cobra ledger. Type one in and you see that single card, or you learn that someone is bluffing.</p>
+        </div>
+        <form class="lookup" action="verify.html" method="get" id="lookup-form" data-reveal>
+          <label for="q">Look up a serial</label>
+          <input id="q" name="q" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="Tiger #0427" required aria-describedby="lookup-help">
+          <button class="btn btn--primary" type="submit">Verify</button>
+          <p id="lookup-help" class="help">Also accepts "tiger 427" or "TGR-0427". Only serials are searchable, never people.</p>
+        </form>
+        <div class="proof">
+          <article class="card card--epic" data-family="swift" data-reveal aria-label="Example: Cheetah, epic, serial 42. 5.0 kilometres in 19 minutes 35 seconds. Verified.">
             <div class="card__cap"><span>Monsoon 2026</span><span class="card__rarity">Epic</span></div>
             <div class="card__art" aria-hidden="true"><span class="card__glyph">C</span></div>
             <div class="card__body">
-              <h2 class="card__name">Cheetah</h2>
-              <p class="card__flavour">the one who makes the horizon come closer</p>
+              <h3 class="card__name">Cheetah</h3>
+              <p class="card__flavour">the comeback sprinter</p>
               <hr class="card__rule">
-              <p class="card__stats">5.0 km · 19:35 · 3:55/km</p>
-              <p class="card__serial"><span>Cheetah</span><span>#0042</span><span class="tick" aria-label="Verified">✓</span></p>
+              <p class="card__stats">5.0 km in 19:35 · 3:55 per km</p>
+              <p class="card__serial"><span>Cheetah</span><span>#0042</span><span class="tick">✓</span></p>
             </div>
           </article>
+          <div class="ledger" data-reveal style="--delay: 80ms" aria-label="Example ledger entry">
+            <h3>What the ledger says</h3>
+            <div class="ledger-row"><span>Card</span><b>Cheetah #0042</b></div>
+            <div class="ledger-row"><span>Earned by</span><b>Priya</b></div>
+            <div class="ledger-row"><span>On</span><b>28 Sep 2026</b></div>
+            <div class="ledger-row"><span>Run</span><b>5.0 km in 19:35</b></div>
+            <div class="ledger-row"><span>Issued</span><b>#0042 of 118</b></div>
+            <div class="ledger-row"><span>Status</span><b class="ok">Real ✓</b></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="how" aria-labelledby="how-h">
-      <div class="wrap">
-        <p class="eyebrow">How it works</p>
-        <h2 id="how-h">One moment per run.</h2>
-        <p class="lede">Three seconds after you stop, a card turns over. Everything else is quieter than that.</p>
-        <div class="steps">
-          <article class="step">
-            <h3>Run</h3>
-            <p>No start button needed. Flying Cobra notices a run on its own, measures it, and stays out of your way. There's a big Start for people who like intent.</p>
-          </article>
-          <article class="step">
-            <h3>Reveal</h3>
-            <p>The card slides up, pauses, and flips. Which animal you get depends on the run you did — where, when, how far, how steady.</p>
-            <p class="hint">Some animals only come out at night.</p>
-          </article>
-          <article class="step">
-            <h3>Collect</h3>
-            <p>Earn the same animal again and your bond grows: baby, young, adult. Your collection fills in one wild corner of India at a time.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="animals" aria-labelledby="animals-h">
-      <div class="wrap">
-        <p class="eyebrow">Animals</p>
-        <h2 id="animals-h">Families, not tiers.</h2>
-        <p class="lede">Every pace has its own animals. Same foil, same celebration, same card weight — because slow is never shame.</p>
-        <div class="families">
-          <article class="family" style="--fam-bg:#F5E2C8;--fam-fg:#5A2E0C;--fam-accent:#E0902F">
-            <span class="who">Cheetah · Blackbuck · Falcon</span>
-            <h3>Swift</h3>
-            <p>For the days the ground can't keep up with you.</p>
-          </article>
-          <article class="family" style="--fam-bg:#D9E7D6;--fam-fg:#1F3D2B;--fam-accent:#4F8A5B">
-            <span class="who">Elephant · Gaur · Hornbill</span>
-            <h3>Steady</h3>
-            <p>The elephant: the tireless traveller who never hurries and always arrives.</p>
-          </article>
-          <article class="family" style="--fam-bg:#E6DFF0;--fam-fg:#3A2E57;--fam-accent:#8B74C9">
-            <span class="who">Nilgai · Sambar · Langur</span>
-            <h3>Calm</h3>
-            <p>Long breath, easy stride, the kind of run you think during.</p>
-          </article>
-          <article class="family" style="--fam-bg:#F1DCD1;--fam-fg:#5B2F22;--fam-accent:#C76A4E">
-            <span class="who">Tortoise · Pangolin · Sloth bear</span>
-            <h3>Gentle</h3>
-            <p>The tortoise: unstoppable. Shows up, finishes, outlives everyone.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="verify" class="trust" aria-labelledby="verify-h">
-      <div class="wrap">
-        <div>
-          <p class="eyebrow">Trust</p>
-          <h2 id="verify-h">Real cards have serial numbers.</h2>
-          <p class="lede">Anyone can fake a card image. Nobody can fake a serial number that lives in the Flying Cobra ledger. Type one in and you'll see that single card — the animal, the number, who earned it and when — or you'll learn that someone is bluffing.</p>
-          <form class="lookup" action="verify.html" method="get" id="lookup-form">
-            <label for="q">Look up a serial</label>
-            <input id="q" name="q" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="Tiger #0427" required aria-describedby="lookup-help">
-            <button class="btn btn--primary" type="submit">Verify</button>
-            <p id="lookup-help" class="muted" style="flex:1 1 100%;font-size:13px;margin:4px 0 0">Also accepts “tiger 427” or “TGR-0427”. Only serials are searchable — never people.</p>
-          </form>
-        </div>
-        <div class="panel" aria-label="Example ledger entry">
-          <p class="eyebrow" style="margin-bottom:6px">Ledger entry</p>
-          <div class="ledger-row"><span>Card</span><b>Cheetah #0042</b></div>
-          <div class="ledger-row"><span>Earned by</span><b>Priya</b></div>
-          <div class="ledger-row"><span>On</span><b>28 Sep 2026</b></div>
-          <div class="ledger-row"><span>Run</span><b>5.0 km · 19:35</b></div>
-          <div class="ledger-row"><span>Issued</span><b>#0042 of 118</b></div>
-          <div class="ledger-row"><span>Status</span><b style="color:var(--success)">Real ✓</b></div>
-        </div>
-      </div>
-    </section>
-
+    <!-- Scene 7: privacy -->
     <section id="privacy" aria-labelledby="privacy-h">
       <div class="wrap">
-        <p class="eyebrow">Privacy</p>
-        <h2 id="privacy-h">Private by design.</h2>
-        <p class="lede">Your settings read like a receipt of what we hold and why. Nothing is shown that you didn't choose to show.</p>
-        <ul class="privacy-list">
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg><div><b>Posters never show your route or start point</b><span>Share the animal and the serial. Your streets stay yours.</span></div></li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg><div><b>Age and gender are optional — and never shown</b><span>Only used to grade effort fairly. Stored as a birth year, nothing more.</span></div></li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg><div><b>Each permission asks separately, with a reason</b><span>Location, motion, heart rate, notifications: one at a time, each skippable. “Not now” is as big as “Allow”.</span></div></li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg><div><b>India DPDP-aware</b><span>Built for the Digital Personal Data Protection Act: purpose-limited, plain-language consent, export anytime.</span></div></li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg><div><b>Delete everything, anytime</b><span>One tap in the trust centre removes your account, runs and cards. No emails to write.</span></div></li>
+        <div class="section-head" data-reveal>
+          <h2 id="privacy-h">Private by design.</h2>
+          <p class="lede">Your settings read like a receipt of what we hold and why. Nothing is shown that you did not choose to show.</p>
+        </div>
+        <ul class="promises">
+          <li data-reveal><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg><div><b>Posters never show your route or start point.</b><span>Share the animal and the serial. Your streets stay yours.</span></div></li>
+          <li data-reveal style="--delay: 60ms"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg><div><b>Age and gender are optional, and never shown.</b><span>Used only to grade effort fairly. Stored as a birth year, nothing more.</span></div></li>
+          <li data-reveal style="--delay: 120ms"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg><div><b>Each permission asks separately, with a reason.</b><span>Location, motion, heart rate, notifications: one at a time, each skippable. "Not now" is as big as "Allow".</span></div></li>
+          <li data-reveal style="--delay: 180ms"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg><div><b>Built for India's data protection law.</b><span>Purpose-limited, plain-language consent, and an export of everything whenever you ask.</span></div></li>
+          <li data-reveal style="--delay: 240ms"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg><div><b>Delete everything, anytime.</b><span>One tap in the trust centre removes your account, your runs and your cards. No emails to write.</span></div></li>
         </ul>
+      </div>
+    </section>
+
+    <!-- Scene 8: download -->
+    <section class="download" id="download" aria-labelledby="download-h">
+      <div class="wrap" data-reveal>
+        <h2 id="download-h">Your first run opens the bag.</h2>
+        <p class="lede">Free. Works with location alone. Everything else is optional and asked for separately.</p>
+        <div class="hero-actions">
+          <a class="btn btn--primary btn--store" href="#download" data-store="ios">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.2-.8s1.9.8 3.2.8c1.3 0 2.2-1.2 3-2.4.9-1.3 1.3-2.6 1.3-2.7 0 0-2.6-1-2.6-3.9zM14 5.4c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1 .1 2.1-.6 2.8-1.4z"/></svg>
+            <span><small>Download on the</small>App Store</span>
+          </a>
+          <a class="btn btn--store" href="#download" data-store="android">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3.5v17c0 .4.2.7.5.9L13.8 12 4.5 2.6c-.3.2-.5.5-.5.9zm11.3 6.9L6.4 5.3l7.2 7.2 1.7-2.1zm3.9 1.1-2.5-1.4-2 2.4 2 2.3 2.5-1.4c.7-.4.7-1.5 0-1.9zM6.4 19.2l8.9-5.1-1.7-2-7.2 7.1z"/></svg>
+            <span><small>Get it on</small>Google Play</span>
+          </a>
+        </div>
+        <p class="small">Coming to the App Store and Google Play. These buttons light up the day the apps ship.</p>
       </div>
     </section>
   </main>
@@ -188,5 +377,6 @@
 
   <div class="toast" role="status" aria-live="polite" id="toast"></div>
   <script src="app.js" defer></script>
+  <script type="module" src="scene.js"></script>
 </body>
 </html>

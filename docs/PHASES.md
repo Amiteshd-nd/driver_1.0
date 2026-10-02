@@ -67,3 +67,13 @@ The code exists but has not been compiled or run because this Mac has no Flutter
 12. Airplane mode → finish a run → expect "Saved. We'll fetch your card when you're back online." → disable airplane mode → reopen → card reveal appears.
 13. Walk under a bridge / indoors mid-run: GPS pill shows "Looking for GPS…", distance pauses, timer continues, run still submits.
 14. Dark mode: every screen uses the dark tokens; card palettes still pass contrast.
+
+## Marketing site rebuild (added 3 Oct 2026)
+
+| Step | Deliverable | Status | Where |
+|---|---|---|---|
+| Skills | `ui-ux-pro-max`, `design-motion-principles`, `taste-skill` imported from `a7/two/cloud-march` with a local note | ✅ | `.claude/skills/` |
+| Script | Creative director's script and storyboard: logline, design read, dials, cast, eight scenes, placeholders | ✅ | `docs/marketing/SITE_SCRIPT.md` |
+| Site | Eight-scene page on the design-system tokens; sticky card reveal; pace control; card river; verify; privacy; download | ✅ runs now | `web/marketing/` |
+| 3D | Three.js 0.186.1 vendored and pinned; one renderer, three scissor-rect stages; procedural runner, cheetah, chital, cat, star tortoise, rooster, eagle-owl; reduced-motion path | ✅ | `web/marketing/scene.js`, `web/vendor/three/` |
+| Placeholders | Store links (`app.js` → `STORE_LINKS`), GLB models, card art, footer legal links | 🟡 user | `MANUAL_TASKS.md` §11 |

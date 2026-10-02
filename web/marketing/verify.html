@@ -3,13 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Verify a card — Flying Cobra</title>
-  <meta name="description" content="Type a Flying Cobra serial number to see whether the card is real. If it lives in the ledger, it's real. If not, someone is bluffing.">
+  <title>Verify a card: Flying Cobra</title>
+  <meta name="description" content="Type a Flying Cobra serial number to see whether the card is real. If it lives in the ledger, it is real. If not, someone is bluffing.">
   <meta name="color-scheme" content="light dark">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#F7F3EC" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#121311" media="(prefers-color-scheme: dark)">
   <link rel="stylesheet" href="../../design_system/fonts/satoshi.css">
+  <link rel="stylesheet" href="../../design_system/tokens.css">
   <link rel="stylesheet" href="styles.css">
 <script src="../../design_system/typeface.js"></script>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='%23C8551B'%3E%3Cellipse cx='19' cy='36' rx='10' ry='12'/%3E%3Cellipse cx='39' cy='20' rx='10' ry='12'/%3E%3Cellipse cx='61' cy='20' rx='10' ry='12'/%3E%3Cellipse cx='81' cy='36' rx='10' ry='12'/%3E%3Cpath d='M38 52h24q16 0 19 16l3 10q2 16-14 16H30q-16 0-14-16l3-10q3-16 19-16z'/%3E%3C/g%3E%3C/svg%3E">
@@ -35,10 +36,7 @@
           <li><a href="index.html#privacy">Privacy</a></li>
         </ul>
       </nav>
-      <div class="nav-cta">
-        <a class="btn btn--primary" href="#" data-store="ios">App Store</a>
-        <a class="btn" href="#" data-store="android">Google Play</a>
-      </div>
+      <div class="nav-cta"><a class="btn btn--primary" href="index.html#download">Get the app</a></div>
     </div>
   </header>
 
@@ -50,7 +48,7 @@
         <label for="q">Serial number</label>
         <input id="q" name="q" type="text" autocomplete="off" spellcheck="false" placeholder="Tiger #0427" required aria-describedby="lookup-help">
         <button class="btn btn--primary" type="submit">Verify</button>
-        <p id="lookup-help" class="muted" style="flex:1 1 100%;font-size:13px;margin:4px 0 0">Also accepts “tiger 427” or “TGR-0427”. Only serials are searchable — never people.</p>
+        <p id="lookup-help" class="help">Also accepts "tiger 427" or "TGR-0427". Only serials are searchable, never people.</p>
       </form>
 
       <div id="result" class="verify-layout" aria-live="polite" aria-busy="false">

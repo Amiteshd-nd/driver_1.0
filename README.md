@@ -10,7 +10,7 @@
 ```bash
 python3 -m http.server 8790
 ```
-Open **http://localhost:8790/workbench/**: every screen clickable in a phone frame, timings and triggers tunable live, the design-system catalogue, and a simulate-run control that plays real card reveals. See [workbench/README.md](workbench/README.md). The design phase documents are in [docs/ux/](docs/ux/README.md).
+Open **http://localhost:8790/workbench/**: every screen clickable in a phone frame, timings and triggers tunable live, the design-system catalogue, and a simulate-run control that plays real card reveals. See [workbench/README.md](workbench/README.md). The design phase documents are in [docs/ux/](docs/ux/README.md). The marketing site is at **http://localhost:8790/web/marketing/** (script and storyboard: [docs/marketing/SITE_SCRIPT.md](docs/marketing/SITE_SCRIPT.md)).
 
 ## Layout
 ```
@@ -21,7 +21,8 @@ tools/illustrate/      local illustration pipeline: `node tools/illustrate/serve
 supabase/migrations/   the whole game engine lives in Postgres (apply 0001 → 0009 in order)
 supabase/functions/    verify page · illustrate worker (Edge Functions)
 app/                   Flutter: player app + admin panel
-web/marketing/         static marketing site + verify fallback
+web/marketing/         marketing site (Three.js stages, see docs/marketing/SITE_SCRIPT.md) + verify page
+web/vendor/three/      Three.js 0.186.1, pinned and self-hosted
 tools/dbtest/          PGlite test harness — `cd tools/dbtest && npm install && node test.mjs`
 ```
 

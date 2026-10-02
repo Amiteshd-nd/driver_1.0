@@ -1,4 +1,4 @@
-/* Flying Cobra verify — static fallback. Calls the public lookup_serial RPC and renders the card client-side.
+/* Flying Cobra verify, static fallback. Calls the public lookup_serial RPC and renders the card client-side.
    All dynamic text goes through textContent; nothing from the network touches innerHTML. */
 (function () {
   'use strict';
@@ -130,7 +130,7 @@
       h('div', null,
         seal,
         h('h2', { style: 'margin-top:18px' }, 'Earned by ' + v.earnedBy + (v.issuedAt ? ' on ' + fmtDate(v.issuedAt) : '')),
-        h('p', { class: 'muted' }, 'This card is in the ledger. Serial numbers are issued once, by the database, and never reused. No route, location or health data is shown here — ever.'),
+        h('p', { class: 'muted' }, 'This card is in the ledger. Serial numbers are issued once, by the database, and never reused. No route, location or health data is shown here, ever.'),
         facts,
         h('p', { class: 'muted', style: 'margin-top:24px;font-size:14px' }, 'Want your own? Every run earns a card.'),
         storeButtons())
@@ -172,7 +172,7 @@
   function viewIdle() {
     return [h('div', { class: 'state', style: 'grid-column:1/-1;max-width:640px' },
       h('h2', null, 'Type a serial to begin.'),
-      h('p', { class: 'muted' }, 'You’ll see that single card — the animal, the number, who earned it and when. If it isn’t in the ledger, someone is bluffing.'))];
+      h('p', { class: 'muted' }, 'You’ll see that single card, the animal, the number, who earned it and when. If it isn’t in the ledger, someone is bluffing.'))];
   }
   function viewLoading() {
     return [h('div', { class: 'verify-card' }, h('div', { class: 'shimmer', 'aria-hidden': 'true' })),
