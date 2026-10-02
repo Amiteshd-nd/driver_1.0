@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flying Cobra — Design Document</title>
+<meta name="description" content="The concept and complete logic of Flying Cobra: a jogging app for India where every run earns a collectible animal card with a serial number only you hold.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F7F3EC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121311" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Flying Cobra — Design Document">
+<meta property="og:description" content="Every run earns a collectible animal card. The card reflects the run, not the runner. No leaderboards.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='%23C8551B'%3E%3Cellipse cx='19' cy='36' rx='10' ry='12'/%3E%3Cellipse cx='39' cy='20' rx='10' ry='12'/%3E%3Cellipse cx='61' cy='20' rx='10' ry='12'/%3E%3Cellipse cx='81' cy='36' rx='10' ry='12'/%3E%3Cpath d='M38 52h24q16 0 19 16l3 10q2 16-14 16H30q-16 0-14-16l3-10q3-16 19-16z'/%3E%3C/g%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a class="brand" href="../marketing/index.html">
+      <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+        <ellipse cx="19" cy="36" rx="10" ry="12"/><ellipse cx="39" cy="20" rx="10" ry="12"/>
+        <ellipse cx="61" cy="20" rx="10" ry="12"/><ellipse cx="81" cy="36" rx="10" ry="12"/>
+        <path d="M38 52h24q16 0 19 16l3 10q2 16-14 16H30q-16 0-14-16l3-10q3-16 19-16z"/>
+      </svg>
+      Flying Cobra
+    </a>
+    <span class="topbar__doc">Design document</span>
+    <span class="topbar__spacer"></span>
+    <button class="theme-toggle" id="theme" type="button" aria-live="polite">Theme</button>
+  </div>
+  <div class="progress" id="progress" role="presentation"></div>
+</header>
+
+<main id="main">
+
+<section class="hero wrap">
+  <div class="hero__grid">
+    <div>
+      <p class="eyebrow">Design document · October 2026</p>
+      <h1>Every run earns a collectible animal card.</h1>
+      <p class="lede">That is the whole product in one line. You lace up, you run, and the app quietly hands you a beautiful card — an animal that matches how you ran today, stamped with a serial number that is yours alone.</p>
+      <p class="lede" style="margin-top:1em"><strong style="color:var(--ink)">No scores to feel bad about. No leaderboard to lose on.</strong> Just a growing, shareable collection that makes you want to run again tomorrow.</p>
+      <div class="hero__meta">
+        <span class="pill">Jogging app for India</span>
+        <span class="pill">87 animals</span>
+        <span class="pill">No leaderboards</span>
+        <span class="pill">Serial-numbered cards</span>
+      </div>
+    </div>
+    <div class="card-slot" data-family="swift">
+      <div class="card" data-rarity="epic" data-finish="glow" id="hero-card">
+        <div class="card__cap"><span>Monsoon 2026</span><span class="card__rarity"><i></i>Epic</span></div>
+        <div class="card__art">
+          <div class="card__blob" style="width:58%"><span class="card__initial" style="font-size:27cqw">C</span></div>
+          <div class="card__foil"></div>
+        </div>
+        <div class="card__body">
+          <div class="card__name">Cheetah</div>
+          <div class="card__flavour">the comeback sprinter</div>
+          <div class="card__rule"></div>
+          <div class="card__stats">5.0 km · 19:35 · 3:55/km</div>
+          <div class="card__serial"><span>CHEETAH #0042</span><span class="card__tick">✓</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="muted" style="margin-top:var(--sp-6);max-width:60ch"><strong>The emotional promise:</strong> running should give you something delightful to keep, not a number that makes you feel slow.</p>
+</section>
+
+<div class="wrap layout">
+
+  <nav class="toc" aria-label="Sections">
+    <ol id="toc-list">
+      <li><a href="#different">Why it is different</a></li>
+      <li><a href="#scales">The three time scales</a></li>
+      <li><a href="#chosen">How an animal is chosen</a></li>
+      <li><a href="#shame">Slow is never shame</a></li>
+      <li><a href="#growth">Growth and progression</a></li>
+      <li><a href="#surprise">The surprise layer</a></li>
+      <li><a href="#explore">Exploration and geography</a></li>
+      <li><a href="#card">The card itself</a></li>
+      <li><a href="#trust">Trust and sharing</a></li>
+      <li><a href="#discovery">Discovery-first</a></li>
+      <li><a href="#appendix">Parameter reference</a></li>
+    </ol>
+  </nav>
+
+  <div>
+
+  <section class="section" id="different">
+    <p class="section__num">01</p>
+    <h2>Why it is different</h2>
+    <p class="section__intro">Most running apps are built on comparison: pace, rank, who beat whom. This one deliberately drops all of that.</p>
+    <div class="grid grid--2">
+      <div class="panel"><h3>No leaderboards, no rankings</h3><p class="muted">Nobody is above or below anybody. There is no screen in the app where one person is measured against another.</p></div>
+      <div class="panel"><h3>Fun first</h3><p class="muted">The joy is collecting, growing and showing off animals — not chasing a personal best.</p></div>
+      <div class="panel"><h3>The card is the hero</h3><p class="muted">Distance, pace, calendar and heat map all exist, but as quiet supporting furniture. The animal is the star of every screen.</p></div>
+      <div class="panel"><h3>The card reflects the run, not the runner</h3><p class="muted">A gentle jog and a hard sprint earn <em>different</em> animals, never a better and a worse one.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="scales">
+    <p class="section__num">02</p>
+    <h2>The three time scales</h2>
+    <p class="section__intro">The app tells three different stories about your running, on three clocks. The daily card is instant gratification. The weekly card rewards showing up. The monthly card celebrates place and travel.</p>
+    <div class="table-scroll">
+      <table>
+        <caption>Each scale answers a different question.</caption>
+        <thead><tr><th>Scale</th><th>The question it answers</th><th>What it measures</th><th>Animals you find here</th></tr></thead>
+        <tbody>
+          <tr><td><b>Daily</b></td><td>How did you run <em>today</em>?</td><td>Speed, pace, distance, effort of one run</td><td>Everyday animals — cheetah, horse, rabbit, hamster, cat</td></tr>
+          <tr><td><b>Weekly</b></td><td>What was the <em>pattern</em> of your week?</td><td>Consistency across three, five or seven days, total volume, variety</td><td>Rare animals live here</td></tr>
+          <tr><td><b>Monthly</b></td><td><em>Where</em> are you?</td><td>Region and geography you ran in</td><td>Regional animals — Kerala species, West Bengal species, camel for Rajasthan</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="chosen">
+    <p class="section__num">03</p>
+    <h2>How an animal is chosen</h2>
+    <p class="section__intro">Three inputs each control a different dimension of the card. Speed says <em>which</em> animal, distance says <em>how big</em>, and consistency says <em>how special</em>. Three dials, endless combinations.</p>
+
+    <div class="table-scroll" style="margin-bottom:var(--sp-6)">
+      <table>
+        <thead><tr><th>Input</th><th>What it decides</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><b>Speed</b> (age-graded)</td><td>The animal <em>family</em></td><td>Fast effort opens cheetah, falcon and horse; gentle effort opens rabbit, cat, owl and deer</td></tr>
+          <tr><td><b>Distance</b></td><td>The <em>scale</em> of the animal</td><td>A short run gives a baby; a long run gives a full-grown adult</td></tr>
+          <tr><td><b>Consistency</b></td><td>The <em>special finish</em></td><td>Streaks add a glow, a seasonal colour, or a rare variant</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel">
+      <h3>Try the three dials</h3>
+      <p class="muted" style="font-size:.9rem">This runs the real selection logic from the shipped engine, including the age-grading formula. Move the dials and watch the card change.</p>
+      <div class="lab">
+        <div class="dials lab__controls">
+          <div class="dial">
+            <label for="pace">Pace <output id="pace-out">5:00 /km</output></label>
+            <input type="range" id="pace" min="210" max="600" step="5" value="300" aria-describedby="pace-hint">
+            <p class="dial__hint" id="pace-hint">How hard the effort was. Graded against your age, so it is effort, not raw speed.</p>
+          </div>
+          <div class="dial">
+            <label for="dist">Distance <output id="dist-out">5.0 km</output></label>
+            <input type="range" id="dist" min="1" max="15" step="0.5" value="5" aria-describedby="dist-hint">
+            <p class="dial__hint" id="dist-hint">Picks the scale of the animal, from baby to adult.</p>
+          </div>
+          <div class="dial">
+            <label for="days">Run-days this week <output id="days-out">3</output></label>
+            <input type="range" id="days" min="1" max="7" step="1" value="3" aria-describedby="days-hint">
+            <p class="dial__hint" id="days-hint">Consistency picks the finish: plain, glow, or radiant.</p>
+          </div>
+          <div class="dial">
+            <label for="age">Runner's age <output id="age-out">30</output></label>
+            <input type="range" id="age" min="14" max="85" step="1" value="30" aria-describedby="age-hint">
+            <p class="dial__hint" id="age-hint">Private in the real app, never shown on a card. Here it shows the fairness engine at work: hold the pace and raise the age.</p>
+          </div>
+          <div>
+            <button class="btn" id="draw" type="button">Draw again</button>
+            <span class="muted" style="font-size:.82rem;margin-left:var(--sp-2)">The run picks the bag; luck picks the animal.</span>
+          </div>
+        </div>
+
+        <div class="lab__out">
+          <div class="card-slot" data-family="steady" id="demo-wrap">
+            <div class="card" id="demo-card" data-rarity="common" data-finish="plain">
+              <div class="card__cap"><span id="d-set">Monsoon 2026</span><span class="card__rarity"><i></i><span id="d-rarity">Common</span></span></div>
+              <div class="card__art" id="d-art">
+                <div class="card__blob" id="d-blob"><span class="card__initial" id="d-initial">C</span></div>
+              </div>
+              <div class="card__body">
+                <div class="card__name" id="d-name">Chital</div>
+                <div class="card__flavour" id="d-flavour">the dappled wanderer</div>
+                <div class="card__rule"></div>
+                <div class="card__stats" id="d-stats">5.0 km · 25:00 · 5:00/km</div>
+                <div class="card__serial"><span id="d-serial">CHITAL #0042</span><span class="card__tick">✓</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="readout" aria-live="polite" id="readout">
+            <div class="readout__row"><span>Effort index</span><b id="r-p">0.50</b></div>
+            <div class="readout__row"><span>Family</span><b id="r-band">steady</b></div>
+            <div class="readout__row"><span>Scale</span><b id="r-stage">young</b></div>
+            <div class="readout__row"><span>Finish</span><b id="r-finish">plain</b></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:var(--sp-5)">
+        <h3 style="font-size:1rem;margin-bottom:var(--sp-2)">The bag this run opened</h3>
+        <p class="muted" style="font-size:.85rem">Every animal in the family, with its real draw probability. The highlighted row is the one that came out.</p>
+        <div class="pool" id="pool"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="shame">
+    <p class="section__num">04</p>
+    <h2>Slow is never shame</h2>
+    <p class="section__intro">This is the heart of the design. Speed does not make a <em>better</em> animal — it makes a <em>different</em> one. Fast and slow are different families, not high and low tiers.</p>
+
+    <div class="families" style="margin-bottom:var(--sp-5)">
+      <div class="fam" data-family="swift">
+        <h3>Swift</h3><p class="fam__role">Explosive · aerial</p>
+        <ul><li>Chinkara</li><li>Blackbuck</li><li>Peregrine Falcon</li><li>Cheetah</li></ul>
+        <p class="fam__equal">Common → Epic</p>
+      </div>
+      <div class="fam" data-family="steady">
+        <h3>Steady</h3><p class="fam__role">Pack · rhythm</p>
+        <ul><li>Chital</li><li>Dhole</li><li>Indian Wolf</li><li>Leopard</li></ul>
+        <p class="fam__equal">Common → Epic</p>
+      </div>
+      <div class="fam" data-family="calm">
+        <h3>Calm</h3><p class="fam__role">Gentle · curious</p>
+        <ul><li>Rabbit</li><li>Peacock</li><li>Otter</li><li>Mouse Deer</li></ul>
+        <p class="fam__equal">Common → Epic</p>
+      </div>
+      <div class="fam" data-family="gentle">
+        <h3>Gentle</h3><p class="fam__role">Tireless · grounded</p>
+        <ul><li>Star Tortoise</li><li>Porcupine</li><li>Pangolin</li><li>Elephant</li></ul>
+        <p class="fam__equal">Common → Epic</p>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-bottom:var(--sp-5)">
+      <p><strong>Every family has the same ceiling.</strong> Each one holds two commons, two uncommons, a rare and an epic. There is no family you can be unlucky enough to be stuck in, and no family that is worth more than another. An elephant is endurance and majesty. A tortoise is "unstoppable". A dhole is "the pack hunter". None of these is a losing card.</p>
+    </div>
+
+    <div class="grid grid--2">
+      <div class="panel">
+        <h3>Age-graded, so effort counts</h3>
+        <p class="muted">Age and gender are used only for age-grading, so a sixty-year-old and a twenty-five-year-old can both earn top animals for an equivalent effort. These inputs are optional, private, and never shown on the card.</p>
+        <p class="muted" style="margin-bottom:0"><em>Raise the age dial in section 03 without touching the pace and watch the family change. That is the whole fairness argument in one gesture.</em></p>
+      </div>
+      <div class="panel">
+        <h3>A light week is not a punishment</h3>
+        <p class="muted">A fast runner having a light week simply gets a hamster or a baby animal — because the card reflects <em>the week</em>, not the person.</p>
+        <p class="muted" style="margin-bottom:0">Skipped weeks produce no card at all, never an insulting one.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="growth">
+    <p class="section__num">05</p>
+    <h2>Growth and progression</h2>
+    <p class="section__intro">Animals are alive — they grow with you.</p>
+
+    <div class="panel" style="margin-bottom:var(--sp-5)" data-family="gentle">
+      <div class="growth">
+        <div class="growth__step"><span class="growth__dot" style="width:34px;height:34px"></span><div class="growth__label">Baby</div><div class="growth__sub">first weeks</div></div>
+        <div class="growth__arrow" aria-hidden="true">→</div>
+        <div class="growth__step"><span class="growth__dot" style="width:52px;height:52px"></span><div class="growth__label">Young</div><div class="growth__sub">three weeks earned</div></div>
+        <div class="growth__arrow" aria-hidden="true">→</div>
+        <div class="growth__step"><span class="growth__dot" style="width:74px;height:74px"></span><div class="growth__label">Adult</div><div class="growth__sub">six weeks earned</div></div>
+      </div>
+    </div>
+
+    <div class="grid grid--2">
+      <div class="panel"><h3>Baby to adult</h3><p class="muted">Keep running consistently and your animal grows up. Growth moments are celebrated events: <em>"Your cheetah is all grown up!"</em></p></div>
+      <div class="panel"><h3>No re-babying on a break</h3><p class="muted">Miss some days and you are not demoted to a baby — you simply see a <em>different</em> animal instead. After about two months of inactivity, animals reset to baby.</p></div>
+      <div class="panel"><h3>Skipped weeks give no card</h3><p class="muted">Never an insulting one. Silence is kinder than a bad grade.</p></div>
+      <div class="panel"><h3>Unlock the Wild</h3><p class="muted">Once you have mastered an animal, you graduate to a stage where each run rolls a different rare species. This keeps the late game exciting for dedicated runners.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="surprise">
+    <p class="section__num">06</p>
+    <h2>The surprise layer</h2>
+    <p class="section__intro">There is luck in it, but it is <em>fair</em> luck.</p>
+    <div class="callout" style="margin-bottom:var(--sp-5)">
+      <p><strong>The run decides the pool; luck decides which animal from that pool.</strong> A fast effort opens the fast-animals bag; a gentle run opens the calm bag. So a collector can deliberately run slowly to chase a rabbit — the player always has agency.</p>
+    </div>
+    <div class="grid grid--2">
+      <div class="panel"><h3>A pity timer</h3><p class="muted">The odds of a rare quietly rise the longer you go without one, so nobody gets stuck feeling unlucky forever. There is also a hard ceiling: past a certain wait, the commons drop out of the bag entirely.</p></div>
+      <div class="panel"><h3>Like opening a pack</h3><p class="muted">The surprise keeps every run feeling like opening a pack, without ever feeling random or unearned. You chose the bag. The bag chose the animal.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="explore">
+    <p class="section__num">07</p>
+    <h2>Exploration and geography</h2>
+    <p class="section__intro">The app rewards <em>where</em> and <em>how</em> you explore, not just how fast you go. Each trigger unlocks a different kind of animal.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Trigger</th><th>What you do</th><th>What you earn</th></tr></thead>
+        <tbody>
+          <tr><td><b>New route</b></td><td>Run a zigzag or untraced path in a familiar area</td><td>An explorer animal, such as a fox</td></tr>
+          <tr><td><b>New location</b></td><td>Run even once in a place you have not run before</td><td>That location's animal — a travel souvenir</td></tr>
+          <tr><td><b>Home region</b></td><td>Set once</td><td>An always-available regional pride animal</td></tr>
+          <tr><td><b>Migratory bird</b></td><td>Run across different states over about three weeks</td><td>The prestige prize</td></tr>
+          <tr><td><b>Time of day</b></td><td>Run at night, or at dawn</td><td>An owl at night; a rooster or songbird at dawn</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout" style="margin-top:var(--sp-5)">
+      <p><strong>A floor keeps it honest.</strong> A minimum of about one kilometre, or ten minutes at running pace, stops anyone farming location animals from a train or a car.</p>
+    </div>
+  </section>
+
+  <section class="section" id="card">
+    <p class="section__num">08</p>
+    <h2>The card itself</h2>
+    <p class="section__intro">Every card carries the same ingredients, so two runners can compare at a glance.</p>
+
+    <div class="anatomy">
+      <div class="card-slot" data-family="weekly">
+        <div class="card" data-rarity="legendary" data-finish="radiant">
+          <div class="card__cap"><span>Monsoon 2026</span><span class="card__rarity"><i></i>Legendary</span></div>
+          <div class="card__art">
+            <div class="card__blob" style="width:62%"><span class="card__initial" style="font-size:27cqw">T</span></div>
+            <div class="card__foil"></div>
+          </div>
+          <div class="card__body">
+            <div class="card__name">Bengal Tiger</div>
+            <div class="card__flavour">the one the forest listens for</div>
+            <div class="card__rule"></div>
+            <div class="card__stats">7 days · 35 km</div>
+            <div class="card__serial"><span>BENGAL TIGER #0009</span><span class="card__tick">✓</span></div>
+          </div>
+        </div>
+      </div>
+      <ol>
+        <li><b>Original animal art</b><small>Illustrated per animal, per stage. Until the illustrations exist, a deterministic placeholder renders from the animal's name, so every surface agrees.</small></li>
+        <li><b>A unique serial number</b><small>The scarcity and proof mechanic. Tiger #0009 beats Tiger #4120, and everyone can see it. Set in the display face with tabular figures, like a banknote.</small></li>
+        <li><b>Run stats</b><small>The numbers behind this card, and nothing more. No route, no start point.</small></li>
+        <li><b>A short flavour line</b><small>"Elephant, the tireless traveller." One line that makes the animal feel like a character.</small></li>
+        <li><b>A set name</b><small>"Monsoon 2026", grouping cards into collectible seasons.</small></li>
+      </ol>
+    </div>
+
+    <div class="callout" style="margin-top:var(--sp-5)">
+      <p><strong>Same animal plus same tier means an identical template for everyone</strong> — only the serial number differs. The rarest cards carry foil shimmer and rarity borders. The <em>feel</em> is a rare collectible card, but all art, layout, fonts and naming are fully original.</p>
+    </div>
+
+    <div class="grid grid--2" style="margin-top:var(--sp-5)">
+      <div class="panel panel--quiet"><h3>Rarity is a border, never a size</h3><p class="muted">A common card is exactly as large, as detailed and as celebrated as a legendary one. Rarity shows in the border weight and the finish, so a common card never looks like a consolation prize.</p></div>
+      <div class="panel panel--quiet"><h3>Consistency shows as light</h3><p class="muted">A plain card is matte. Four run-days in the week add a soft glow. Seven make it radiant, breathing slowly, tinted with the season's colour.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="trust">
+    <p class="section__num">09</p>
+    <h2>Trust and sharing</h2>
+    <p class="section__intro">The serial number is what makes a card real — and that powers both trust and growth.</p>
+    <div class="grid grid--2">
+      <div class="panel"><h3>One search field</h3><p class="muted">Serial-number lookup, and nothing else. No searching people by name. You type a number, such as Tiger #0427, and see that single card — animal, number, who earned it, when.</p></div>
+      <div class="panel"><h3>The trust mechanism</h3><p class="muted">Anyone can fake a card image or generate one. Nobody can fake a serial number that lives in the database. If it is in there, it is real.</p></div>
+      <div class="panel"><h3>Shareable posters</h3><p class="muted">Built for Instagram and WhatsApp stories, showing the animal and serial number, with a QR code to a public verify page. No app download needed. Friends verify, then want their own. That is the growth loop.</p></div>
+      <div class="panel"><h3>Safety</h3><p class="muted">Posters and verify pages never show the route map or start point, so nobody leaks a home address. The route is stored in a separate place that the card can never reach.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="discovery">
+    <p class="section__num">10</p>
+    <h2>Discovery-first philosophy</h2>
+    <p class="section__intro">The magic depends on <em>not</em> explaining the magic.</p>
+    <div class="grid grid--2">
+      <div class="panel"><h3>Never reveal the recipe</h3><p class="muted">The app hints that rewards exist, but never spells out how parameters map to animals. Users discover it by playing — <em>"I got something different when I ran faster!"</em></p></div>
+      <div class="panel"><h3>Easter eggs</h3><p class="muted">Some animals are undocumented, waiting to be stumbled upon. They stay invisible in the encyclopedia until the day you earn one.</p></div>
+      <div class="panel"><h3>The encyclopedia</h3><p class="muted">A searchable database of every animal and its real-world qualities. This is what turns a "slow" animal into a point of pride, and adds a layer of genuine charm and learning.</p></div>
+      <div class="panel"><h3>Gentle nudges</h3><p class="muted">The app may notice you are somewhere new and softly suggest a run — warm and well timed, never spammy, never surveillance.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="appendix">
+    <p class="section__num">11</p>
+    <h2>Parameter reference</h2>
+    <p class="section__intro">Every parameter the app reads, and what it controls on the card. Together these dials give enormous variety from a tiny amount of input — the player just runs.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Parameter</th><th>What it maps to</th></tr></thead>
+        <tbody>
+          <tr><td>Speed and pace, age-graded</td><td>The animal family: fast against calm</td></tr>
+          <tr><td>Distance</td><td>The scale of the animal, baby to adult</td></tr>
+          <tr><td>Consistency and streak</td><td>The special finish: glow, seasonal colour, variant</td></tr>
+          <tr><td>Days run per week</td><td>Weekly card tier at three, five or seven days</td></tr>
+          <tr><td>Total weekly volume</td><td>Weekly card richness</td></tr>
+          <tr><td>New route or zigzag</td><td>Explorer animal</td></tr>
+          <tr><td>New location</td><td>That location's souvenir animal</td></tr>
+          <tr><td>Home region</td><td>Regional pride animal</td></tr>
+          <tr><td>Different geographies over about three weeks</td><td>Migratory bird</td></tr>
+          <tr><td>Time of day</td><td>Night owl, dawn songbird</td></tr>
+          <tr><td>Age and gender, optional and private</td><td>Age-grading only; never shown</td></tr>
+          <tr><td>Heart rate, optional, from a watch</td><td>Effort refinement and anti-cheat</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__row">
+    <span>Flying Cobra · Run. Collect. Keep.</span>
+    <span class="muted">Source: <code>docs/source/Running-App-Design-Presentation.md</code> · Build: <code>docs/ALGORITHMS.md</code></span>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
