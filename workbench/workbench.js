@@ -112,7 +112,8 @@
   function renderAll() { renderPages(); renderPhone(); renderProps(); }
 
   // ---------- navigation & actions ----------
-  function go(page, state = 'success') { W.page = page; W.state = state; renderAll(); }
+  // Navigation clears any toast: a sticky GPS toast must never follow the runner into the finish screen or the reveal.
+  function go(page, state = 'success') { toast.clear(); W.page = page; W.state = state; renderAll(); }
   function openCard(c) { W.focusCard = c; go('card-detail'); }
 
   function fire(trigger) {
@@ -150,8 +151,9 @@
   }
 
   function playReveal(result) {
-    if (!result.card) { toast.show({ text: result.message, ms: 3600, pos: 'bottom', dismiss: 'tap' }); go('today'); return; }
+    if (!result.card) { go('today'); toast.show({ text: result.message, ms: 3600, pos: 'bottom', dismiss: 'tap' }); return; } // navigate first: go() clears toasts
     const pc = pageCfg('reveal'), red = W.opts.reduced;
+    toast.clear(); // §3 of the interaction spec: nothing on screen during the reveal
     W.page = 'reveal'; renderPages(); $('screen-name').textContent = 'Card reveal';
     FC.reveal($('screen'), result.card, { shimmerMs: ms('reveal', 'shimmer', 900), slideMs: ms('reveal', 'card-slide', 420), pauseMs: ms('reveal', 'pause-before-flip', 300), flipMs: ms('reveal', 'card-flip', 600), particles: ms('reveal', 'particle-burst', 900) ? 24 : 0, reduced: red }, (ov) => {
       const caps = result.celebrations.map(c => c.kind === 'growth' ? c.message : c.kind === 'discovery' ? ({ 1: `You found this one because you ran at ${result.timeWindow}.`, 2: 'You found this one because you went somewhere new.', 3: 'A souvenir from where you ran.', 4: 'You found this one by running across India.' })[c.tier] : '').filter(Boolean);
