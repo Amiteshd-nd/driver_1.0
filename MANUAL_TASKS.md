@@ -83,11 +83,19 @@ supabase functions deploy verify --no-verify-jwt
 ```
 Your verify URL base is then `https://YOUR-PROJECT.supabase.co/functions/v1/verify`. Paste it into the admin panel → Config → `app` → `verify_base_url` so QR codes point there.
 
-## 7. Domain for verify links (later)
+## 7. Rename the GitHub repo to `pugmark` (1 minute)
+
+The code is pushed to https://github.com/Amiteshd-nd/driver_1.0. To rename: open that page → **Settings** (tab on the right) → under **General**, the first field is **Repository name** → change `driver_1.0` to `pugmark` → **Rename**. GitHub keeps the history and redirects the old URL. Then tell Claude "renamed", or run this yourself from the project folder:
+
+```bash
+git remote set-url origin https://github.com/Amiteshd-nd/pugmark.git
+```
+
+## 8. Domain for verify links (later)
 
 Buy a short domain (e.g. `pugmark.run`) and point it at the marketing site host. Until then verify URLs use the Supabase Edge Function URL; update `config.app → verify_base_url` in the admin panel when the domain is live.
 
-## 8. Card art (later)
+## 9. Card art (later)
 
 Commission or generate original illustrations: 3 poses (baby / young / adult) per animal, 1200 × 1200 PNG with transparent background. Upload via the admin panel (Animals → edit → art) which stores them in the `card-art` bucket. Until then every card shows the procedural placeholder.
 
