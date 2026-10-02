@@ -26,6 +26,10 @@ The code exists but has not been compiled or run because this Mac has no Flutter
 - **Re-earn = new card** (PRD open question, v1 answer); the collection shows count + best serial.
 - **Age factors are an approximation of the WMA shape**, admin-editable, flagged as such.
 
+## Open from the source documents
+
+**Home region pride animal.** The design presentation lists "Home region · set once · an always-available regional pride animal"; the PRD does not, so it was not built. Today `profiles.home_region` only decides what is *not* a travel souvenir, and regional animals reach the player through the monthly card or a new-state souvenir. Adding it needs no code: one tier-0 `animal_rules` row per region, predicate `{"region_codes":["IN-XX"]}`, at a low weight so it seasons the everyday pool rather than crowding out the speed families. The open question is the weight, which is a balance call — try it in the admin Simulator first.
+
 ## Phase 8 manual test checklist (for Amitesh, after setup)
 1. Sign in with a magic link; complete onboarding; decline Motion and Health; confirm the app still records a run with Location only.
 2. Record a 1.2 km walk-jog outdoors. Expect: a card (calm or gentle family), stage baby, serial #0001 for that animal if nobody else earned it.
