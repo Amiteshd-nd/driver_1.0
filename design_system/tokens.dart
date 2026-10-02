@@ -82,6 +82,17 @@ class TokenFinish {
   };
 }
 
+/// Typeface controller: Brand.typeface picks one; theme.dart reads it. "classic" needs google_fonts, "satoshi" is bundled.
+class TokenTypeface {
+  const TokenTypeface(this.display, this.text, this.semibold, this.bundled);
+  final String display, text; final FontWeight semibold; final bool bundled;
+  static const Map<String, TokenTypeface> all = {
+    'satoshi': TokenTypeface('Satoshi', 'Satoshi', FontWeight.w700, true),
+    'classic': TokenTypeface('Fraunces', 'Manrope', FontWeight.w600, false),
+  };
+  static const String active = 'satoshi';
+}
+
 class TokenSpace {
   TokenSpace._();
   static const double xs = 4;

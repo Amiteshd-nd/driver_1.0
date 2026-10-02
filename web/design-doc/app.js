@@ -244,6 +244,9 @@
     Object.keys(byId).forEach(function (id) { var el = document.getElementById(id); if (el) obs.observe(el); });
   }
 
+  // ---------- typeface controller ----------
+  const tfBtn = $('typeface'); if (tfBtn && window.Typeface) Typeface.bind(tfBtn);
+
   // ---------- theme ----------
   var btn = $('theme');
   function label() {

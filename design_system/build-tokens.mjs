@@ -23,8 +23,10 @@ for (const [name, f] of Object.entries(T.family)) css.push(`  --fam-${name}-bg: 
 for (const [name, r] of Object.entries(T.rarity)) css.push(`  --rarity-${name}-border: ${r.borderWidth}px; --rarity-${name}-reveal: ${r.revealMs}ms; --rarity-${name}-particles: ${r.particles};`);
 for (const [name, t] of Object.entries(T.tier)) css.push(`  --tier-${name}-art: ${t.artScale}; --tier-${name}-initial: ${t.initialScale}cqw;`);
 for (const [name, f] of Object.entries(T.finish)) css.push(`  --finish-${name}-blur: ${f.glowBlur}px; --finish-${name}-alpha: ${f.glowAlpha};`);
-css.push(`  --font-display: '${T.typography.display.family}', ${T.typography.display.fallback};`);
-css.push(`  --font-text: '${T.typography.text.family}', ${T.typography.text.fallback};`);
+const activeTF = T.typography.typefaces[T.typography.active];
+css.push(`  --font-display: '${activeTF.display.family}', ${activeTF.display.fallback};`);
+css.push(`  --font-text: '${activeTF.text.family}', ${activeTF.text.fallback};`);
+css.push(`  --font-semibold: ${activeTF.semiboldWeight};`);
 for (const [name, s] of Object.entries(T.typography.scale)) {
   css.push(`  --type-${kebab(name)}-size: ${s.size}px; --type-${kebab(name)}-line: ${s.line}px; --type-${kebab(name)}-weight: ${s.weight};${s.tracking ? ` --type-${kebab(name)}-tracking: ${s.tracking}em;` : ''}`);
 }
@@ -39,6 +41,8 @@ css.push(`/* dark: follows the system unless [data-theme] pins it */`);
 css.push(`:root:not([data-theme='light']) { @media (prefers-color-scheme: dark) {\n${colorVars('dark')}\n  --elevation-card: ${T.elevation.cardDark};\n} }`);
 css.push(`:root[data-theme='dark'], [data-mode='dark'] {\n${colorVars('dark')}\n  --elevation-card: ${T.elevation.cardDark};\n}`);
 css.push(`:root[data-theme='light'], [data-mode='light'] {\n${colorVars('light')}\n  --elevation-card: ${T.elevation.card};\n}`);
+css.push('', '/* typeface controller: data-typeface on <html> flips every surface (design_system/typeface.js) */');
+for (const [name, tf] of Object.entries(T.typography.typefaces)) css.push(`:root[data-typeface='${name}'] { --font-display: '${tf.display.family}', ${tf.display.fallback}; --font-text: '${tf.text.family}', ${tf.text.fallback}; --font-semibold: ${tf.semiboldWeight}; }`);
 css.push('', '/* family scope: put data-family on any ancestor and components pick it up */');
 for (const name of Object.keys(T.family)) css.push(`[data-family='${name}'] { --fam-bg: var(--fam-${name}-bg); --fam-fg: var(--fam-${name}-fg); --fam-accent: var(--fam-${name}-accent); }`);
 const reduced = Object.keys(T.motion.duration).map(k => `--duration-${kebab(k)}: 1ms;`).join(' ');
@@ -73,6 +77,10 @@ d.push('  };', '}', '');
 d.push('class TokenFinish {', '  const TokenFinish(this.glowBlur, this.glowAlpha, this.breathe, this.minRunDays);', '  final double glowBlur, glowAlpha; final bool breathe; final int minRunDays;', '  static const Map<String, TokenFinish> all = {');
 for (const [name, f] of Object.entries(T.finish)) d.push(`    '${name}': TokenFinish(${f.glowBlur}, ${f.glowAlpha}, ${f.breathe}, ${f.minRunDays}),`);
 d.push('  };', '}', '');
+d.push('/// Typeface controller: Brand.typeface picks one; theme.dart reads it. "classic" needs google_fonts, "satoshi" is bundled.');
+d.push('class TokenTypeface {', '  const TokenTypeface(this.display, this.text, this.semibold, this.bundled);', '  final String display, text; final FontWeight semibold; final bool bundled;', '  static const Map<String, TokenTypeface> all = {');
+for (const [name, tf] of Object.entries(T.typography.typefaces)) d.push(`    '${name}': TokenTypeface('${tf.display.family}', '${tf.text.family}', FontWeight.w${tf.semiboldWeight}, ${name === 'satoshi'}),`);
+d.push('  };', `  static const String active = '${T.typography.active}';`, '}', '');
 d.push('class TokenSpace {', '  TokenSpace._();');
 for (const [k, v] of Object.entries(T.space)) d.push(`  static const double ${k} = ${v};`);
 d.push('}', '', 'class TokenRadius {', '  TokenRadius._();');

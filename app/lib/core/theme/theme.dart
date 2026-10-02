@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
+import 'package:google_fonts/google_fonts.dart';
+
+import '../brand.dart';
 import 'tokens.dart';
 
-/// The product typeface. Satoshi has no 600 weight; semibold roles use w700.
+/// Resolved from the typeface controller (Brand.typeface). Satoshi is bundled; the reserved classic pair uses google_fonts.
 const kFontFamily = 'Satoshi';
+bool get _classic => Brand.typeface == 'classic';
 
 /// Builds the Material theme from the Flying Cobra tokens (docs/DESIGN.md §3–4).
 ThemeData buildTheme(Brightness brightness) {
@@ -98,9 +102,12 @@ ThemeData buildTheme(Brightness brightness) {
 TextTheme _textTheme(AppColors c) {
   // Satoshi (Indian Type Foundry, via Fontshare) for every role — bundled under assets/fonts, declared in pubspec.yaml.
   // Fraunces/Manrope were retired 2026-10-02 and are kept on record in design_system/tokens.json only.
-  TextStyle display(double size, double height, FontWeight w) => TextStyle(fontFamily: kFontFamily, fontSize: size, height: height / size, fontWeight: w, color: c.ink);
-  TextStyle text(double size, double height, FontWeight w, {double spacing = 0}) =>
-      TextStyle(fontFamily: kFontFamily, fontSize: size, height: height / size, fontWeight: w, color: c.ink, letterSpacing: spacing);
+  TextStyle display(double size, double height, FontWeight w) => _classic
+      ? GoogleFonts.fraunces(fontSize: size, height: height / size, fontWeight: w, color: c.ink)
+      : TextStyle(fontFamily: kFontFamily, fontSize: size, height: height / size, fontWeight: w, color: c.ink);
+  TextStyle text(double size, double height, FontWeight w, {double spacing = 0}) => _classic
+      ? GoogleFonts.manrope(fontSize: size, height: height / size, fontWeight: w, color: c.ink, letterSpacing: spacing)
+      : TextStyle(fontFamily: kFontFamily, fontSize: size, height: height / size, fontWeight: w, color: c.ink, letterSpacing: spacing);
   return TextTheme(
     displayLarge: display(40, 46, FontWeight.w700),
     displayMedium: display(32, 38, FontWeight.w700),
@@ -125,7 +132,7 @@ class AppText {
   static const tabular = [FontFeature.tabularFigures()];
 
   /// Satoshi serial with tabular figures and wide tracking (DESIGN.md §4).
-  static TextStyle serial(BuildContext context, {Color? color, double size = 18}) => TextStyle(fontFamily: kFontFamily, 
+  static TextStyle serial(BuildContext context, {Color? color, double size = 18}) => _display(
         fontSize: size,
         fontWeight: FontWeight.w500,
         letterSpacing: size * 0.08,
@@ -134,8 +141,16 @@ class AppText {
       );
 
   static TextStyle stat(BuildContext context, {Color? color}) =>
-      TextStyle(fontFamily: kFontFamily, fontSize: 22, height: 26 / 22, fontWeight: FontWeight.w500, color: color ?? context.colors.ink, fontFeatures: tabular);
+      _display(fontSize: 22, height: 26 / 22, fontWeight: FontWeight.w500, color: color ?? context.colors.ink, fontFeatures: tabular);
 
   static TextStyle flavour(BuildContext context, {Color? color}) =>
-      TextStyle(fontFamily: kFontFamily, fontSize: 14, height: 20 / 14, fontStyle: FontStyle.italic, color: color ?? context.colors.inkMuted);
+      _text(fontSize: 14, height: 20 / 14, fontStyle: FontStyle.italic, color: color ?? context.colors.inkMuted);
+
+  // The same controller as buildTheme: Satoshi bundled, the reserved classic pair via google_fonts.
+  static TextStyle _display({double? fontSize, double? height, FontWeight? fontWeight, double? letterSpacing, Color? color, List<FontFeature>? fontFeatures, FontStyle? fontStyle}) => _classic
+      ? GoogleFonts.fraunces(fontSize: fontSize, height: height, fontWeight: fontWeight, letterSpacing: letterSpacing, color: color, fontFeatures: fontFeatures, fontStyle: fontStyle)
+      : TextStyle(fontFamily: kFontFamily, fontSize: fontSize, height: height, fontWeight: fontWeight, letterSpacing: letterSpacing, color: color, fontFeatures: fontFeatures, fontStyle: fontStyle);
+  static TextStyle _text({double? fontSize, double? height, FontWeight? fontWeight, double? letterSpacing, Color? color, List<FontFeature>? fontFeatures, FontStyle? fontStyle}) => _classic
+      ? GoogleFonts.manrope(fontSize: fontSize, height: height, fontWeight: fontWeight, letterSpacing: letterSpacing, color: color, fontFeatures: fontFeatures, fontStyle: fontStyle)
+      : TextStyle(fontFamily: kFontFamily, fontSize: fontSize, height: height, fontWeight: fontWeight, letterSpacing: letterSpacing, color: color, fontFeatures: fontFeatures, fontStyle: fontStyle);
 }

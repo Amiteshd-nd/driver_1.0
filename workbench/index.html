@@ -7,7 +7,8 @@
 <meta name="description" content="Every screen of the Flying Cobra app, clickable in a phone frame, with live control over animation and toast timing and the triggers that fire them. Mock data; no backend.">
 <meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="../design_system/fonts/satoshi.css">
-<link rel="stylesheet" href="../design_system/tokens.css?v=2">
+<link rel="stylesheet" href="../design_system/tokens.css?v=3">
+<script src="../design_system/typeface.js?v=3"></script>
 <link rel="stylesheet" href="../design_system/components.css?v=2">
 <link rel="stylesheet" href="app.css?v=2">
 <link rel="stylesheet" href="workbench.css?v=2">
@@ -22,6 +23,7 @@
   <span class="wb-pill">Mock data · no backend</span>
   <span class="wb-spacer"></span>
   <div class="seg" role="group" aria-label="Device"><button type="button" data-device="iphone" class="is-on">iPhone</button><button type="button" data-device="android">Android</button><button type="button" data-device="small">Small</button></div>
+  <button class="ghost" id="typeface" type="button" aria-live="polite">Type: Satoshi</button>
   <button class="ghost" id="mode" type="button">App: light</button>
   <button class="ghost" id="reset" type="button">Reset to start</button>
 </header>

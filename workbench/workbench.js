@@ -251,6 +251,7 @@
 
   $('personas').addEventListener('click', e => { const b = e.target.closest('[data-persona]'); if (b) { setPersona(b.dataset.persona); $('personas').querySelectorAll('.persona').forEach(x => x.classList.toggle('is-on', x.dataset.persona === b.dataset.persona)); } });
   document.querySelectorAll('[data-device]').forEach(b => b.addEventListener('click', () => { W.device = b.dataset.device; document.querySelectorAll('[data-device]').forEach(x => x.classList.toggle('is-on', x === b)); renderPhone(); }));
+  Typeface.bind($('typeface'));
   $('mode').addEventListener('click', () => { W.mode = W.mode === 'light' ? 'dark' : 'light'; $('mode').textContent = W.mode === 'light' ? 'App: light' : 'App: dark'; renderPhone(); });
   ['reduced','nogps','offline'].forEach(k => $('opt-' + k).addEventListener('change', e => { W.opts[k] = e.target.checked; renderPhone(); }));
   $('reset').addEventListener('click', () => { clearInterval(W.ticker); setPersona(W.personaId); go(W.user.fresh ? 'welcome' : 'today'); });

@@ -80,9 +80,14 @@ Consistency finishes (`plain / glow / radiant`) add a soft outer glow (`glow`: 1
 
 ## 4. Typography
 
-One family: **Satoshi** (Indian Type Foundry, via Fontshare; free for commercial use). It carries every role, from the animal name and the banknote-style serial to body and labels. Serial numbers use tabular figures, letter-spacing 0.08 em. Satoshi ships no 600 weight, so semibold roles use 700.
+The typeface is a **controller in the design system**, not a hard-coded choice. `design_system/tokens.json` → `typography.typefaces` holds named sets and `typography.active` picks one; every component reads `--font-display` and `--font-text`, so one switch changes the whole product.
 
-> **On record, not in use.** Before 2 Oct 2026 the system used *Fraunces* for display and *Manrope* for text. They were retired at the designer's request and are recorded in `design_system/tokens.json` → `typography.retired`. Nothing loads or references them.
+| Set | Display | Text | Status |
+|---|---|---|---|
+| `satoshi` | Satoshi | Satoshi | **Active.** Indian Type Foundry via Fontshare, self-hosted in `design_system/fonts/` and `app/assets/fonts/`. No 600 weight, so semibold roles use 700. |
+| `classic` | Fraunces | Manrope | **Reserved.** The pair used before 2 Oct 2026. Loaded from Google Fonts only when selected. |
+
+**Switching.** Web: the "Type" button in the workbench and the design document (sets `data-typeface` on `<html>`, remembered per browser), or `Typeface.set('classic')` from `design_system/typeface.js`. Flutter: `Brand.typeface`. Serial numbers use tabular figures with 0.08 em tracking in either set.
 
 | Role | Font | Size / line | Weight |
 |---|---|---|---|

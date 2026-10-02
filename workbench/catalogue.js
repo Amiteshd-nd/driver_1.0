@@ -21,7 +21,10 @@
     out.push(`<section class="cat-sec"><h2>Rarity</h2><p class="cat-hint">A new rarity is a new row here, never a new component.</p>${table(T.rarity)}</section>`);
     out.push(`<section class="cat-sec"><h2>Tier (scale)</h2>${table(T.tier)}</section>`);
     out.push(`<section class="cat-sec"><h2>Finish (consistency)</h2>${table(T.finish)}</section>`);
-    out.push(`<section class="cat-sec"><h2>Typography</h2>${Object.entries(T.typography.scale).map(([k, s]) => `<div class="cat-type"><code>${esc(k)}</code><span style="font-family:var(--font-${s.font});font-size:${s.size}px;line-height:${s.line}px;font-weight:${s.weight};${s.italic ? 'font-style:italic;' : ''}${s.tabular ? 'font-variant-numeric:tabular-nums;' : ''}${s.tracking ? `letter-spacing:${s.tracking}em;` : ''}">${s.tabular ? 'CHEETAH #0042' : 'Run. Collect. Keep.'}</span><small>${s.size}/${s.line} · ${s.weight}${s.use ? ' · ' + esc(s.use) : ''}</small></div>`).join('')}</section>`);
+    const tfs = T.typography.typefaces || {}, active = (window.Typeface && Typeface.get()) || T.typography.active;
+    out.push(`<section class="cat-sec"><h2>Typography</h2><p class="cat-hint"><b>Typeface controller.</b> One switch flips every surface; components only ever read <code>--font-display</code> / <code>--font-text</code>.</p>
+      <div class="cat-row" style="margin-bottom:12px">${Object.entries(tfs).map(([k, tf]) => `<button class="chip${k === active ? ' is-on' : ''}" data-typeface="${k}" style="display:grid;text-align:left;gap:2px;padding:10px 14px;border-radius:12px"><b>${esc(tf.label)}</b><span style="font-size:11px;opacity:.75">${esc(tf.display.family)} · ${esc(tf.text.family)} · ${k === T.typography.active ? 'default' : 'reserved'}</span></button>`).join('')}</div>
+      ${Object.entries(T.typography.scale).map(([k, s]) => `<div class="cat-type"><code>${esc(k)}</code><span style="font-family:var(--font-${s.font});font-size:${s.size}px;line-height:${s.line}px;font-weight:${s.weight};${s.italic ? 'font-style:italic;' : ''}${s.tabular ? 'font-variant-numeric:tabular-nums;' : ''}${s.tracking ? `letter-spacing:${s.tracking}em;` : ''}">${s.tabular ? 'CHEETAH #0042' : 'Run. Collect. Keep.'}</span><small>${s.size}/${s.line} · ${s.weight}${s.use ? ' · ' + esc(s.use) : ''}</small></div>`).join('')}</section>`);
     out.push(`<section class="cat-sec"><h2>Spacing</h2><div class="cat-bars">${Object.entries(T.space).map(([k, v]) => `<div><i style="width:${v * 3}px"></i><code>${k}</code> ${v}px</div>`).join('')}</div></section>`);
     out.push(`<section class="cat-sec"><h2>Radius</h2><div class="cat-row">${Object.entries(T.radius).map(([k, v]) => `<div class="cat-radius" style="border-radius:${Math.min(v, 40)}px"><code>${k}</code><span>${v}px</span></div>`).join('')}</div></section>`);
     out.push(`<section class="cat-sec"><h2>Elevation</h2><div class="cat-row">${Object.entries(T.elevation).map(([k, v]) => `<div class="cat-elev" style="box-shadow:${esc(v)}"><code>${k}</code></div>`).join('')}</div></section>`);
@@ -68,6 +71,7 @@
     <div class="cat-tabs" style="display:flex;gap:6px;margin-bottom:14px"><button class="chip is-on" data-cat="tokens">Tokens</button><button class="chip" data-cat="components">Components</button></div>
     <div id="cat-body">${tokens()}</div>`;
     host.querySelectorAll('[data-cat]').forEach(b => b.addEventListener('click', () => { host.querySelectorAll('[data-cat]').forEach(x => x.classList.toggle('is-on', x === b)); host.querySelector('#cat-body').innerHTML = b.dataset.cat === 'tokens' ? tokens() : components(); }));
+    host.addEventListener('click', e => { const b = e.target.closest('[data-typeface]'); if (b && window.Typeface) { Typeface.set(b.dataset.typeface); host.querySelectorAll('[data-typeface]').forEach(x => x.classList.toggle('is-on', x === b)); } });
   }
 
   window.Catalogue = { render };
